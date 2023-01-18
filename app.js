@@ -1,8 +1,9 @@
-const express = require("express");
-const db = require("./models");
+const express = require('express');
+const db = require('./models');
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+app.use('/api', require('./routes'))
 app.get('/', (req, res) => {
     res.send('Hello World');
     
