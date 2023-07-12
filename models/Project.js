@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "ownerID",
         as: "owner",
       });
-};
+    };
 
    return Project
 }

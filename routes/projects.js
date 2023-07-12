@@ -30,14 +30,15 @@ router.get('/:projectId', async (req, res) => {
   
 
 router.post('/', (req, res) => {
-    
+    ownerid = req.user.id;
     const {
         projectTitle,
-        projectDescription
+        projectDescription,
     } = req.body;
     Project.create({
         projectTitle,
-        projectDescription
+        projectDescription,
+        ownerID: ownerid
     })
     .then((newProject) => {
         res.status(201).json(newProject);
