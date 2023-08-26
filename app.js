@@ -8,26 +8,19 @@ const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // setup passport and session cookies
 app.use(
-    expressSession({
-      secret: process.env.SESSION_SECRET,
-      resave: false,
-      saveUninitialized: true,
-      //cookie:{secure: false}
-    })
-  );
-  app.use(passport.initialize());
-  app.use(passport.session());
+  expressSession({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
-  // app.use((req, res, next) => {
-  //   //console.log(req.session);
-  //   console.log("This is user: ", req.user);
-  //   next();
-  // });
-  
 // add http request logging to help us debug and audit app use
 const logFormat = process.env.NODE_ENV === "production" ? "combined" : "dev";
 app.use(morgan(logFormat));
@@ -38,20 +31,19 @@ app.use('/api', require('./routes'))
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-// all unknown routes should be handed to our react app
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"));
-});
+  // all unknown routes should be handed to our react app
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
 }
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
-    
+  res.send('Hello World');
+
 });
 
-
-db.sequelize.sync({force: false});
+db.sequelize.sync({ force: false });
 
 app.listen(PORT, () => {
-    console.log(`App listening on port ${PORT}`);
+  console.log(`App listening on port ${PORT}`);
 });

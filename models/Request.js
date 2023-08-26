@@ -1,7 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
 
-
 module.exports = (sequelize, DataTypes) => {
     const Request = sequelize.define("Request", {
         requesterId: {
@@ -23,20 +22,24 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Request.associate = function (models) {
-		// associations can be defined here
-		Request.belongsTo(models.User, {
-			foreignKey: "requesterId",
-			as: "requester",
-		});
+        // associations can be defined here
         Request.belongsTo(models.User, {
-			foreignKey: "ownerId",
-			as: "owner",
-		});
-		Request.belongsTo(models.Project, {
-			foreignKey: "projectId",
-			as: "project",
-		});
-	};
+            foreignKey: "requesterId",
+            as: "requester",
+        });
+        Request.belongsTo(models.User, {
+            foreignKey: "requesterId",
+            as: "member",
+        });
+        Request.belongsTo(models.User, {
+            foreignKey: "ownerId",
+            as: "owner",
+        });
+        Request.belongsTo(models.Project, {
+            foreignKey: "projectId",
+            as: "project",
+        });
+    };
 
     return Request
 }
