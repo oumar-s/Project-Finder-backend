@@ -34,13 +34,27 @@ router.get("/login", (req, res) => {
 });
 
 router.post("/logout", (req, res, next) => {
-  // Logout is now async and has to finish before we can return a response
-  //  passport version >= 0.6.0
-  //  https://medium.com/passportjs/fixing-session-fixation-b2b68619c51d
   req.logout((err) => {
     if (err) return next(err);
     res.status(200).json({ message: "Logout successful" });
   });
+});
+
+router.get('/user', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id, {
+      attributes: ['firstName', 'lastName', 'email']
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 module.exports = router;
