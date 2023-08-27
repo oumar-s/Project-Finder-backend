@@ -6,22 +6,26 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+//const config = require(__dirname + "/../config/config.json")[env];
 const db = {};
 
 // disable sequelize logging
-config.logging = false;
+//config.logging = false;
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
+// if (env === 'development') {
+//   sequelize = new Sequelize(
+//     config.database,
+//     config.username,
+//     config.password,
+//     config
+//   );
+const config = {
+  "dialect": "postgres"
 }
+
+// } else {
+  sequelize = new Sequelize(process.env.PGDATABASE, process.env.PGUSER, process.env.PGUSER, config);
+// }
 
 fs.readdirSync(__dirname)
   .filter((file) => {
