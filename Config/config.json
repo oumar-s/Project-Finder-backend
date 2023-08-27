@@ -14,7 +14,7 @@
         "dialect": "postgres"
     },
     "production": {
-        "use_env_variable": "postgresql://postgres:khXntb1wjietgWD5Y1PQ@containers-us-west-95.railway.app:6739/railway",
+        "use_env_variable": "DATABASE_URL",
         "dialect": "postgres",
         "dialectOptions": {
             "ssl": {
