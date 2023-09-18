@@ -14,8 +14,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
   origin: 'https://project-finder-frontend-production.up.railway.app',
   credentials: true,
-  methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization',
 }));
 
 
