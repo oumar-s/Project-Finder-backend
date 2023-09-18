@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./models');
 const app = express();
+const cors = require('cors');
 const expressSession = require("express-session");
 const morgan = require("morgan");
 const passport = require("./middlewares/authentication");
@@ -9,6 +10,14 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin: 'https://project-finder-frontend-production.up.railway.app',
+  credentials: true,
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+}));
+
 
 // setup passport and session cookies
 app.use(
