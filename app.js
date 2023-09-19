@@ -23,8 +23,8 @@ app.use(cors({
 app.use(
   expressSession({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
     secure: true,
   })
 );
