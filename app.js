@@ -15,7 +15,7 @@ app.use(cors({
   origin: 'https://project-finder-frontend-production.up.railway.app',
   credentials: true,
   methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization',
+  allowedHeaders: 'Content-Type, Authorization'
 }));
 
 
@@ -25,7 +25,8 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    secure: true
+    secure: true,
+    store: new session.MemoryStore()
   })
 );
 app.use(passport.initialize());
