@@ -26,7 +26,6 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secure: true,
-    store: new session.MemoryStore()
   })
 );
 app.use(passport.initialize());
