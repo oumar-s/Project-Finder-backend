@@ -3,6 +3,7 @@ const db = require('./models');
 const app = express();
 const cors = require('cors');
 const expressSession = require("express-session");
+const pgSession = require('connect-pg-simple')(expressSession);
 const morgan = require("morgan");
 const passport = require("./middlewares/authentication");
 const PORT = process.env.PORT || 8080;
@@ -22,10 +23,15 @@ app.use(cors({
 // setup passport and session cookies
 app.use(
   expressSession({
+    store: new pgSession({
+      pool : db.sequelize,                // Connection pool
+      tableName : 'sessions',   // Use another table-name than the default "session" one
+      // Insert connect-pg-simple options here
+      createTableIfMissing: true
+    }),
     secret: process.env.SESSION_SECRET,
-    resave: true,
+    resave: false,
     saveUninitialized: true,
-    secure: true,
   })
 );
 app.use(passport.initialize());
