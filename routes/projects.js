@@ -46,7 +46,7 @@ router.get('/:projectId', async (req, res) => {
 
 
 router.post('/', (req, res) => {
-  ownerid = req.user.id;
+  const ownerid = req.user.id;
   const {
     title: projectTitle,
     description: projectDescription,
