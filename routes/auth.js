@@ -43,6 +43,7 @@ router.post("/logout", (req, res, next) => {
 router.get('/user', async (req, res) => {
   try {
     console.log(req.session);
+    console.log(req.user);
     const user = await User.findByPk(req.user.id, {
       attributes: ['firstName', 'lastName', 'email']
     });
