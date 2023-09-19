@@ -24,7 +24,7 @@ app.use(cors({
 app.use(
   expressSession({
     store: new pgSession({
-      pool : db.sequelize,                // Connection pool
+      conObject : db.sequelize,                // Connection pool
       tableName : 'sessions',   // Use another table-name than the default "session" one
       // Insert connect-pg-simple options here
       createTableIfMissing: true
