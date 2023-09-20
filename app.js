@@ -30,7 +30,6 @@ app.use(
     }),
     cookie: {
       sameSite: 'none',
-      secure: true
     },
     secret: process.env.SESSION_SECRET,
     resave: false,
