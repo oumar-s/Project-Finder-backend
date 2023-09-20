@@ -5,7 +5,7 @@ const { Project, User } = db;
 
 router.get('/', (req, res) => {
   console.log("Get all project user log: ", req.user);
-  console.log("Get all project request log: ", req);
+  console.log("Get all project session log: ", req.session);
   Project.findAll({
     include: [
       {
