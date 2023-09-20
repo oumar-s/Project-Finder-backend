@@ -4,6 +4,7 @@ const db = require('../models');
 const { Project, User } = db;
 
 router.get('/', (req, res) => {
+  console.log("Get all project user log: ", req.user);
   Project.findAll({
     include: [
       {
