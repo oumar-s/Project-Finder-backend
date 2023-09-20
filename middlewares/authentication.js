@@ -41,6 +41,7 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
+  console.log("User from serialize: ", user)
   done(null, user.id);
 });
 
@@ -51,7 +52,7 @@ passport.deserializeUser((id, done) => {
         done(null, false);
         return;
       }
-
+      console.log("User from Deserialize: ", user)
       done(null, user);
       
       return;
