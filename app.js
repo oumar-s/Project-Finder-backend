@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({
   origin: '*',
   credentials: false,
-  methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization'
+  methods: 'GET, POST, PUT, DELETE'
 }));
 
 
@@ -30,7 +29,7 @@ app.use(
       createTableIfMissing: true
     }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );
