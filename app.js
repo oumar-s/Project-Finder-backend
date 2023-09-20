@@ -22,12 +22,12 @@ app.use(cors({
 // setup passport and session cookies
 app.use(
   expressSession({
-    store: new pgSession({
-      conString : process.env.DATABASE_URL,                // Connection pool
-      tableName : 'sessions',   // Use another table-name than the default "session" one
-      // Insert connect-pg-simple options here
-      createTableIfMissing: true
-    }),
+    // store: new pgSession({
+    //   conString : process.env.DATABASE_URL,                // Connection pool
+    //   tableName : 'sessions',   // Use another table-name than the default "session" one
+    //   // Insert connect-pg-simple options here
+    //   createTableIfMissing: true
+    // }),
     cookie: {
       sameSite: 'none',
     },
