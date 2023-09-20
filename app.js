@@ -13,8 +13,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: '*',
-  credentials: false,
+  origin: 'https://project-finder-frontend-production.up.railway.app',
+  credentials: true,
   methods: 'GET, POST, PUT, DELETE'
 }));
 
@@ -28,9 +28,15 @@ app.use(
       // Insert connect-pg-simple options here
       createTableIfMissing: true
     }),
+    cookie: {
+      sameSite: 'none',
+      secure: true
+    },
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
+    credentials: true
+
   })
 );
 app.use(passport.initialize());
