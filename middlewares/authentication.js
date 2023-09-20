@@ -49,6 +49,7 @@ passport.deserializeUser((id, done) => {
   User.findByPk(id)
     .then((user) => {
       if (!user) {
+        console.log("No User Found. From Deserialize: ", user)
         done(null, false);
         return;
       }
