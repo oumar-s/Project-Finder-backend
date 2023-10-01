@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./models');
 const app = express();
+const path = require("path");
 //const cors = require('cors');
 const expressSession = require("express-session");
 //const pgSession = require('connect-pg-simple')(expressSession);
