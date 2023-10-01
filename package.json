@@ -2,11 +2,12 @@
   "name": "project-finder-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon -r dotenv/config app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node api/app.js",
+    "dev": "nodemon -r dotenv/config api/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm install && npm run build"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,6 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "connect-pg-simple": "^9.0.0",
-    "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
@@ -34,5 +34,10 @@
   "devDependencies": {
     "dotenv": "^8.6.0",
     "nodemon": "^2.0.20"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "client/"
+    ]
   }
 }
