@@ -24,7 +24,7 @@ app.use(
     //   // Insert connect-pg-simple options here
     //   createTableIfMissing: true
     // }),
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "supersecretkey",
     resave: false,
     saveUninitialized: true,
   })
