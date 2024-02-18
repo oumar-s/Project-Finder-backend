@@ -1,10 +1,13 @@
 import React, { useState, useEffect, createContext } from "react";
+import { apiSlice } from "../features/api/apiSlice";
+import { useDispatch } from "react-redux";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
 //const url = 'https://project-finder-backend-production.up.railway.app';
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function checkIfUserIsLoggedIn() {
@@ -65,10 +68,12 @@ const AuthProvider = ({ children }) => {
       throw new Error("Logout Failed");
     }
 
-    let body = await response.json();
     setUser(false);
 
+    let body = await response.json();
+    dispatch(apiSlice.util.resetApiState());
     return body;
+    
   };
 
   return (

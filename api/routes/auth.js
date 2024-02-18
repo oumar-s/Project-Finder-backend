@@ -3,7 +3,7 @@ const { User } = require("../models");
 const passport = require("../middlewares/authentication");
 
 router.post("/signup", (req, res) => {
-  console.log("POST body: ", req.body);
+  //console.log("POST body: ", req.body);
   User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -22,7 +22,7 @@ router.post("/signup", (req, res) => {
 router.post("/login", passport.authenticate("local"), (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
-  console.log("Authenticated user is: ", req.user);
+  //console.log("Authenticated user is: ", req.user);
   res.json(req.user);
 });
 
