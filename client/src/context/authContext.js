@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
   const dispatch = useDispatch();
 
+  //UseEffect to check if the user is logged in.
   useEffect(() => {
     async function checkIfUserIsLoggedIn() {
       try {
@@ -28,13 +29,19 @@ const AuthProvider = ({ children }) => {
         setUser(false);
       }
     }
-
     checkIfUserIsLoggedIn();
 
     return () => {
       // clean up function
     };
   }, []);
+
+  //UseEffect to reset the api state when the user logs out
+  useEffect(() => {
+    if (user === false) {
+      dispatch(apiSlice.util.resetApiState());
+    }
+  }, [user, dispatch]);
 
   const authenticate = async (email, password) => {
     let response = await fetch('/api/auth/login', {
@@ -69,11 +76,9 @@ const AuthProvider = ({ children }) => {
     }
 
     setUser(false);
-
-    let body = await response.json();
-    dispatch(apiSlice.util.resetApiState());
-    return body;
     
+    let body = await response.json();
+    return body;
   };
 
   return (
