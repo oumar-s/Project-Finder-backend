@@ -5,7 +5,7 @@ export function ProjectsContainer() {
   const { data, isSuccess, error, isLoading } = useGetAllProjectsQuery();
 
   if (isLoading) {
-    return <div>Loading projects...</div>;
+    return <div className="" style={{ minHeight: "calc(100vh - 268px)"}}>Loading projects...</div>;
   }
 
   if (error) {

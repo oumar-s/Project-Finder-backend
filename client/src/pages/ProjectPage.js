@@ -1,5 +1,5 @@
-import Navbar from '../common/navbar';
-import Footer from '../common/footer';
+import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
 
 export default function ProjectPage() {

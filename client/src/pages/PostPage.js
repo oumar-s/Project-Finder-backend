@@ -1,5 +1,5 @@
-import Navbar from '../common/navbar';
-import Footer from '../common/footer';
+import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 import { AddProjectFormContainer } from '../features/project/addProjectForm/addFormContainer';
 function PostPage() {
   return (

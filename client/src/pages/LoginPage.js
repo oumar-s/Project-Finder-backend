@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-import Navbar from "../common/navbar";
+
+//import Navbar from "../components/navbar";
+//import Footer from "../components/footer";
 
 function LoginPage() {
   const auth = useAuth();
@@ -50,36 +52,67 @@ function LoginPage() {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="mx-auto my-5 col-10 col-md-8 col-lg-7">
-        <form data-bs-theme="dark" onSubmit={login}>
-          <div className="form-row">
+    <div className="">
+      {/* <Navbar /> */}
+      <div className="flex flex-col items-center gap-8 m-8 ">
+
+        <div className="text-xl">
+          <Link className="" to="/">Synergy</Link>
+        </div>
+
+        <h1 className="text-2xl">Sign in to Synergy</h1>
+
+        <form className="bg-[#f6f8fa]" onSubmit={login}>
+          <div className="flex flex-col w-80 p-4 border rounded-md">
             {errorMessage}
+           
+            <label htmlFor="email" className="">
+              Email address
+            </label>
             <input
               type="email"
-              className="form-control my-3"
+              className="border p-3 rounded-md h-8"
               name="email"
-              placeholder="Email"
+              //placeholder="Email"
               value={data.email}
               onChange={fieldChanged("email")}
+              autoFocus = "true"
             />
+            
+
+            <div className="flex justify-between mt-4">
+              <label htmlFor="password" className="">
+                Password
+              </label>
+              {/* <a href="/forgot-password" style={{ textDecoration: "none" }} className="">
+                Forgot your password?
+              </a> */}
+            </div>
             <input
               type="password"
-              className="form-control"
+              className="border p-3 rounded-md h-8"
               name="password"
-              placeholder="Password"
+              //placeholder="Password"
               value={data.password}
               onChange={fieldChanged("password")}
             />
-            <button type="submit" className="btn btn-primary d-grid col-3 mx-auto my-4">
-              Login
+            
+
+            <button type="submit" className="font-medium  mt-4 py-1 text-white bg-emerald-600 border rounded-md h-8">
+              Sign in
             </button>
           </div>
+          
         </form>
-        <a href="/sign-up" style={{ textDecoration: "none" }} className="d-grid col-3 mx-auto my-4 text-center">Register now</a>
+
+        <div className="flex w-80 justify-center gap-1 p-4 border rounded-md">
+          <p>New to Synergy?</p>
+          <a href="/sign-up" className="text-blue-600">Creat an account</a>
+        </div>
+
       </div>
-    </>
+      {/* <Footer /> */}
+    </div>
   );
 }
 
