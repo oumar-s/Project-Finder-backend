@@ -5,45 +5,203 @@ export const apiSlice = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api', credentials: 'include' }),
   tagTypes: ['getProjects',],
   endpoints: (builder) => ({
+    //User
+    getUser: builder.query({
+      query: () => '/auth/user'
+    }),
+
+    //Project
     getAllProjects: builder.query({
       query: () => '/projects',
       providesTags: ['getProjects']
     }),
+
     getProject: builder.query({
-      query: (projectId) => `projects/${projectId}`
+      query: (projectId) => `/projects/${projectId}`
     }),
-    getMembers: builder.query({
-      query: (projectId) => `requests/members/${projectId}`,
-      providesTags: ['']
-    }),
+
     addProject: builder.mutation({
-      query: project => ({
-        url: '/projects',
+      query: (project, teamId) => ({
+        url: `/projects/${teamId}`,
         method: 'POST',
         body: project
       }),
       invalidatesTags: ['getProjects']
     }),
     
+    getProjectsForTeam: builder.query({
+      query: (teamId) => `/projects/${teamId}`
+    }),
+
+    getUserProjectsInTeam: builder.query({
+      query: (teamId, userId) => `/projects/${teamId}/${userId}`
+    }),
     
-    getUser: builder.query({
-      query: () => '/auth/user'
+    //project members
+    getAllProjectsForUser: builder.query({
+      query: (userId) => `/projectMembers/${userId}`,
+      providesTags: []
     }),
+
+    getProjectMembers: builder.query({
+      query: (projectId) => `projectMembers/${projectId}`,
+      providesTags: []
+    }),
+
+    addUserToProject: builder.mutation({
+      query: (data, projectId, userId) => ({
+        url: `/projectMembers/${projectId}/${userId}`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: []
+    }),
+
+    //project requests
+    getProjectRequests: builder.query({
+      query: (projectId) => `requests/${projectId}`,
+      providesTags: []
+    }),
+
+    addRequestToProject: builder.mutation({
+      query: (data, projectId) => ({
+        url: `/projectRequests/${projectId}`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: []
+    }),
+
+    //teams
     getAllTeams: builder.query({
-      query: () => '/teams'
+      query: () => '/teams',
+      providesTags: []
     }),
+    
     getTeam: builder.query({
-      query: (teamId) => `teams/${teamId}`
+      query: (teamId) => `/teams/${teamId}`,
+      providesTags: []
     }),
+
     addTeam: builder.mutation({
       query: team => ({
         url: '/teams',
         method: 'POST',
         body: team
       }),
-      invalidatesTags: ['getTeams']
+      invalidatesTags: []
+    }),
+
+    //team members
+    getTeamMembers: builder.query({
+      query: (teamId) => `teamMembers/${teamId}`,
+      providesTags: []
+    }),
+
+    getUserTeams: builder.query({
+      query: (userId) => `teamMembers/${userId}`,
+      providesTags: []
+    }),
+
+    addMemberToTeam: builder.mutation({
+      query: (data, teamId, userId) => ({
+        url: `/teamMembers/${teamId}/${userId}`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: []
+    }),
+
+    //team requests
+    getTeamRequests: builder.query({
+      query: (teamId) => `teamRequests/${teamId}`,
+      providesTags: []
+    }),
+
+    addRequestToTeam: builder.mutation({
+      query: (data, teamId) => ({
+        url: `/teamRequests/${teamId}`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: []
+    }),
+
+    //tasks
+    getTasksForUser: builder.query({
+      query: (userId) => `tasks/${userId}`,
+      providesTags: []
+    }),
+
+    getIncompleteTasksForUser: builder.query({
+      query: (userId) => `tasks/incomplete/${userId}`,
+      providesTags: []
+    }),
+
+    getProjectTasksAssignedToUser: builder.query({
+      query: (projectId, userId) => `tasks/${projectId}/${userId}`,
+      providesTags: []
+    }),
+
+    getProjectTasks: builder.query({
+      query: (projectId) => `tasks/${projectId}`,
+      providesTags: []
+    }),
+
+    assignTask: builder.mutation({
+      query: (taskId, userId) => ({
+        url: `/tasks/${taskId}/${userId}`,
+        method: 'PUT',
+        body: {}
+      }),
+      invalidatesTags: []
+    }),
+
+    changeTaskStatus: builder.mutation({
+      query: (data, taskId) => ({
+        url: `/tasks/${taskId}`,
+        method: 'PATCH',
+        body: data
+      }),
+      invalidatesTags: []
+    }),
+
+    addTask: builder.mutation({
+      query: (data, projectId) => ({
+        url: `/tasks/${projectId}`,
+        method: 'POST',
+        body: data
+      }),
+      invalidatesTags: []
     }),
   }),
 });
 
-export const { useGetAllProjectsQuery, useGetProjectQuery, useGetMembersQuery, useAddProjectMutation, useGetUserQuery, useGetAllTeamsQuery, useGetTeamQuery, useAddTeamMutation } = apiSlice;
+export const {
+  useGetUserQuery,
+  useGetAllProjectsQuery,
+  useGetProjectQuery,
+  useAddProjectMutation,
+  useGetProjectsForTeamQuery,
+  useGetUserProjectsInTeamQuery,
+  useGetAllProjectsForUserQuery,
+  useGetProjectMembersQuery,
+  useAddUserToProjectMutation,
+  useGetProjectRequestsQuery,
+  useAddRequestToProjectMutation,
+  useGetAllTeamsQuery,
+  useGetTeamQuery,
+  useAddTeamMutation,
+  useGetTeamMembersQuery,
+  useGetUserTeamsQuery,
+  useAddMemberToTeamMutation,
+  useGetTeamRequestsQuery,
+  useAddRequestToTeamMutation,
+  useGetTasksForUserQuery,
+  useGetIncompleteTasksForUserQuery,
+  useGetProjectTasksAssignedToUserQuery,
+  useGetProjectTasksQuery,
+  useAssignTaskMutation,
+  useChangeTaskStatusMutation,
+  useAddTaskMutation
+} = apiSlice;

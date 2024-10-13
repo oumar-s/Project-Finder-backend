@@ -97,7 +97,7 @@ router.put('/:taskId/:userId', async (req, res) => {
 
 //Change the status of a task
 
-router.patch('/:taskId/status', async (req, res) => {
+router.patch('/:taskId', async (req, res) => {
     try {
         const taskId = req.params.taskId;
         const status = req.body.status;
@@ -113,15 +113,21 @@ router.patch('/:taskId/status', async (req, res) => {
 
 //Add a new task
 
-router.post('/', async (req, res) => {
+router.post('/:projectId', async (req, res) => {
     try {
-        const newTask = req.body;
-        const task = await Task.create(newTask);
-        return res.status(200).json(task);
+        const projectId = req.params.projectId;
+        const task = await Task.create({
+            projectID: projectId,
+            name: req.body.name,
+            description: req.body.description,
+            status: req.body.status,
+            ownerId: req.user.id
+        })
+        res.status(201).json(task);
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ error: 'Internal server error' });
+        res.status(400).json(err);
     }
+    
 });
 
 module.exports = router;
