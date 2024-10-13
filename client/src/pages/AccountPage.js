@@ -8,7 +8,7 @@ export default function AccountPage() {
         <div >
             <Navbar />
 
-            <AccountContainer />
+            {/* <AccountContainer /> */}
 
             <Footer />
         </div>

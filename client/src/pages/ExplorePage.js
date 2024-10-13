@@ -3,7 +3,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 
-export default function HomePage() {
+export default function ExplorePage() {
 
     return (
         <div >

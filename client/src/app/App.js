@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from '../context/authContext';
 import PrivateRouteRequiresAuth from '../components/PrivateRouteRequiresAuth';
-import HomePage from '../pages/HomePage';
+import ExplorePage from '../pages/ExplorePage';
 import AboutPage from '../pages/AboutPage';
 import LandingPage from '../pages/LandingPage';
 import LoginPage from '../pages/LoginPage';
@@ -25,7 +25,7 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/sign-up" element={<SignUpPage />} />
-					<Route path="/home" element={<HomePage />} />
+					<Route path="/home" element={<ExplorePage />} />
 					<Route path="/teams" element={<AllTeamsPage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route
