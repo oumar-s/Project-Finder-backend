@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { Project, User, TeamMember } = db;
+const { Project, Team, User, TeamMember } = db;
 
 router.get('/', (req, res) => {
   //console.log("Get all project user log: ", req.user);
@@ -12,6 +12,10 @@ router.get('/', (req, res) => {
         model: User,
         as: "owner",
         attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Team,
+        as: "team",
       }
     ]
   })

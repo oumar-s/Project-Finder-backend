@@ -11,11 +11,11 @@ const AllTeamsView = (props) => {
                 {props.allTeams.map((team) => {
                     return (
                         <div key={team.id} className='card flex  p-4 place-content-between  border rounded-md '>
-
+                            {console.log(team)}
                             <div className="team-info flex gap-4">
                                 <div className="team-image ">
                                     <Link className="" to={"/teams/" + team.id}>
-                                        <img className="object-cover w-24 h-24 rounded-md" src="https://i0.wp.com/seds.org/wp-content/uploads/2020/03/placeholder.png?w=1200&ssl=1" alt="team" />
+                                        <img className="object-cover w-24 h-24 rounded-md" src={team.teamIcon} alt="team" />
                                     </Link>
                                 </div>
                                 <div className="team-name-and-desc">

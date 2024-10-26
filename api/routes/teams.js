@@ -57,12 +57,14 @@ router.post('/', (req, res) => {
   const {
     teamName: teamName,
     teamDescription: teamDescription,
+    teamIcon: teamIcon,
+    teamBanner: teamBanner
   } = req.body;
   Team.create({
     teamName,
     teamDescription,
-    teamIcon: null,
-    teamBanner: null,
+    teamIcon: teamIcon || null,
+    teamBanner: teamBanner || null,
     teamStatus: "Open",
     ownerID: ownerid
   })

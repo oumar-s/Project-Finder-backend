@@ -5,7 +5,9 @@ import { useAddTeamMutation } from "../../api/apiSlice";
 export function AddTeamFormContainer() {
     const [teamForm, setTeamForm] = useState({
         teamName: '',
-        teamDescription: ''
+        teamDescription: '',
+        teamIcon: '',
+        teamBanner: ''
     });
     const [addTeam] = useAddTeamMutation();
     
@@ -17,13 +19,21 @@ export function AddTeamFormContainer() {
     const handleTeamDescriptionChange = (event) => {
         setTeamForm({...teamForm, teamDescription: event.target.value});
     }
+    const handleTeamIconChange = (event) => {
+        setTeamForm({...teamForm, teamIcon: event.target.value});
+    }
+    const handleTeamBannerChange = (event) => {
+        setTeamForm({...teamForm, teamBanner: event.target.value});
+    }
     const handleAdd = async event => {
         event.preventDefault();
         let team = {...teamForm};
         await addTeam(team);
         setTeamForm({
             teamName: '',
-            teamDescription: ''
+            teamDescription: '',
+            teamIcon: '',
+            teamBanner: ''
         });
     }
     
@@ -31,6 +41,8 @@ export function AddTeamFormContainer() {
         <AddTeamFormView
             handleTeamNameChange = {handleTeamNameChange} 
             handleTeamDescriptionChange = {handleTeamDescriptionChange}
+            handleTeamIconChange = {handleTeamIconChange}
+            handleTeamBannerChange = {handleTeamBannerChange}
             handleAdd = {handleAdd}
             formData = {teamForm}
         />

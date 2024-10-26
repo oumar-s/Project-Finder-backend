@@ -11,7 +11,14 @@ const AllProjectsView = (props) => {
                 {props.allProjects.map((project) => {
                     return (
                         <div key={project.id} className='card  border rounded-md '>
+                            {console.log(project)}
                             <div className="card-header flex items-center border-b px-4 pb-4 bg-[#f6f8fa] text-lg md:text-xl h-16 text-blue-500">
+                                <Link className="" to={"/teams/" + project.team.id}>
+                                    <span className="hover:border-b-2 hover:border-blue-500"> {project.team.teamName} </span>
+                                </Link>
+
+                                <span className="mx-1">/</span>
+
                                 <Link className="" to={"/projects/" + project.id}>
                                     <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
                                 </Link>
@@ -19,9 +26,9 @@ const AllProjectsView = (props) => {
                             <div className="card-body flex flex-col gap-8 p-4 text-slate-500 text-sm">
                                 {/* <h5 class="card-title">Special title treatment</h5> */}
                                 <div className="card-text ">{project.projectDescription}</div>
-                                
+
                                 <div className="font-bold">
-                                    Owner: {project.owner.firstName} {project.owner.lastName} 
+                                    Owner: {project.owner.firstName} {project.owner.lastName}
                                 </div>
 
                                 <div>
