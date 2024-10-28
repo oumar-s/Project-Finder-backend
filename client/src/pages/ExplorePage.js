@@ -4,11 +4,14 @@ import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 
 export default function ExplorePage() {
+    const tabs = [
+        {id: 1, name: 'Home', link: "/home"}, {id: 2, name: "Teams", link: "/teams"}
+    ];
 
     return (
         <div >
             <Navbar page='Explore' />
-            <TabNav />
+            <TabNav page='explore' tabs={tabs}/>
 
             <ProjectsContainer />
 
