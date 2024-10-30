@@ -15,6 +15,7 @@ import ProfilePage from '../pages/ProfilePage';
 import AddTeamPage from '../pages/AddTeamPage';
 import AllTeamsPage from '../pages/AllTeamsPage';
 import TeamPage from '../pages/TeamPage';
+import TeamProjectsPage from '../pages/TeamProjectsPage';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
 					<Route path="/teams" element={<AllTeamsPage />} />
 					<Route path="/about" element={<AboutPage />} />
 					<Route
-						path="/post"
+						path="/teams/:teamId/new-project"
 						element={
 							<PrivateRouteRequiresAuth>
 								<PostPage />
@@ -84,6 +85,15 @@ function App() {
 							<PrivateRouteRequiresAuth>
 								{" "}
 								<TeamPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/teams/:teamId/projects"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<TeamProjectsPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>

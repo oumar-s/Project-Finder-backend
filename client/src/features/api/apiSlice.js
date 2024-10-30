@@ -21,16 +21,16 @@ export const apiSlice = createApi({
     }),
 
     addProject: builder.mutation({
-      query: (project, teamId) => ({
-        url: `/projects/${teamId}`,
+      query: (arg) => ({
+        url: `/projects/${arg.teamId}`,
         method: 'POST',
-        body: project
+        body: arg.project
       }),
       invalidatesTags: ['getProjects']
     }),
     
     getProjectsForTeam: builder.query({
-      query: (teamId) => `/projects/${teamId}`
+      query: (teamId) => `/projects/teams/${teamId}`
     }),
 
     getUserProjectsInTeam: builder.query({

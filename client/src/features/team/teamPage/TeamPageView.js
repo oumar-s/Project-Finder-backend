@@ -4,8 +4,9 @@ const TeamPageView = (props) => {
     return (
         <div className="container col-6 my-5" style={{minHeight: "100vh"}}>
 
-            <div className="">
+            <div className="bg-[#f6f8fa]">
                 {/* banner */}
+                Banner
             </div>
 
             <div className="flex">
@@ -18,8 +19,22 @@ const TeamPageView = (props) => {
                     </div>
                 </div>
             </div>
-            <h1>{props.team.teamName}</h1>
-            <p>{props.team.teamDescription}</p>
+
+            <div className="flex flex-col gap-8 w-11/12 md:w-1/2" id="team-projects"> 
+                <h4 className="text-lg md:text-lg">Team Projects</h4>
+
+                {props.teamProjects.map((project) => {
+                    return (
+                        <div className="project" key={project.id}>
+                            <Link to={`/project/${project.id}`}>
+                                <div className="project-name">
+                                    <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
+                                </div>
+                            </Link>
+                        </div>
+                    )
+                })}
+            </div>
             
             
             

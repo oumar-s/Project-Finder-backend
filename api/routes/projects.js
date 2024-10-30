@@ -27,6 +27,7 @@ router.get('/', (req, res) => {
     });
 });
 router.get('/:projectId', async (req, res) => {
+  console.log("Get all project user log");
   try {
     const projectId = req.params.projectId;
     const project = await Project.findByPk(projectId, {
@@ -53,10 +54,16 @@ router.get('/:projectId', async (req, res) => {
 
 //Add a new project
 
-router.post('/', async (req, res) => {
+router.post('/:teamId', async (req, res) => {
   try {
-    const newProject = req.body;
-    const project = await Project.create(newProject);
+    console.log(req.user);
+    const ownerId = req.user.id;
+    const project = await Project.create({
+      teamID: req.params.teamId,
+      projectTitle: req.body.projectTitle,
+      projectDescription: req.body.projectDescription,
+      ownerID: ownerId
+    })
     return res.status(200).json(project);
   } catch (err) {
     console.error(err);
@@ -66,7 +73,8 @@ router.post('/', async (req, res) => {
 
 //Get all projects for a specific team.
 
-router.get('/:teamId', async (req, res) => {
+router.get('/teams/:teamId', async (req, res) => {
+  console.log("correct route");
   try {
     const teamId = req.params.teamId;
     const team = await Project.findAll({
@@ -81,7 +89,7 @@ router.get('/:teamId', async (req, res) => {
         }
       ]
     })
-    console.log(team);
+    
     return res.status(200).json(team);
   } catch (err) {
     console.error(err);

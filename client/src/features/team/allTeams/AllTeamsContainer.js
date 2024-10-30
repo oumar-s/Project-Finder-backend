@@ -13,6 +13,7 @@ export function AllTeamsContainer() {
     return <div>Error! Try again: {error.message}</div>;
   }
   if (isSuccess) {
+    console.log("all teams: ", data);
     return (
       <AllTeamsView allTeams={data} />
     );
