@@ -13,7 +13,7 @@ const AllProjectsView = (props) => {
                         <div key={project.id} className='card  border rounded-md '>
                             {console.log(project)}
                             <div className="card-header flex items-center border-b px-4 pb-4 bg-[#f6f8fa] text-lg md:text-xl h-16 text-blue-500">
-                                <Link className="" to={"/teams/" + project.team.id}>
+                                <Link className="" to={"/teams/" + project.team.id + "/overview"}>
                                     <span className="hover:border-b-2 hover:border-blue-500"> {project.team.teamName} </span>
                                 </Link>
 

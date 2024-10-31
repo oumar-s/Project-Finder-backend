@@ -1,46 +1,22 @@
 import TeamPageView from "./TeamPageView";
-//import { useNavigate } from "react-router-dom";
-import { useGetTeamQuery, useGetProjectsForTeamQuery, useGetMembersQuery, useAddRequestMutation } from "../../api/apiSlice";
+import { useGetTeamQuery, useGetProjectsForTeamQuery, useGetUserProjectsInTeamQuery } from "../../api/apiSlice";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-
+import { useAuth } from "../../../context/authContext";
 
 export function TeamPageContainer() {
-  //const navigate = useNavigate();
-  let params = useParams();
+  const params = useParams();
+  const auth = useAuth();
+  console.log('auth', auth);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const { data, error, isLoading, isSuccess } = useGetTeamQuery(params.teamId);
-  const { data: teamProjects, isSuccess: teamProjectsIsSuccess, teamProjectsIsLoading, teamProjectsIsError } = useGetProjectsForTeamQuery(params.teamId);
-  //const [addRequest] = useAddRequestMutation()
+  const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
+  const { data: teamProjects, error: teamProjectsError, isLoading: teamProjectsLoading } = useGetProjectsForTeamQuery(params.teamId);
+  const {data: myProjects, error: myProjectsError, isLoading: myProjectsLoading} = useGetUserProjectsInTeamQuery({teamId: params.teamId, userId: auth.user?.id});
 
+  if (teamLoading || teamProjectsLoading || myProjectsLoading) return <div>Loading projects...</div>;
+  if (teamError || teamProjectsError || myProjectsError) return <div>Error: {teamError?.message || teamProjectsError?.message || myProjectsError?.message}</div>;
 
-  if (isLoading) {
-    return <div>Loading projects...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-  if (teamProjectsIsLoading) {
-    return <div>Loading projects...</div>;
-  }
-  if (teamProjectsIsError) {
-    return <div>Error: {teamProjectsIsError.message}</div>;
-  }
-
-
-
-
-
-  // const handleJoin = async () => {
-  //   setButtonClicked(true);
-  //   await addRequest(params.projectId);
-  // }
-
-  if (isSuccess && teamProjectsIsSuccess) {
-    console.log('Team projects', teamProjects, "data", data)
-    return (
-      <TeamPageView team={data} teamProjects={teamProjects} />
-    )
-  }
+  return (
+    <TeamPageView team={team} teamProjects={teamProjects} myProjects={myProjects}/>
+  );
 }

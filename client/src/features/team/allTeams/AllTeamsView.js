@@ -14,13 +14,13 @@ const AllTeamsView = (props) => {
                             {console.log(team)}
                             <div className="team-info flex gap-4">
                                 <div className="team-image ">
-                                    <Link className="" to={"/teams/" + team.id}>
+                                    <Link className="" to={"/teams/" + team.id + "/overview"}>
                                         <img className="object-cover w-24 h-24 rounded-md" src="https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480" alt="team-icon" />
                                     </Link>
                                 </div>
                                 <div className="team-name-and-desc">
                                     <div className="team-name text-lg md:text-xl text-blue-500">
-                                        <Link className="" to={"/teams/" + team.id}>
+                                        <Link className="" to={"/teams/" + team.id + "/overview"}>
                                             <span className="hover:border-b-2 hover:border-blue-500"> {team.teamName} </span>
                                         </Link>
                                     </div>

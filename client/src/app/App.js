@@ -14,8 +14,9 @@ import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
 import AddTeamPage from '../pages/AddTeamPage';
 import AllTeamsPage from '../pages/AllTeamsPage';
-import TeamPage from '../pages/TeamPage';
+import TeamMembersPage from '../pages/TeamMembersPage';
 import TeamProjectsPage from '../pages/TeamProjectsPage';
+import TeamOverviewPage from '../pages/TeamOverviewPage';
 
 
 function App() {
@@ -80,11 +81,11 @@ function App() {
 						}
 					/>
 					<Route
-						path="/teams/:teamId"
+						path="/teams/:teamId/overview"
 						element={
 							<PrivateRouteRequiresAuth>
 								{" "}
-								<TeamPage />{" "}
+								<TeamOverviewPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>
@@ -94,6 +95,15 @@ function App() {
 							<PrivateRouteRequiresAuth>
 								{" "}
 								<TeamProjectsPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/teams/:teamId/members"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<TeamMembersPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>

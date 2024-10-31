@@ -19,9 +19,25 @@ const TeamPageView = (props) => {
                     </div>
                 </div>
             </div>
+            <div className="flex flex-col gap-8 w-11/12 md:w-1/2" id="my-projects"> 
+                <h4 className="text-lg md:text-lg">Your Projects:</h4>
+
+                {console.log("myProjects", props.myProjects)}
+                {props.myProjects.map((project) => {
+                    return (
+                        <div className="project" key={project.id}>
+                            <Link to={`/project/${project.id}`}>
+                                <div className="project-name">
+                                    <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
+                                </div>
+                            </Link>
+                        </div>
+                    )
+                })}
+            </div>
 
             <div className="flex flex-col gap-8 w-11/12 md:w-1/2" id="team-projects"> 
-                <h4 className="text-lg md:text-lg">Team Projects</h4>
+                <h4 className="text-lg md:text-lg">Team Projects:</h4>
 
                 {props.teamProjects.map((project) => {
                     return (

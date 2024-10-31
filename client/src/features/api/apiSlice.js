@@ -34,7 +34,7 @@ export const apiSlice = createApi({
     }),
 
     getUserProjectsInTeam: builder.query({
-      query: (teamId, userId) => `/projects/${teamId}/${userId}`
+      query: (params) => `/projects/${params.teamId}/${params.userId}`
     }),
     
     //project members

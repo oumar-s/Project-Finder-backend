@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { Project, Team, User, TeamMember } = db;
+const { Project, Team, User, ProjectMember } = db;
 
 router.get('/', (req, res) => {
   //console.log("Get all project user log: ", req.user);
@@ -89,7 +89,7 @@ router.get('/teams/:teamId', async (req, res) => {
         }
       ]
     })
-    
+
     return res.status(200).json(team);
   } catch (err) {
     console.error(err);
@@ -101,40 +101,39 @@ router.get('/teams/:teamId', async (req, res) => {
 
 router.get('/:teamId/:userId', async (req, res) => {
   try {
-    const teamId = req.params.teamId;
-    const userId = req.params.userId;
-    const projects = await Project.findAll({
-      where: {
-        teamID: teamId
-      },
-      include: [
-        {
-          model: TeamMember,
-          as: "teamMembers",
-          where: {
-            userID: userId,
-            required: true
-          },
-        }
-      ],
-      include: [
-        {
-          model: User,
-          as: "owner",
-        }
-      ]
+      const teamId = req.params.teamId;
+      const userId = req.params.userId;
 
-    });
-    //console.log(team);
-    return res.status(200).json(projects);
+      const projects = await Project.findAll({
+          where: {
+              teamID: teamId
+          },
+          include: [
+              {
+                  model: ProjectMember,
+                  as: "projectMembers",
+                  where: {
+                      userID: userId
+                  },
+                  required: true
+              },
+              {
+                  model: User,
+                  as: "owner"
+              }
+          ]
+      });
+
+      console.log("Get all projects for a team the user belongs to");
+      return res.status(200).json(projects);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Internal server error' });
+      console.error(err);
+      return res.status(500).json({ error: 'Internal server error' });
   }
 });
-  
 
-          
-        
+
+
+
 
 module.exports = router;
