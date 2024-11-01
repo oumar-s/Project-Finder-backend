@@ -44,7 +44,7 @@ export const apiSlice = createApi({
     }),
 
     getProjectMembers: builder.query({
-      query: (projectId) => `projectMembers/${projectId}`,
+      query: (projectId) => `/projectMembers/${projectId}`,
       providesTags: []
     }),
 
@@ -59,7 +59,7 @@ export const apiSlice = createApi({
 
     //project requests
     getProjectRequests: builder.query({
-      query: (projectId) => `requests/${projectId}`,
+      query: (projectId) => `/requests/${projectId}`,
       providesTags: []
     }),
 
@@ -94,12 +94,12 @@ export const apiSlice = createApi({
 
     //team members
     getTeamMembers: builder.query({
-      query: (teamId) => `teamMembers/${teamId}`,
+      query: (teamId) => `/teamMembers/${teamId}`,
       providesTags: []
     }),
 
     getUserTeams: builder.query({
-      query: (userId) => `teamMembers/${userId}`,
+      query: (userId) => `/teamMembers/${userId}`,
       providesTags: []
     }),
 
@@ -114,7 +114,7 @@ export const apiSlice = createApi({
 
     //team requests
     getTeamRequests: builder.query({
-      query: (teamId) => `teamRequests/${teamId}`,
+      query: (teamId) => `/teamRequests/${teamId}`,
       providesTags: []
     }),
 
@@ -129,22 +129,22 @@ export const apiSlice = createApi({
 
     //tasks
     getTasksForUser: builder.query({
-      query: (userId) => `tasks/${userId}`,
+      query: (userId) => `/tasks/${userId}`,
       providesTags: []
     }),
 
     getIncompleteTasksForUser: builder.query({
-      query: (userId) => `tasks/incomplete/${userId}`,
+      query: (userId) => `/tasks/incomplete/${userId}`,
       providesTags: []
     }),
 
     getProjectTasksAssignedToUser: builder.query({
-      query: (projectId, userId) => `tasks/${projectId}/${userId}`,
+      query: (projectId, userId) => `/tasks/${projectId}/${userId}`,
       providesTags: []
     }),
 
     getProjectTasks: builder.query({
-      query: (projectId) => `tasks/${projectId}`,
+      query: (projectId) => `/tasks/${projectId}`,
       providesTags: []
     }),
 

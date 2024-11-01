@@ -1,7 +1,7 @@
 import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
-import { TeamPageContainer } from '../features/team/teamPage/TeamPageContainer';
+import { ProjectsListContainer } from '../components/ProjectsList/projectsListContainer'; 
 import { useParams } from "react-router-dom";
 
 export default function TeamProjectsPage() {
@@ -16,7 +16,7 @@ export default function TeamProjectsPage() {
 
             <TabNav tabs={tabs}/>
 
-            <TeamPageContainer />
+            <ProjectsListContainer />
 
             <Footer />
         </div>

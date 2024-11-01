@@ -10,19 +10,19 @@ const TeamMembersListView = ({ members, onDeleteMember }) => {
           className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
         >
           <div className="flex items-center space-x-3">
-            {member.profileImage ? (
+            {member.user.profilePic ? (
               <img 
-                src={member.profileImage} 
-                alt={member.name}
+                src='https://via.placeholder.com/150' 
+                alt={member.user.firstName}
                 className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
               <div>profile image</div>
             )}
             <div>
-              <h3 className="font-medium text-gray-900">{member.name}</h3>
-              {member.email && (
-                <p className="text-sm text-gray-500">{member.email}</p>
+              <h3 className="font-medium text-gray-900">{member.user.firstName}</h3>
+              {member.user.email && (
+                <p className="text-sm text-gray-500">{member.user.email}</p>
               )}
             </div>
           </div>
@@ -30,7 +30,7 @@ const TeamMembersListView = ({ members, onDeleteMember }) => {
           <button
             onClick={() => onDeleteMember(member.id)}
             className="p-2 text-red-600 hover:bg-red-50 rounded-full transition-colors"
-            aria-label={`Remove ${member.name}`}
+            aria-label={`Remove ${member.user.firstName}`}
           >
             <div>X</div>
           </button>

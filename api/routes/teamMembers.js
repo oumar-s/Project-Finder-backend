@@ -1,5 +1,4 @@
 const express = require('express');
-const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
 const { User, Project, TeamMember } = db;
@@ -15,8 +14,7 @@ router.get('/:teamId', async (req, res) => {
             include: [
                 {
                     model: User,
-                    as: "user",
-                    attributes: ["id", "firstName", "lastName"],
+                    as: "user"
                 }
             ]
         })
