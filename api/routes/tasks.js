@@ -50,8 +50,23 @@ router.get('/:projectId/:userId', async (req, res) => {
         const tasks = await Task.findAll({
             where: {
                 projectID: projectId,
-                assigneeID: userId
-            }
+                assignedTo: userId
+            },
+            include: [
+                {
+                  model: User,
+                  as: "owner",
+                },
+                {
+                    model: User,
+                    as: "assignee",
+                },
+                {
+                  model: Project,
+                  as: "project",
+                },
+                
+            ]
         })
         console.log(tasks);
         return res.status(200).json(tasks);
@@ -129,14 +144,16 @@ router.patch('/:taskId', async (req, res) => {
 //Add a new task
 
 router.post('/:projectId', async (req, res) => {
+    console.log("body", req.body)
     try {
         const projectId = req.params.projectId;
         const task = await Task.create({
+            taskName: req.body.taskName,
+            taskDescription: req.body.taskDescription,
+            taskStatus: "Pending",
+            ownerID: req.user.id,
+            assignedTo: Number(req.body.assignedTo),
             projectID: projectId,
-            name: req.body.name,
-            description: req.body.description,
-            status: req.body.status,
-            ownerId: req.user.id
         })
         res.status(201).json(task);
     } catch (err) {

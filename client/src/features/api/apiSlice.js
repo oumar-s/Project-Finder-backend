@@ -139,7 +139,7 @@ export const apiSlice = createApi({
     }),
 
     getProjectTasksAssignedToUser: builder.query({
-      query: (projectId, userId) => `/tasks/${projectId}/${userId}`,
+      query: (params) => `/tasks/${params.projectId}/${params.userId}`,
       providesTags: []
     }),
 
@@ -167,10 +167,10 @@ export const apiSlice = createApi({
     }),
 
     addTask: builder.mutation({
-      query: (data, projectId) => ({
-        url: `/tasks/${projectId}`,
+      query: (data) => ({
+        url: `/tasks/${data.projectId}`,
         method: 'POST',
-        body: data
+        body: data.task
       }),
       invalidatesTags: []
     }),

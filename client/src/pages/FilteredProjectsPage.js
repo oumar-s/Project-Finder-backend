@@ -1,6 +1,6 @@
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
-import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
+import { MyTasksListContainer } from '../components/MyTasksList/myTasksListContainer';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function FilteredProjectsPage() {
 
             <TabNav tabs={tabs}/>
 
-            <ProjectPageContainer />
+            <MyTasksListContainer />
 
             <Footer />
         </div>

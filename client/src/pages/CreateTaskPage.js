@@ -1,6 +1,6 @@
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
-import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
+import { AddTaskFormContainer } from '../components/AddTaskForm/addTaskFormContainer';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function CreateTaskPage() {
 
             <TabNav tabs={tabs}/>
 
-            <ProjectPageContainer />
+            <AddTaskFormContainer />
 
             <Footer />
         </div>
