@@ -5,13 +5,13 @@ const { Op } = require("sequelize");
 const { Task, User, Project } = db;
 
 //Get all task assigned to the user (all statuses)
-router.get('/:userId', async (req, res) => {
+router.get('/user/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
         const tasks = await Task.findAll({
             where: {
                 assigneeID: userId
-            }
+            },
         })
         console.log(tasks);
         return res.status(200).json(tasks);
@@ -69,7 +69,22 @@ router.get('/:projectId', async (req, res) => {
         const tasks = await Task.findAll({
             where: {
                 projectID: projectId
-            }
+            },
+            include: [
+                {
+                  model: User,
+                  as: "owner",
+                },
+                {
+                    model: User,
+                    as: "assignee",
+                },
+                {
+                  model: Project,
+                  as: "project",
+                },
+                
+            ]
         })
         console.log(tasks);
         return res.status(200).json(tasks);

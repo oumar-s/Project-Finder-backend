@@ -15,7 +15,7 @@ const ProjectsListView = ({ projects }) => {
             className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-6"
           >
             <Link 
-              to={`/projects/${project.id}`} 
+              to={`/projects/${project.id}/all`} 
               className="block mb-4 hover:text-blue-600 transition-colors"
             >
               <h3 className="text-xl font-semibold text-gray-900 hover:underline">

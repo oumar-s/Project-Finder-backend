@@ -9,6 +9,9 @@ import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
 import PostPage from '../pages/PostPage';
 import ProjectPage from '../pages/ProjectPage';
+import FilteredProjectsPage from '../pages/FilteredProjectsPage';
+import CreateTaskPage from '../pages/CreateTaskPage';
+import ProjectInfoPage from '../pages/ProjectInfoPage';
 import AccountPage from '../pages/AccountPage';
 import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
@@ -72,11 +75,38 @@ function App() {
 					/>
 					<Route path="/logout" element={<LandingPage />} />
 					<Route
-						path="/projects/:projectId"
+						path="/projects/:projectId/all"
 						element={
 							<PrivateRouteRequiresAuth>
 								{" "}
 								<ProjectPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/projects/:projectId/my"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<FilteredProjectsPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/projects/:projectId/new-task"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<CreateTaskPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/projects/:projectId/info"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<ProjectInfoPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>
@@ -107,6 +137,7 @@ function App() {
 							</PrivateRouteRequiresAuth>
 						}
 					/>
+					
 				</Routes>
 			</Router>
 		</AuthProvider>

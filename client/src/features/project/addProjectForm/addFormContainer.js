@@ -21,13 +21,19 @@ export function AddProjectFormContainer() {
     const handleDescriptionChange = (event) => {
         setProjectForm({...projectForm, projectDescription: event.target.value});
     }
+
+    const handleRepositoryChange = (event) => {
+        setProjectForm({...projectForm, projectRepository: event.target.value});
+    }
     const handleSubmit = async event => {
         event.preventDefault();
         let project = {...projectForm};
         await addPost({project: project, teamId: params.teamId});
+        //set each input to empty
         setProjectForm({
             projectTitle: '',
-            projectDescription: ''
+            projectDescription: '',
+            projectRepository: ''
         });
     }
     
@@ -35,6 +41,7 @@ export function AddProjectFormContainer() {
         <AddProjectFormView
             handleTitleChange = {handleTitleChange} 
             handleDescriptionChange = {handleDescriptionChange}
+            handleRepositoryChange = {handleRepositoryChange}
             handleSubmit = {handleSubmit}
             formData = {projectForm}
         />

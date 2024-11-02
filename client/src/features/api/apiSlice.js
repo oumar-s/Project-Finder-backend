@@ -129,7 +129,7 @@ export const apiSlice = createApi({
 
     //tasks
     getTasksForUser: builder.query({
-      query: (userId) => `/tasks/${userId}`,
+      query: (userId) => `/tasks/user/${userId}`,
       providesTags: []
     }),
 
