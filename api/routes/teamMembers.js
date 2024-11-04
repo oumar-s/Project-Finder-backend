@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { User, Project, TeamMember } = db;
+const { User, Project, TeamMember, Team } = db;
 
 //Get all members of a specific team.
 router.get('/:teamId', async (req, res) => {
@@ -27,7 +27,7 @@ router.get('/:teamId', async (req, res) => {
 });
 
 //Get all teams for a specific user.
-router.get('/:userId', async (req, res) => {
+router.get('/teams/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
         const user = await TeamMember.findAll({
@@ -38,7 +38,6 @@ router.get('/:userId', async (req, res) => {
                 {
                     model: Team,
                     as: "team",
-                    attributes: ["id", "teamName"],
                 }
             ]
         })

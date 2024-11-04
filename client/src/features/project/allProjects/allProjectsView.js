@@ -19,7 +19,7 @@ const AllProjectsView = (props) => {
 
                                 <span className="mx-1">/</span>
 
-                                <Link className="" to={"/projects/" + project.id}>
+                                <Link className="" to={"/projects/" + project.id + "/all"}>
                                     <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
                                 </Link>
                             </div>

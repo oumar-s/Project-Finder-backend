@@ -75,7 +75,7 @@ const Navbar = ({ page }) => {
           <button onClick={handleLeftNav} className="border p-2 rounded-md">
             <ThreeBars />
           </button>
-          <Link className=" bg-black text-white1 py-1 px-2 font-semibold rounded-sm" to="/">
+          <Link className=" bg-black text-white1 py-1 px-2 font-semibold rounded-sm" to="/dashboard">
             Synergy
           </Link>
           <div>

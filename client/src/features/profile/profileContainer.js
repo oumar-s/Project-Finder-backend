@@ -1,19 +1,20 @@
 import ProfileView from "./profileView";
-import { useGetUserQuery } from "../api/apiSlice";
+import { useGetAllProjectsForUserQuery } from "../api/apiSlice";
+import { useAuth } from "../../context/authContext";
 export function ProfileContainer() {
-  const { data, isError, isLoading, isSuccess } = useGetUserQuery();
+  const auth = useAuth();
+  const { data, error: isError, isLoading } = useGetAllProjectsForUserQuery(auth.user?.id);
 
   if (isLoading) {
-    return <div>Loading user Info...</div>;
+    return <div>Loading...</div>;
   }
 
   if (isError) {
     return <div>Error: {isError.message}</div>;
   }
 
-  if (isSuccess) {
+  console.log('data', data)
     return (
-      <ProfileView profile={data} />
+      <ProfileView members={data} profile={auth.user} />
     )
   }
-}

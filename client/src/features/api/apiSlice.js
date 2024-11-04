@@ -44,7 +44,7 @@ export const apiSlice = createApi({
     }),
 
     getProjectMembers: builder.query({
-      query: (projectId) => `/projectMembers/${projectId}`,
+      query: (projectId) => `/projectMembers/members/${projectId}`,
       providesTags: []
     }),
 
@@ -99,7 +99,7 @@ export const apiSlice = createApi({
     }),
 
     getUserTeams: builder.query({
-      query: (userId) => `/teamMembers/${userId}`,
+      query: (userId) => `/teamMembers/teams/${userId}`,
       providesTags: []
     }),
 

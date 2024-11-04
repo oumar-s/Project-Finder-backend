@@ -10,10 +10,24 @@ router.get('/user/:userId', async (req, res) => {
         const userId = req.params.userId;
         const tasks = await Task.findAll({
             where: {
-                assigneeID: userId
+                assignedTo: userId
             },
+            include: [
+                {
+                  model: User,
+                  as: "owner",
+                },
+                {
+                    model: User,
+                    as: "assignee",
+                },
+                {
+                  model: Project,
+                  as: "project",
+                },
+                
+            ]
         })
-        console.log(tasks);
         return res.status(200).json(tasks);
     } catch (err) {
         console.error(err);

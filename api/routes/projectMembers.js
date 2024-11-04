@@ -2,13 +2,14 @@ const express = require('express');
 const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
-const { Project, ProjectMember, Team} = db;
+const { Project, ProjectMember, Team, User } = db;
 
 //Get all projects the user belongs to. Include team.
 router.get('/:userId', async (req, res) => {
+    console.log("Get all project user log");
     try {
         const userId = req.params.userId;
-        const user = await ProjectMember.findAll({
+        const project = await ProjectMember.findAll({
             where: {
                 userID: userId
             },
@@ -20,11 +21,17 @@ router.get('/:userId', async (req, res) => {
                         {
                            model: Team,
                            as: "team",
+                        },
+                        {
+                            model: User,
+                            as: "owner",
+                            attributes: ["id", "firstName", "lastName"],
                         }
                     ]
                 }
             ]
         })
+        res.status(200).json(project);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });
@@ -32,7 +39,7 @@ router.get('/:userId', async (req, res) => {
 });
 
 //Get all members of a specific project
-router.get('/:projectId', async (req, res) => {
+router.get('/members/:projectId', async (req, res) => {
     try {
         const projectId = req.params.projectId;
         const project = await ProjectMember.findAll({

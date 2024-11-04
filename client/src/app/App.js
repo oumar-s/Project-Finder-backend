@@ -5,6 +5,7 @@ import PrivateRouteRequiresAuth from '../components/PrivateRouteRequiresAuth';
 import ExplorePage from '../pages/ExplorePage';
 import AboutPage from '../pages/AboutPage';
 import LandingPage from '../pages/LandingPage';
+import Dashboard from '../pages/Dashboard';
 import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
 import PostPage from '../pages/PostPage';
@@ -15,6 +16,9 @@ import ProjectInfoPage from '../pages/ProjectInfoPage';
 import AccountPage from '../pages/AccountPage';
 import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
+import ProfileTeamsPage from '../pages/ProfileTeamsPage';
+import ProfileProjectsPage from '../pages/ProfileProjectsPage';
+import ProfileTasksPage from '../pages/ProfileTasksPage';
 import AddTeamPage from '../pages/AddTeamPage';
 import AllTeamsPage from '../pages/AllTeamsPage';
 import TeamMembersPage from '../pages/TeamMembersPage';
@@ -33,6 +37,14 @@ function App() {
 					<Route path="/home" element={<ExplorePage />} />
 					<Route path="/teams" element={<AllTeamsPage />} />
 					<Route path="/about" element={<AboutPage />} />
+					<Route
+						path="/dashboard"
+						element={
+							<PrivateRouteRequiresAuth>
+								<Dashboard />
+							</PrivateRouteRequiresAuth>
+						}
+					/>
 					<Route
 						path="/teams/:teamId/new-project"
 						element={
@@ -70,6 +82,30 @@ function App() {
 						element={
 							<PrivateRouteRequiresAuth>
 								<ProfilePage />
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/profile/teams"
+						element={
+							<PrivateRouteRequiresAuth>
+								<ProfileTeamsPage />
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/profile/projects"
+						element={
+							<PrivateRouteRequiresAuth>
+								<ProfileProjectsPage />
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/profile/tasks"
+						element={
+							<PrivateRouteRequiresAuth>
+								<ProfileTasksPage />
 							</PrivateRouteRequiresAuth>
 						}
 					/>
