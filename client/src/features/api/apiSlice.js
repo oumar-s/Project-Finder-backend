@@ -59,15 +59,24 @@ export const apiSlice = createApi({
 
     //project requests
     getProjectRequests: builder.query({
-      query: (projectId) => `/requests/${projectId}`,
+      query: (projectId) => `/projectRequests/${projectId}`,
       providesTags: []
     }),
 
     addRequestToProject: builder.mutation({
-      query: (data, projectId) => ({
+      query: (projectId) => ({
         url: `/projectRequests/${projectId}`,
         method: 'POST',
-        body: data
+        body: {}
+      }),
+      invalidatesTags: []
+    }),
+
+    changeProjectRequestStatus: builder.mutation({
+      query: (data) => ({
+        url: `/projectRequests/${data.requestId}`,
+        method: 'PATCH',
+        body: {status: data.status}
       }),
       invalidatesTags: []
     }),
@@ -119,13 +128,23 @@ export const apiSlice = createApi({
     }),
 
     addRequestToTeam: builder.mutation({
-      query: (data, teamId) => ({
+      query: (teamId) => ({
         url: `/teamRequests/${teamId}`,
         method: 'POST',
-        body: data
+        body: {}
       }),
       invalidatesTags: []
     }),
+
+    changeTeamRequestStatus: builder.mutation({
+      query: (data) => ({
+        url: `/teamRequests/${data.requestId}`,
+        method: 'PATCH',
+        body: { status: data.status },
+      }),
+      invalidatesTags: []
+    }),
+    
 
     //tasks
     getTasksForUser: builder.query({
@@ -188,6 +207,7 @@ export const {
   useGetProjectMembersQuery,
   useAddUserToProjectMutation,
   useGetProjectRequestsQuery,
+  useChangeProjectRequestStatusMutation,
   useAddRequestToProjectMutation,
   useGetAllTeamsQuery,
   useGetTeamQuery,
@@ -196,6 +216,7 @@ export const {
   useGetUserTeamsQuery,
   useAddMemberToTeamMutation,
   useGetTeamRequestsQuery,
+  useChangeTeamRequestStatusMutation,
   useAddRequestToTeamMutation,
   useGetTasksForUserQuery,
   useGetIncompleteTasksForUserQuery,

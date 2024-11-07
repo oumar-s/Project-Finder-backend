@@ -42,7 +42,7 @@ router.get('/:userId', async (req, res) => {
 router.get('/members/:projectId', async (req, res) => {
     try {
         const projectId = req.params.projectId;
-        const project = await ProjectMember.findAll({
+        const projects = await ProjectMember.findAll({
             where: {
                 projectID: projectId
             },
@@ -53,6 +53,7 @@ router.get('/members/:projectId', async (req, res) => {
                 }
             ]
         })
+        res.status(200).json(projects);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });

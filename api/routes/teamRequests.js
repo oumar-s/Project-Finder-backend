@@ -2,21 +2,28 @@ const express = require('express');
 const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
-const { TeamRequest } = db;
+const { TeamRequest, User, Team } = db;
 
 //Get all requests of a specific team
 router.get('/:teamId', async (req, res) => {
+	console.log("get all requests");
 	try {
 		const teamId = req.params.teamId;
 		const requests = await TeamRequest.findAll({
 			where: {
-				teamID: teamId
+				teamID: teamId,
+				status: "Pending"
 			},
 			include: [
 				{
 					model: User,
 					as: "user",
 					attributes: ["id", "firstName", "lastName"],
+				},
+				{
+					model: Team,
+					as: "team",
+					attributes: ["id", "teamName"],
 				}
 			]
 		})
@@ -41,5 +48,25 @@ router.post('/:teamId', async (req, res) => {
 		res.status(400).json(err);
 	}
 });
+
+//update a request
+router.patch('/:requestId', async (req, res) => {
+	console.log('body', req.body);
+	try {
+		const teamRequestId = req.params.requestId;
+		const team = await TeamRequest.update({
+			status: req.body.status,
+		}, {
+			where: {
+				id: teamRequestId
+			}
+		})
+		res.status(201).json(team);
+	} catch (err) {
+		res.status(400).json(err);
+	}
+});
+
+
 
 module.exports = router;

@@ -12,6 +12,7 @@ import PostPage from '../pages/PostPage';
 import ProjectPage from '../pages/ProjectPage';
 import FilteredProjectsPage from '../pages/FilteredProjectsPage';
 import CreateTaskPage from '../pages/CreateTaskPage';
+import ProjectRequestsPage from '../pages/ProjectRequestsPage';
 import ProjectInfoPage from '../pages/ProjectInfoPage';
 import AccountPage from '../pages/AccountPage';
 import RequestsPage from '../pages/RequestsPage';
@@ -24,6 +25,7 @@ import AllTeamsPage from '../pages/AllTeamsPage';
 import TeamMembersPage from '../pages/TeamMembersPage';
 import TeamProjectsPage from '../pages/TeamProjectsPage';
 import TeamOverviewPage from '../pages/TeamOverviewPage';
+import TeamRequestsPage from '../pages/TeamRequestsPage';
 
 
 function App() {
@@ -138,6 +140,15 @@ function App() {
 						}
 					/>
 					<Route
+						path="/projects/:projectId/requests"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<ProjectRequestsPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
 						path="/projects/:projectId/info"
 						element={
 							<PrivateRouteRequiresAuth>
@@ -170,6 +181,15 @@ function App() {
 							<PrivateRouteRequiresAuth>
 								{" "}
 								<TeamMembersPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/teams/:teamId/requests"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<TeamRequestsPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>

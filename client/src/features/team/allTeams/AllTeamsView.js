@@ -31,9 +31,9 @@ const AllTeamsView = (props) => {
 
                             </div>
                             <div>
-                                <Link className="text-sm text-white bg-emerald-600 rounded-md px-4 py-2" to={"/teams/" + team.id}>
+                                <button className="text-sm text-white bg-emerald-600 rounded-md px-4 py-2" onClick={() => props.handleJoinTeam(team.id)}>
                                     Join
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     );

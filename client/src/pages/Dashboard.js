@@ -1,4 +1,4 @@
-import { AllTasksListContainer } from '../components/AllTasksList/allTasksListContainer';
+import { DashboardContainer } from '../components/Dashboard/dashboardContainer'; 
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 
@@ -8,7 +8,7 @@ export default function Dashboard() {
         <div >
             <Navbar />
 
-            <AllTasksListContainer />
+            <DashboardContainer />
             
             <Footer />
         </div>

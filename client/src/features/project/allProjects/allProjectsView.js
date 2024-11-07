@@ -32,9 +32,9 @@ const AllProjectsView = (props) => {
                                 </div>
 
                                 <div>
-                                    <Link className="text-white bg-emerald-600 rounded-md px-4 py-2" to={"/projects/" + project.id}>
+                                    <button className="text-white bg-emerald-600 rounded-md px-4 py-2" onClick={() => {props.handleJoinProject(project.id)}}>
                                         Join
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         </div>

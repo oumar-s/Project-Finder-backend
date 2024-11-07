@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
-const { ProjectRequest } = db;
+const { ProjectRequest, User, Project } = db;
 
 //Get all requests of a specific project
 router.get('/:projectId', async (req, res) => {
@@ -10,13 +10,20 @@ router.get('/:projectId', async (req, res) => {
 		const projectId = req.params.projectId;
 		const requests = await ProjectRequest.findAll({
 			where: {
-				projectID: projectId
+				projectID: projectId,
+				status: "Pending"
+
 			},
 			include: [
 				{
 					model: User,
 					as: "user",
 					attributes: ["id", "firstName", "lastName"],
+				},
+				{
+					model: Project,
+					as: "project",
+					attributes: ["id", "projectTitle"],
 				}
 			]
 		})
@@ -35,6 +42,24 @@ router.post('/:projectId', async (req, res) => {
 			status: "Pending",
 			projectID: projectId,
 			userID: userId,
+		})
+		res.status(201).json(project);
+	} catch (err) {
+		res.status(400).json(err);
+	}
+});
+
+//update a request
+router.patch('/:requestId', async (req, res) => {
+	console.log('body', req.body);
+	try {
+		const projectRequestId = req.params.requestId;
+		const project = await ProjectRequest.update({
+			status: req.body.status,
+		}, {
+			where: {
+				id: projectRequestId
+			}
 		})
 		res.status(201).json(project);
 	} catch (err) {

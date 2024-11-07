@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 
         //Projects should have a hasMany relationship with ProjectMembers
         Project.hasMany(models.ProjectMember, {
-            foreignKey: "projectMemberID",
+            foreignKey: "projectID",
             as: "projectMembers",
         });
     };
