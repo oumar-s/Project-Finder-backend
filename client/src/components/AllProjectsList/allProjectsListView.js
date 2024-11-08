@@ -28,7 +28,7 @@ const allProjectsListView = (props) => {
                             </div>
 
                             <div> 
-                                {props.settingsPage && <button className="text-blue-500 hover:text-blue-800" onClick={() => {props.handleDeleteProject(projectMember.project.id)}}>Leave</button>}
+                                {props.settingsPage && <button className="text-blue-500 hover:text-blue-800" onClick={() => {props.leaveProject(projectMember.id)}}>Leave</button>}
                             </div>
                         </div>
                     );

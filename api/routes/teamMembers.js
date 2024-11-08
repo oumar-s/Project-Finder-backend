@@ -15,6 +15,10 @@ router.get('/:teamId', async (req, res) => {
                 {
                     model: User,
                     as: "user"
+                },
+                {
+                    model: Team,
+                    as: "team"
                 }
             ]
         })
@@ -59,6 +63,22 @@ router.post('/:teamId/:userId', async (req, res) => {
             userID: userId
         })
         res.status(201).json(team);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+//Remove a user from a team
+router.delete('/:memberId', async (req, res) => {
+    try {
+        const memberId = req.params.memberId;
+        const member = await TeamMember.destroy({
+            where: {
+                id: memberId
+            }
+        })
+        res.status(200).json(member);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });

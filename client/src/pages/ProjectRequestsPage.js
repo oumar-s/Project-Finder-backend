@@ -2,7 +2,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 import { RequestsListContainer } from '../components/RequestsList/requestsListContainer'; 
-import { useGetProjectRequestsQuery, useChangeProjectRequestStatusMutation } from '../features/api/apiSlice';
+import { useGetProjectRequestsQuery, useChangeProjectRequestStatusMutation, useAddUserToProjectMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
@@ -13,6 +13,8 @@ export default function ProjectRequestsPage() {
     const { data: requests, error: requestsError, isLoading: requestsLoading } = useGetProjectRequestsQuery(params.projectId);
 
     const [changeProjectRequestStatus] = useChangeProjectRequestStatusMutation();
+
+    const [addUserToProject] = useAddUserToProjectMutation();
 
     if (requestsLoading) {
         return <div>Loading...</div>
@@ -31,7 +33,9 @@ export default function ProjectRequestsPage() {
 
     const acceptRequest = async (request) => {
         await changeProjectRequestStatus({ requestId: request.id, status: 'Accepted' });
+        await addUserToProject({ projectId: request.projectID, userId: request.userID });
         console.log('accept team request', request);
+
     }
 
     const declineRequest = async (request) => {

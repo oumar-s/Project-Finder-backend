@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     ProjectMember.associate = (models) => {
         ProjectMember.belongsTo(models.User, {
             foreignKey: "userID",
-            as: "member",
+            as: "user",
         });
 
         ProjectMember.belongsTo(models.Project, {

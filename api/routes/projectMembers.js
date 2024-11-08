@@ -50,6 +50,10 @@ router.get('/members/:projectId', async (req, res) => {
                 {
                     model: User,
                     as: "user",
+                },
+                {
+                    model: Project,
+                    as: "project",
                 }
             ]
         })
@@ -70,6 +74,21 @@ router.post('/:projectId/:userId', async (req, res) => {
             userID: userId
         })
         res.status(201).json(project);
+    } catch (err) {
+        res.status(400).json(err);
+    }
+});
+
+//remove a user from a project
+router.delete('/:memberId', async (req, res) => {
+    try {
+        const memberId = req.params.memberId;
+        const project = await ProjectMember.destroy({
+            where: {
+                id: memberId
+            }
+        })
+        res.status(200).json(project);
     } catch (err) {
         res.status(400).json(err);
     }

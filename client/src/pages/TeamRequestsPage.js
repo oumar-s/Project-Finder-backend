@@ -2,7 +2,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 import { RequestsListContainer } from '../components/RequestsList/requestsListContainer'; 
-import { useGetTeamRequestsQuery, useChangeTeamRequestStatusMutation } from '../features/api/apiSlice';
+import { useGetTeamRequestsQuery, useChangeTeamRequestStatusMutation, useAddMemberToTeamMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
@@ -13,6 +13,8 @@ export default function TeamRequestsPage() {
     const { data: requests, error: requestsError, isLoading: requestsLoading } = useGetTeamRequestsQuery(params.teamId);
 
     const [changeTeamRequestStatus] = useChangeTeamRequestStatusMutation();
+
+    const [addMemberToTeam] = useAddMemberToTeamMutation();
 
     if (requestsLoading) {
         return <div>Loading...</div>
@@ -31,7 +33,9 @@ export default function TeamRequestsPage() {
 
     const acceptRequest = async (request) => {
         await changeTeamRequestStatus({ requestId: request.id, status: 'Accepted' });
+        await addMemberToTeam({ teamId: request.teamID, userId: request.userID });
         console.log('accept team request', request);
+
     }
 
     const declineRequest = async (request) => {

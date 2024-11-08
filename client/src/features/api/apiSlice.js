@@ -49,10 +49,19 @@ export const apiSlice = createApi({
     }),
 
     addUserToProject: builder.mutation({
-      query: (data, projectId, userId) => ({
-        url: `/projectMembers/${projectId}/${userId}`,
+      query: (data) => ({
+        url: `/projectMembers/${data.projectId}/${data.userId}`,
         method: 'POST',
-        body: data
+        body: {}
+      }),
+      invalidatesTags: []
+    }),
+
+    removeUserFromProject: builder.mutation({
+      query: (memberId) => ({
+        url: `/projectMembers/${memberId}`,
+        method: 'DELETE',
+        body: {}
       }),
       invalidatesTags: []
     }),
@@ -113,10 +122,19 @@ export const apiSlice = createApi({
     }),
 
     addMemberToTeam: builder.mutation({
-      query: (data, teamId, userId) => ({
-        url: `/teamMembers/${teamId}/${userId}`,
+      query: (data) => ({
+        url: `/teamMembers/${data.teamId}/${data.userId}`,
         method: 'POST',
-        body: data
+        body: {}
+      }),
+      invalidatesTags: []
+    }),
+
+    removeMemberFromTeam: builder.mutation({
+      query: (memberId) => ({
+        url: `/teamMembers/${memberId}`,
+        method: 'DELETE',
+        body: {}
       }),
       invalidatesTags: []
     }),
@@ -206,6 +224,7 @@ export const {
   useGetAllProjectsForUserQuery,
   useGetProjectMembersQuery,
   useAddUserToProjectMutation,
+  useRemoveUserFromProjectMutation,
   useGetProjectRequestsQuery,
   useChangeProjectRequestStatusMutation,
   useAddRequestToProjectMutation,
@@ -215,6 +234,7 @@ export const {
   useGetTeamMembersQuery,
   useGetUserTeamsQuery,
   useAddMemberToTeamMutation,
+  useRemoveMemberFromTeamMutation,
   useGetTeamRequestsQuery,
   useChangeTeamRequestStatusMutation,
   useAddRequestToTeamMutation,

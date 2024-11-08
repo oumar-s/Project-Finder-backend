@@ -2,7 +2,7 @@ import { useGetUserTeamsQuery } from "../../features/api/apiSlice";
 import AllTeamsListView from "./allTeamsListView";
 import { useAuth } from "../../context/authContext";
 
-export function AllTeamsListContainer(settingsPage) {
+export function AllTeamsListContainer({settingsPage, leaveTeam}) {
   const auth = useAuth();
   const { data, isSuccess, error, isLoading } = useGetUserTeamsQuery(auth.user?.id);
 
@@ -17,7 +17,7 @@ export function AllTeamsListContainer(settingsPage) {
   if (isSuccess) {
     console.log("all teams: ", data);
     return (
-      <AllTeamsListView allTeams={data} settingsPage={settingsPage} />
+      <AllTeamsListView allTeams={data} settingsPage={settingsPage} leaveTeam={leaveTeam}/>
     );
   }
 }

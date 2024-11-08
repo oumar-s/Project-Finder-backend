@@ -2,7 +2,7 @@ import { useGetAllProjectsForUserQuery } from "../../features/api/apiSlice";
 import AllProjectsListView from "./allProjectsListView";
 import { useAuth } from "../../context/authContext";
 
-export function AllProjectsListContainer({settingsPage}) {
+export function AllProjectsListContainer({settingsPage, leaveProject}) {
   const auth = useAuth();
   const { data, isSuccess, error, isLoading } = useGetAllProjectsForUserQuery(auth.user?.id);
 
@@ -14,10 +14,12 @@ export function AllProjectsListContainer({settingsPage}) {
   if (error) {
     return <div>Error! Try again: {error.message}</div>;
   }
+
+  
   if (isSuccess) {
     console.log("all teams: ", data);
     return (
-      <AllProjectsListView allProjects={data} settingsPage={settingsPage} />
+      <AllProjectsListView allProjects={data} leaveProject={leaveProject} settingsPage={settingsPage} />
     );
   }
 }

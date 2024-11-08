@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom"
 
-const AllTeamsListView = (props) => {
-    if (!props.allTeams.length) {
+const AllTeamsListView = ({allTeams, settingsPage, leaveTeam}) => {
+    if (!allTeams.length) {
         return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no projects.</div>
     }
 
     return (
         <div className="flex place-content-center" style={{ minHeight: "calc(100vh - 268px)" }}>
             <div className="flex flex-col gap-8 w-11/12 md:w-1/2">
-                {props.allTeams.map((teamMember) => {
+                {allTeams.map((teamMember) => {
                     return (
                         <div key={teamMember.id} className='card flex  p-4 place-content-between  border rounded-md '>
                             {console.log("team member: ", teamMember)}
@@ -31,7 +31,7 @@ const AllTeamsListView = (props) => {
 
                             </div>
                             <div> 
-                                {props.settingsPage && <button className="text-blue-500 hover:text-blue-800" onClick={() => {props.handleDeleteProject(teamMember.project.id)}}>Leave</button>}
+                                {settingsPage && <button className="text-blue-500 hover:text-blue-800" onClick={() => {leaveTeam(teamMember.id)}}>Leave</button>}
                             </div>
                         </div>
                     );
