@@ -1,14 +1,16 @@
 import TasksListView from './tasksListView';
 import TaskModal from './taskModal';
-import { useGetProjectTasksQuery } from '../../features/api/apiSlice';
+import { useGetProjectTasksQuery, useGetProjectMembersQuery } from '../../features/api/apiSlice';
 import { React, useState } from 'react';
 import { useParams } from "react-router-dom";
 
 export const TasksListContainer = () => {
   const params = useParams();
-
   const [selectedTask, setSelectedTask] = useState(null);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
+
+  const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
 
   const task = [
     {
@@ -60,11 +62,32 @@ export const TasksListContainer = () => {
     return <div>Loading...</div>;
   }
 
+  const teamMember = [
+    { id: 1, name: "Sarah Chen" },
+    { id: 2, name: "Mike Johnson" },
+    { id: 3, name: "Alex Thompson" },
+    { id: 4, name: "Emily Davis" }
+  ];
+
+  const handleAssigneeChange = async (taskId, newAssignee) => {
+    try {
+      // Here you would typically make an API call to update the assignee
+      tasks.find(task => task.id === taskId).assignee = newAssignee;
+      console.log(`Assigning task ${taskId} to user ${newAssignee.id}`);
+    } catch (error) {
+      console.error('Error updating assignee:', error);
+    }
+  };
+
   console.log('tasks: ', tasks);
   return (
     <>
     <TasksListView
       tasks={tasks}
+      projectMembers={members}
+      openDropdownId={openDropdownId} 
+      setOpenDropdownId={setOpenDropdownId}
+      handleAssigneeChange={handleAssigneeChange}
       getStatusColor={getStatusColor}
       handleTaskClick={setSelectedTask}
     />
