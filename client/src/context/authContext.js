@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import { apiSlice } from "../features/api/apiSlice";
 import { useDispatch } from "react-redux";
+import { getAuth, signInWithCustomToken } from "firebase/auth";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
@@ -57,8 +58,21 @@ const AuthProvider = ({ children }) => {
       throw new Error("Login Failed");
     }
 
-    let loggedInUser = await response.json();
+    let res = await response.json();
+
+    let loggedInUser = res.user;
     setUser(loggedInUser);
+
+    // Sign in to Firebase with custom token
+    const firebaseToken = await res.token;
+    const auth = getAuth();
+    await signInWithCustomToken(auth, firebaseToken);
+
+    //check if user logged in in firebase
+    const firebaseUser = auth.currentUser;
+    if (!firebaseUser) {
+      throw new Error("Firebase login failed");
+    }
 
     return loggedInUser;
   };

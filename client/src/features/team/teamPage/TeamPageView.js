@@ -5,13 +5,15 @@ const TeamPageView = (props) => {
         <div className="container col-6 my-5" style={{minHeight: "100vh"}}>
 
             <div className="bg-[#f6f8fa]">
-                {/* banner */}
-                Banner
+                {/* team banner */}
+                <div className="team-banner">
+                    <img className="object-cover w-full h-48" src={props.team.teamBanner ? props.team.teamBanner : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-banner" />
+                </div>
             </div>
 
             <div className="flex">
                 <div className="team-image">
-                    <img className="object-cover w-24 h-24 rounded-md" src="https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480" alt="team-icon" />
+                    <img className="object-cover w-24 h-24 rounded-md" src={props.team.teamIcon ? props.team.teamIcon : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-icon" />
                 </div>
                 <div className="team-name-and-desc">
                     <div className="team-name text-lg md:text-xl text-blue-500">

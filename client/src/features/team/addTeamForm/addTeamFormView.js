@@ -14,11 +14,11 @@ const AddTeamFormView = (props) => {
 
                 <div className="mb-3">
                     <label className="form-label">Team Icon: </label>
-                    <input type="file" value={formData.icon} className="" name="teamIcon"  onChange={(e) => handleTeamIconChange(e)} />
+                    <input type="file"  className="" name="teamIcon"  onChange={(e) => handleTeamIconChange(e)} />
                 </div>
                 <div className="mb-3">
                     <label className="form-label">Team Banner: </label>
-                    <input type="file" value={formData.icon} className="" name="teamBanner"  onChange={(e) => handleTeamBannerChange(e)} />
+                    <input type="file"  className="" name="teamBanner"  onChange={(e) => handleTeamBannerChange(e)} />
                 </div>
 
                 <div className="d-grid col-3 mx-auto">

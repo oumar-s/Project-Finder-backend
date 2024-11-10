@@ -9,6 +9,12 @@ const morgan = require("morgan");
 const passport = require("./middlewares/authentication");
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
+const admin = require('firebase-admin');
+
+const serviceAccount = require("./firebase.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

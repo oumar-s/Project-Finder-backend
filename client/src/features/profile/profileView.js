@@ -4,7 +4,7 @@ const ProfileView = (props) => {
         <div className="container my-5" style={{ minHeight: "100vh" }}>
             <div className="flex">
                 <div className="profile-image">
-                    <img className="object-cover w-full h-full" src="../../assets/images/profile_image.png" alt="user profile" />
+                    <img className="object-cover w-24 h-24 " src={props.profile.profilePic ? props.profile.profilePic : "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"} alt="user profile" />
                     <p>First Name: {props.profile.firstName}</p>
                     <p>Last Name: {props.profile.lastName}</p>
                     <p>Email: {props.profile.email}</p>

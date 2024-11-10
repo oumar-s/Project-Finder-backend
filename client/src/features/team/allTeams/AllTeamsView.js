@@ -15,7 +15,7 @@ const AllTeamsView = (props) => {
                             <div className="team-info flex gap-4">
                                 <div className="team-image ">
                                     <Link className="" to={"/teams/" + team.id + "/overview"}>
-                                        <img className="object-cover w-24 h-24 rounded-md" src="https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480" alt="team-icon" />
+                                        <img className="object-cover w-24 h-24 rounded-md" src={team.teamIcon ? team.teamIcon : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-icon" />
                                     </Link>
                                 </div>
                                 <div className="team-name-and-desc">

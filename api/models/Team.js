@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         teamIcon: {
-            type: DataTypes.BLOB
+            type: DataTypes.STRING
         },
         teamBanner: {
-            type: DataTypes.BLOB
+            type: DataTypes.STRING
         },
         teamStatus: { //Open, Full, Closed
             type: DataTypes.STRING,

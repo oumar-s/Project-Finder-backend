@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../models");
 const passport = require("../middlewares/authentication");
+const admin = require('firebase-admin');
 
 router.post("/signup", async (req, res) => {
   try {
@@ -12,11 +13,17 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", passport.authenticate("local"), (req, res) => {
+router.post("/login", passport.authenticate("local"), async (req, res) => {
   // If this function gets called, authentication was successful.
   // `req.user` contains the authenticated user.
   //console.log("Authenticated user is: ", req.user);
-  res.json(req.user);
+  try {
+    const firebaseToken = await admin.auth().createCustomToken(req.user.id.toString());
+    res.json({user: req.user, token: firebaseToken}); //res.json(req.user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 router.get("/login", (req, res) => {
