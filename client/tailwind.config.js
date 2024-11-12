@@ -9,6 +9,7 @@ module.exports = {
         'midnight': '#121063',
         'black1': '#24292f',
         'white1': '#f6f8fa',
+        'blue1' : '#1571e3',
         
       },
       fontFamily: {

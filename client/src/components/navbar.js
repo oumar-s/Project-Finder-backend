@@ -11,7 +11,7 @@ import AuthButton from './AuthButton';
 
 import { ReactComponent as ThreeBars } from '../assets/images/three-bars.svg';
 import { ReactComponent as X } from '../assets/images/x.svg';
-
+import { ReactComponent as Logo } from '../assets/images/logo.svg';
 
 const Navbar = ({ page }) => {
   const [showNav, setShowNav] = useState(false);
@@ -41,19 +41,23 @@ const Navbar = ({ page }) => {
   if (!auth.isAuthenticated) {
     return (
       <div className=''>
-        <div className="flex items-center font-mono-sans text-white bg-black1 sticky top-0 h-16 border border-black1">
+        <div className="flex items-center font-mono-sans text-gray-700 bg-white1 sticky top-0 h-16 border-b">
           <div className="flex flex-row  w-full justify-between  mx-4 md:mx-2 ">
             <div className="md:order-3">
               <AuthButton />
             </div>
             <div className="flex items-center gap-8 md:order-1">
-              <Link className=" bg-slate-500 py-1 px-2 font-semibold rounded-sm" to="/">Synergy</Link>
-              <div className="hidden md:flex md:order-2">
+              {/* make logo white */}
+              <div className="brand flex items-center gap-1">
+                <Logo />
+                <Link className="text-xl font-semibold" to="/">Synergy</Link>
+              </div>
+              <div className="hidden md:flex md:order-2 ">
                 <Navlinks type='navbar' />
               </div>
             </div>
             <button onClick={handleNav} className="md:hidden">
-              {showNav ? <X fill="white" /> : <ThreeBars fill="white" />}
+              {showNav ? <X  /> : <ThreeBars />}
             </button>
           </div>
         </div>

@@ -90,6 +90,10 @@ const AuthProvider = ({ children }) => {
     }
 
     setUser(false);
+
+    // Sign out of Firebase
+    const auth = getAuth();
+    await auth.signOut();
     
     let body = await response.json();
     return body;
