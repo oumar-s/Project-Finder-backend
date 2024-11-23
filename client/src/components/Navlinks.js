@@ -4,6 +4,8 @@ import AuthButton from './AuthButton';
 import Avatar from './Avatar';
 import { ReactComponent as RightNavX } from '../assets/images/x.svg';
 import { ReactComponent as LeftNavX } from '../assets/images/x.svg';
+import { ReactComponent as Logo } from '../assets/images/logo.svg';
+
 
 
 
@@ -11,7 +13,7 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
 
   if (type === 'navbar') {
     return (
-      <div className="flex flex-col gap-y-8 md:flex-row md:gap-x-8">
+      <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-8">
         <div className="">
           <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Explore</Link>
         </div>
@@ -39,60 +41,62 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
 
   if (type === 'rightnav') {
     return (
-      <div className="flex flex-col gap-y-8 md:gap-x-8">
-        <div className='flex justify-between'>
+      <div className="">
+        <div className='flex justify-between mb-8'>
           <Avatar type='2' />
           <button onClick={rightNavHandler}>
-            <RightNavX fill="white" />
+            <RightNavX fill="" />
           </button>
         </div>
-
+        <div className="flex flex-col gap-y-4 md:gap-x-8 text-base font-normal">
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/profile">Profile</Link>
+          <Link className="" to="/profile">Profile</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Projects</Link>
+          <Link className="" to="/profile/projects">Projects</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Teams</Link>
+          <Link className="" to="/profile/teams">Teams</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/requests">Requests</Link>
+          <Link className="" to="/profile/requests">Requests</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/account">Account</Link>
-        </div>
-
-        <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/"><AuthButton /></Link>
+          <Link className="" to="/account">Account</Link>
         </div>
 
+        <div className="">
+          <Link className="" to="/"><AuthButton /></Link>
+        </div>
+        </div>
       </div>
     )
   }
 
   if (type === 'leftnav') {
     return (
-      <div className="flex flex-col gap-y-8 md:gap-x-8">
-        <div className='flex justify-between'>
-          <Link className=" bg-white1 text-black  py-1 px-2 font-semibold rounded-sm" to="/">
-            Synergy
+      <div className="">
+        <div className='flex justify-between mb-8'>
+          <Link className=" " to="/">
+            <Logo />
           </Link>
           <button onClick={leftNavHandler}>
-            <LeftNavX fill="white" />
+            <LeftNavX fill="" />
           </button>
         </div>
+        <div className="flex flex-col gap-y-4 text-base font-normal md:gap-x-8">
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/dashboard">Home</Link>
+          <Link className="" to="/dashboard">Home</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Projects</Link>
+          <Link className="" to="/home">Projects</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Teams</Link>
+          <Link className="" to="/home">Teams</Link>
         </div>
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Explore</Link>
+          <Link className="" to="/home">Explore</Link>
+        </div>
         </div>
       </div>
     )

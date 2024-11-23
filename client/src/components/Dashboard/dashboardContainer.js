@@ -1,32 +1,41 @@
 import DashboardView from "./dashboardView";
-import { MyTasksListContainer } from "../DashboardTasksList/myTasksListContainer";
 import { useGetUserTeamsQuery, useGetAllProjectsForUserQuery } from "../../features/api/apiSlice";
-import { useState } from "react";
+import React, { useState } from 'react';
+
 import { useAuth } from "../../context/authContext";
 export function DashboardContainer() {
   const auth = useAuth();
-  const [selectedTeam, setSelectedTeam] = useState(null);
-
-
   //const teams = ['Team A', 'Team B', 'Team C'];
   const { data: teams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(auth.user?.id);
   const { data: projects, error: projectsError, isLoading: projectsLoading, isSuccess: projectsSuccess } = useGetAllProjectsForUserQuery(auth.user?.id);
+  
+  const [selectedTeam, setSelectedTeam] = useState(null);
+  const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
 
-  const tasks = [
-    { id: 1, title: 'Task 1', project: 'Project 1', status: 'In Progress' },
-    { id: 2, title: 'Task 2', project: 'Project 2', status: 'Completed' },
-    { id: 3, title: 'Task 3', project: 'Project 4', status: 'To Do' },
-    { id: 4, title: 'Task 4', project: 'Project 6', status: 'In Progress' },
-    { id: 5, title: 'Task 5', project: 'Project 7', status: 'Completed' },
-  ];
+  if (teamsLoading || projectsLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (teamsError || projectsError) {
-    return <div>Error! Try again</div>;
-  }
-  if (teamsLoading || projectsLoading) {
-    return <div> Loading... </div>;
+    return <div>Error: {teamsError?.message || projectsError?.message}</div>;
   }
 
+  
+
+  
+
+  
+
+  const getStatusColor = (status) => {
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 'bg-emerald-100 text-emerald-800';
+      case 'in progress':
+        return 'bg-amber-100 text-amber-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
 
   if (teamsSuccess && projectsSuccess) {
     console.log('projects for user', projects);
@@ -45,15 +54,22 @@ export function DashboardContainer() {
     }, {});
 
     console.log('projectsByTeam', projectsByTeam);
+    console.log('teams', teams);
+    const teamz = [];
+    
     return (
-      <div className="flex h-screen">
+      <div className="">
         <DashboardView
           teams={teams}
           projects={projectsByTeam}
-          selectedTeam={selectedTeam}
+          selectedTeam={selectedTeam || teams[0]?.team}
+          setSelectedTeam={setSelectedTeam}
           onTeamSelect={setSelectedTeam}
+          isTeamDropdownOpen={isTeamDropdownOpen}
+          setIsTeamDropdownOpen={setIsTeamDropdownOpen}
+          //tasks={tasks}
+          getStatusColor={getStatusColor}
         />
-        <MyTasksListContainer />
       </div>
     );
   }

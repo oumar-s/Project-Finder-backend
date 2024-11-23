@@ -16,42 +16,36 @@ export const MyTasksListContainer = () => {
   const task = [
     {
       id: 1,
-      title: "Implement User Authentication",
-      description: "Add login and registration functionality using JWT tokens",
-      assignee: "Sarah Chen",
-      status: "In Progress"
+      name: 'Implement Dark Mode',
+      description: 'Add dark mode support to all components',
+      assignedTo: 'Sarah Chen',
+      status: 'In Progress'
     },
     {
       id: 2,
-      title: "Design Database Schema",
-      description: "Create ERD and implement database models for the application",
-      assignee: "Mike Johnson",
-      status: "Completed"
+      name: 'Fix Navigation Bug',
+      description: 'Address the navigation issue in mobile view',
+      assignedTo: 'John Doe',
+      status: 'New'
     },
     {
       id: 3,
-      title: "API Documentation",
-      description: "Document all API endpoints using Swagger",
-      assignee: "Alex Thompson",
-      status: "Pending"
-    },
-    {
-      id: 4,
-      title: "Unit Test Coverage",
-      description: "Increase test coverage to 80% for core modules",
-      assignee: "Emily Davis",
-      status: "In Review"
+      name: 'Update Documentation',
+      description: 'Update component documentation with new features',
+      assignedTo: 'Sarah Chen',
+      status: 'Completed'
     }
   ];
 
   const getStatusColor = (status) => {
-    const statusColors = {
-      'Completed': 'bg-green-100 text-green-800',
-      'In Progress': 'bg-blue-100 text-blue-800',
-      'Pending': 'bg-yellow-100 text-yellow-800',
-      'In Review': 'bg-purple-100 text-purple-800'
-    };
-    return statusColors[status] || 'bg-gray-100 text-gray-800';
+    switch (status.toLowerCase()) {
+      case 'completed':
+        return 'bg-emerald-100 text-emerald-800';
+      case 'in progress':
+        return 'bg-amber-100 text-amber-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
   };
 
   if(tasksError) {
