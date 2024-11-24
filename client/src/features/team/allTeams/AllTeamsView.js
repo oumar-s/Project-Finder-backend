@@ -1,46 +1,144 @@
 import { Link } from "react-router-dom"
+import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
 
-const AllTeamsView = (props) => {
-    if (!props.allTeams.length) {
+const AllTeamsView = ({teams, type, handleJoinTeam, loadingTeams, joinedTeams, showAlert, setShowAlert}) => {
+    if (!teams.length) {
         return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no projects.</div>
     }
-
-    return (
-        <div className="flex place-content-center" style={{ minHeight: "calc(100vh - 268px)" }}>
-            <div className="flex flex-col gap-8 w-11/12 md:w-1/2">
-                {props.allTeams.map((team) => {
-                    return (
-                        <div key={team.id} className='card flex  p-4 place-content-between  border rounded-md '>
-                            {console.log(team)}
-                            <div className="team-info flex gap-4">
-                                <div className="team-image ">
-                                    <Link className="" to={"/teams/" + team.id + "/overview"}>
-                                        <img className="object-cover w-24 h-24 rounded-md" src={team.teamIcon ? team.teamIcon : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-icon" />
-                                    </Link>
-                                </div>
-                                <div className="team-name-and-desc">
-                                    <div className="team-name text-lg md:text-xl text-blue-500">
-                                        <Link className="" to={"/teams/" + team.id + "/overview"}>
-                                            <span className="hover:border-b-2 hover:border-blue-500"> {team.teamName} </span>
-                                        </Link>
-                                    </div>
-                                
-                                    {/* <h5 class="card-title">Special title treatment</h5> */}
-                                    <div className="team-desc text-slate-500">{team.teamDescription}</div>
-                                </div>
-
-                            </div>
-                            <div>
-                                <button className="text-sm text-white bg-emerald-600 rounded-md px-4 py-2" onClick={() => props.handleJoinTeam(team.id)}>
-                                    Join
-                                </button>
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
+// Custom Toast Component
+const Toast = ({ children, onClose }) => (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+      <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
+        <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+          <Check className="h-4 w-4 text-emerald-600" />
         </div>
-    );
+        <span className="text-sm font-medium text-gray-700">{children}</span>
+        <button 
+          onClick={onClose} 
+          className="ml-2 text-gray-400 hover:text-gray-600"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+    const getStatusStyles = (status) => {
+        switch (status) {
+          case 'open':
+            return 'bg-emerald-100 text-emerald-700';
+          case 'closed':
+            return 'bg-gray-100 text-gray-700';
+          case 'waitlist':
+            return 'bg-amber-100 text-amber-700';
+          default:
+            return 'bg-gray-100 text-gray-700';
+        }
+      };
+    return (
+        <div className="max-w-4xl mx-auto p-6">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900">All Teams</h2>
+            {/*teams.length > 0 && (empty state <>No teams</>)*/}
+            {/* <div className="flex gap-2">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-700">
+                Open
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-amber-100 text-amber-700">
+                Waitlist
+              </span>
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                Closed
+              </span>
+            </div> */}
+          </div>
+        {  console.log("all projects view: ", teams)}
+          <div className="space-y-4">
+            {teams.map((team) => (
+              <div 
+                key={team.id} 
+                className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
+              >
+                {showAlert.visible && showAlert.teamId === team.id && (
+                <Toast onClose={() => setShowAlert({ visible: false, teamId: null })}>
+                  Successfully joined {team.teamName}!
+                </Toast>
+              )}
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <Link 
+                        to={`/teams/${team.id}/overview`}
+                        className="text-lg font-semibold text-blue-500 mb-1 hover:underline ">
+                      {team.teamName}
+                    </Link>
+                    <p className="text-gray-600 text-sm mb-3">
+                      {team.teamDescription}
+                    </p>
+                  </div>
+                  {/* <span 
+                    className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(project.projectStatus)}`}
+                  >
+                    {project.projectStatus}
+                  </span> */}
+                </div>
+    
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-6">
+                    <div className="flex items-center text-gray-600">
+                      <Info size={18} className="mr-2" />
+                      <span className="text-sm">
+                        {team.teamStatus}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-gray-600">
+                      <UserCheck size={18} className="mr-2" />
+                      <span className="text-sm font-medium">
+                        {team.owner.firstName} 
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {team.teamStatus === 'Open' && (
+                  joinedTeams.has(team.id) ? (
+                    <button 
+                      disabled 
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
+                    >
+                      <Check className="mr-2 h-4 w-4" />
+                      Joined
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => handleJoinTeam(team.id)}
+                      disabled={loadingTeams.has(team.id)}
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-500 rounded-md hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loadingTeams.has(team.id) ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Joining...
+                        </>
+                      ) : (
+                        'Join Team'
+                      )}
+                    </button>
+                  )
+                )}
+                  {team.teamStatus === 'Waitlist' && (
+                    <button className="px-4 py-2 text-sm font-medium text-white bg-amber-500 rounded-md hover:bg-amber-600 transition-colors">
+                      Join Waitlist
+                    </button>
+                  )}
+                  {team.teamStatus === 'Closed' && (
+                    <button disabled className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 rounded-md cursor-not-allowed">
+                      Closed
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
 }
 
 export default AllTeamsView;

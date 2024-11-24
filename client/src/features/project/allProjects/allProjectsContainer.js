@@ -1,28 +1,46 @@
-import { useGetAllProjectsQuery, useAddRequestToProjectMutation } from "../../api/apiSlice";
+import {useAddRequestToProjectMutation } from "../../api/apiSlice";
 import AllProjectsView from "./allProjectsView";
+import { useState } from "react";
 
-export function ProjectsContainer() {
-  const { data, isSuccess, error, isLoading } = useGetAllProjectsQuery();
+export function ProjectsContainer({projects, type}) {
+  const [joinedProjects, setJoinedProjects] = useState(new Set());
+  const [loadingProjects, setLoadingProjects] = useState(new Set());
+  const [showAlert, setShowAlert] = useState({ visible: false, projectId: null });
   const [addRequestToProject] = useAddRequestToProjectMutation();
 
-  if (isLoading) {
-    return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading projects...</div>;
-  }
-
-  if (error) {
-    return <div>Error! Try again: {error.message}</div>;
-  }
 
   const handleJoinProject = async (projectId) => {
+    setLoadingProjects(prev => new Set([...prev, projectId]));
     await addRequestToProject(projectId);
     console.log("join project clicked"); 
+    setLoadingProjects(prev => {
+      const next = new Set(prev);
+      next.delete(projectId);
+      return next;
+    });
+    
+    setJoinedProjects(prev => new Set([...prev, projectId]));
+    setShowAlert({ visible: true, projectId });
+    
+    // Hide alert after 3 seconds
+    setTimeout(() => {
+      setShowAlert({ visible: false, projectId: null });
+    }, 3000);
   }
 
-  if (isSuccess) {
     return (
-      <AllProjectsView allProjects={data} handleJoinProject={handleJoinProject} />
+      <div className="">
+      <AllProjectsView projects={projects} 
+      type={type}
+      handleJoinProject={handleJoinProject}
+      joinedProjects={joinedProjects}
+      loadingProjects={loadingProjects}
+      showAlert={showAlert}
+      setShowAlert={setShowAlert}
+       />
+      </div>
     );
-  }
+
 }
 
 
