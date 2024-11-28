@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 //import { Link } from 'react-router-dom';
-import { CheckSquare } from 'lucide-react';
+import { CheckSquare, Eye } from 'lucide-react';
 
 const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -27,16 +27,23 @@ const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
                 className="bg-white rounded-lg shadow-sm border border-gray-200 p-4"
               >
                 <div className="flex justify-between items-start mb-2">
-                  <button onClick={() => handleTaskClick(task)} className="font-medium text-blue-600 hover:text-blue-800 hover:underline">{task.taskName}</button>
+                  <Link  
+                  to={`/projects/${task.project.id}/my`} className="font-medium text-blue-600 hover:text-blue-800 hover:underline">{task.taskName}</Link>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(task.taskStatus)}`}>
                     {task.taskStatus}
                   </span>
                 </div>
                 <p className="text-gray-600 text-sm mb-3">{task.taskDescription}</p>
-                <div className="flex">
+                <div className="flex justify-between">
                 <div className="text-sm text-gray-500">
                   Assigned to: <span className="text-gray-900">{task.assignee.firstName}</span>
                 </div>
+                <button 
+                    onClick={() => handleTaskClick(task)}
+                    className="flex items-center gap-1 bg-blue-50 text-blue-600 px-3 py-1 rounded-md text-sm hover:bg-blue-100"
+                  >
+                    <Eye className="h-4 w-4" /> View
+                  </button>
                 {/* <Link
                   to={`/tasks/${task.id}`}
                   onClick={() => handleTaskClick(task)}

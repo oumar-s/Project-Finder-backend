@@ -26,6 +26,7 @@ import TeamMembersPage from '../pages/TeamMembersPage';
 import TeamProjectsPage from '../pages/TeamProjectsPage';
 import TeamOverviewPage from '../pages/TeamOverviewPage';
 import TeamRequestsPage from '../pages/TeamRequestsPage';
+import Test from '../components/test';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
 					<Route path="/home" element={<ExplorePage />} />
 					<Route path="/teams" element={<AllTeamsPage />} />
 					<Route path="/about" element={<AboutPage />} />
+					<Route path="/test" element={<Test />} />
 					<Route
 						path="/dashboard"
 						element={

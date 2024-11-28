@@ -19,17 +19,23 @@ export default function ExplorePage() {
         return <div>Error! Try again: {error.message}</div>;
     }
 
-    
+
 
     if (isSuccess) {
-         
+
 
         return (
             <div >
                 <Navbar page='Explore' />
                 <TabNav page='explore' tabs={tabs} />
 
-                <ProjectsContainer projects={data} type="join" />
+                <div className='max-w-4xl mx-auto p-6'>
+                    <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-2xl font-semibold text-gray-700">All projects</h2>
+                    </div>
+                    <ProjectsContainer projects={data} type="join" />
+
+                </div>
 
                 <Footer />
             </div>

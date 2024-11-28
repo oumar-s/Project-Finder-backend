@@ -3,10 +3,10 @@ import { useGetProjectsForTeamQuery } from '../../features/api/apiSlice';
 import { React, useState } from 'react';
 import { useParams } from "react-router-dom";
 
-export const ProjectsListContainer = () => {
-  const params = useParams();
+export const ProjectsListContainer = ({projects}) => {
+  //const params = useParams();
 
-  const { data: projects, error: projectsError, isLoading: projectsLoading } = useGetProjectsForTeamQuery(params.teamId);
+  // const { data: projects, error: projectsError, isLoading: projectsLoading } = useGetProjectsForTeamQuery(params.teamId);
 
   const project = [
     {
@@ -26,14 +26,7 @@ export const ProjectsListContainer = () => {
     }
   ];
 
-  if (projectsLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (projectsError) {
-    return <div>Error: {projectsError.message}</div>;
-  }
-  console.log("projects", projects);
+  console.log("projectsList", projects);
   return (
     <ProjectsListView
       projects={projects}

@@ -1,6 +1,6 @@
 import { MyTasksListContainer } from "../DashboardTasksList/myTasksListContainer";
 import { Link } from "react-router-dom";
-import { ChevronDown, Layout, Users, FolderGit2, CheckSquare, AlertCircle, LinkIcon } from 'lucide-react';
+import { ChevronDown, Eye, Users, FolderGit2, ExternalLink, AlertCircle, LinkIcon } from 'lucide-react';
 const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamSelect, isTeamDropdownOpen, setIsTeamDropdownOpen, tasks, getStatusColor }) => {
   console.log('selected team', selectedTeam);
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -21,6 +21,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
               <div className="mb-4">
                 {teams.length > 0 ? (
                   <div className="relative">
+                    <div className="flex">
                     <button
                       onClick={() => setIsTeamDropdownOpen(!isTeamDropdownOpen)}
                       className="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100"
@@ -31,6 +32,13 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                       </div>
                       <ChevronDown className="h-4 w-4" />
                     </button>
+                    <Link
+                      to={`/teams/${selectedTeam.id}/overview`}
+                      className="ml-2 p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                    </div>
                     
                     {isTeamDropdownOpen && (
                       <div className="absolute w-full mt-1 bg-white rounded-md shadow-lg border border-gray-200 z-10">
@@ -48,7 +56,19 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                         ))}
                       </div>
                     )}
+
+                    {/* <div className="self-end">
+                      {selectedTeam && (
+                        <button
+
+                          className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-md text-sm hover:bg-blue-100"
+                        >
+                          <Eye className="h-4 w-4" /> View Team
+                        </button>
+                      )}
+                    </div> */}
                   </div>
+                  
                 ) : (
                   <div>
                   <div className="text-sm font-semibold text-gray-600 mb-2 pl-2 flex items-center gap-2">
@@ -118,6 +138,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                 </h2>
                 {teams.length > 0 ? (
                   <div className="relative">
+                    <div className="flex">
                     <button
                       onClick={() => setIsTeamDropdownOpen(!isTeamDropdownOpen)}
                       className="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100"
@@ -127,6 +148,13 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                       </div>
                       <ChevronDown className="h-4 w-4" />
                     </button>
+                    <Link
+                      to={`/teams/${selectedTeam.id}/overview`}
+                      className="ml-2 p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </Link>
+                    </div>
                     
                     {isTeamDropdownOpen && (
                       <div className="absolute w-full mt-1 bg-white rounded-md shadow-lg border border-gray-200 z-10">

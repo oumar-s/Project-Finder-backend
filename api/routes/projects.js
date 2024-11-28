@@ -88,6 +88,10 @@ router.get('/teams/:teamId', async (req, res) => {
           model: User,
           as: "owner",
           attributes: ["id", "firstName", "lastName"],
+        }, 
+        {
+          model: Team,
+          as: "team",
         }
       ]
     })
@@ -122,6 +126,10 @@ router.get('/:teamId/:userId', async (req, res) => {
               {
                   model: User,
                   as: "owner"
+              },
+              {
+                  model: Team,
+                  as: "team"
               }
           ]
       });

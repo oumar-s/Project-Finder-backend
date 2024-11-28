@@ -36,8 +36,8 @@ const Toast = ({ children, onClose }) => (
       };
     return (
         <div className="max-w-4xl mx-auto p-6">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900">All Teams</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-semibold text-gray-700">All Teams</h2>
             {/*teams.length > 0 && (empty state <>No teams</>)*/}
             {/* <div className="flex gap-2">
               <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-700">

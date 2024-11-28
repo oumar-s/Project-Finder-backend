@@ -1,72 +1,117 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-const TeamPageView = (props) => {
+import { ProjectsListContainer } from '../../../components/ProjectsList/projectsListContainer';
+import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer'; 
+import { Users, Briefcase } from 'lucide-react';
+const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
+    const members = [
+        { name: "Alex Rodriguez", role: "JavaScript, SQL" },
+        { name: "Sam Chen", role: "JavaScript, SQL" },
+        { name: "Jordan Kim", role: "billyfil@example.com" },
+        { name: "Taylor Wong", role: "billyfil@example.com" }
+    ]
     return (
-        <div className="container col-6 my-5" style={{minHeight: "100vh"}}>
+        <div className="bg-gray-50 min-h-screen">
+            {/* Section 1: Team Banner */}
+            <div className="w-full h-64 object-cover">
+                <img
+                    src={team.teamBanner}
+                    alt="Team Banner"
+                    className="w-full h-full"
+                />
+                {/* <div className="absolute inset-0 flex items-center justify-center">
+              <h1 className="text-white text-4xl font-bold text-center drop-shadow-lg">
+                {team.teamName}
+              </h1>
+            </div> */}
+            </div>
 
-            <div className="bg-[#f6f8fa]">
-                {/* team banner */}
-                <div className="team-banner">
-                    <img className="object-cover w-full h-48" src={props.team.teamBanner ? props.team.teamBanner : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-banner" />
+            {/* Section 2: Team Details */}
+            <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
+                <div className="w-64 h-64 flex-shrink-0 mr-8">
+                    <img
+                        src={team.teamIcon}
+                        alt="Team Profile"
+                        className="w-full h-full object-cover rounded-lg shadow-lg"
+                    />
+                </div>
+                <div className="flex-grow">
+                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
+                        {team.teamName}
+                    </h2>
+                    <p className="text-gray-700">
+                        {team.teamDescription}
+                    </p>
                 </div>
             </div>
 
-            <div className="flex">
-                <div className="team-image">
-                    <img className="object-cover w-24 h-24 rounded-md" src={props.team.teamIcon ? props.team.teamIcon : "https://www.shutterstock.com/shutterstock/videos/1065380521/thumb/3.jpg?ip=x480"} alt="team-icon" />
+            {/* Section 3: Projects and Team Members */}
+            <div className="container mx-auto px-4 py-8 grid md:flex md:justify-between gap-8">
+                <div className='flex flex-col gap-12 w-full'>
+                    {/* Part (a): Projects */}
+                    <div className='flex flex-col w-full'>
+                        <div className="flex items-center mb-6">
+                            <Briefcase className="mr-2 text-blue-600" />
+                            <h3 className="text-xl font-semibold text-blue-800">Your Projects</h3>
+                        </div>
+                        <ProjectsListContainer projects={myProjects} />
+
+                    </div>
+                    <div className='flex flex-col w-full'>
+                        <div className="flex items-center mb-6">
+                            <Briefcase className="mr-2 text-blue-600" />
+                            <h3 className="text-xl font-semibold text-blue-800">Team Projects</h3>
+                        </div>
+
+                        <ProjectsContainer projects={teamProjects} />
+                    </div>
                 </div>
-                <div className="team-name-and-desc">
-                    <div className="team-name text-lg md:text-xl text-blue-500">
-                            <span className="hover:border-b-2 hover:border-blue-500"> {props.team.teamName} </span>
+
+
+
+
+
+
+                {/* Part (b): Team Members - Visible on MD and larger screens */}
+                <div className="hidden md:block w-1/3">
+                    <div className="flex items-center mb-6">
+                        <Users className="mr-2 text-blue-600" />
+                        <h3 className="text-xl font-semibold text-blue-800">Team Members</h3>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        {teamMembers.map((member, index) => (
+                            <div
+                                key={index}
+                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                            >
+                                <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
+                                <p className="text-gray-600 text-sm">{member.user.email}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Team Members for Mobile (MD screens and below) */}
+                <div className="md:hidden">
+                    <div className="flex items-center mb-6">
+                        <Users className="mr-2 text-blue-600" />
+                        <h3 className="text-xl font-semibold text-blue-800">Team Members</h3>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                        {teamMembers.map((member, index) => (
+                            <div
+                                key={index}
+                                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                            >
+                                <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
+                                <p className="text-gray-600 text-sm">{member.user.email}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col gap-8 w-11/12 md:w-1/2" id="my-projects"> 
-                <h4 className="text-lg md:text-lg">Your Projects:</h4>
-
-                {console.log("myProjects", props.myProjects)}
-                {props.myProjects.map((project) => {
-                    return (
-                        <div className="project" key={project.id}>
-                            <Link to={`/project/${project.id}`}>
-                                <div className="project-name">
-                                    <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
-                                </div>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-
-            <div className="flex flex-col gap-8 w-11/12 md:w-1/2" id="team-projects"> 
-                <h4 className="text-lg md:text-lg">Team Projects:</h4>
-
-                {props.teamProjects.map((project) => {
-                    return (
-                        <div className="project" key={project.id}>
-                            <Link to={`/project/${project.id}`}>
-                                <div className="project-name">
-                                    <span className="hover:border-b-2 hover:border-blue-500"> {project.projectTitle} </span>
-                                </div>
-                            </Link>
-                        </div>
-                    )
-                })}
-            </div>
-            
-            
-            
-            {/* Conditional rendering based on the buttonClicked state */}
-            {/* {props.buttonClicked ? (
-                <button type="button" className="btn btn-success d-grid col-3 mx-auto my-4">
-                    Request sent!
-                </button>) : (
-                <button type="button" className="btn btn-primary d-grid col-3 mx-auto my-4" onClick={props.joinHandler}>
-                    Join
-                </button>
-            )} */}
         </div>
-    )
+    );
 }
 export default TeamPageView;
 

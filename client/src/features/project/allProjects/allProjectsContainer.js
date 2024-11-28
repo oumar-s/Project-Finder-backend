@@ -2,7 +2,7 @@ import {useAddRequestToProjectMutation } from "../../api/apiSlice";
 import AllProjectsView from "./allProjectsView";
 import { useState } from "react";
 
-export function ProjectsContainer({projects, type}) {
+export function ProjectsContainer({projects, type, title}) {
   const [joinedProjects, setJoinedProjects] = useState(new Set());
   const [loadingProjects, setLoadingProjects] = useState(new Set());
   const [showAlert, setShowAlert] = useState({ visible: false, projectId: null });

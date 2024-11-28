@@ -1,6 +1,8 @@
 import React from 'react';
 //import { UserCircle, X } from 'lucide-react';
+import  Avatar  from "../../assets/images/profile_image.png"
 import { useAuth } from '../../context/authContext';
+
 
 const TeamMembersListView = ({ members, onDeleteMember, type, isOwner }) => {
   const auth = useAuth();
@@ -8,7 +10,7 @@ const TeamMembersListView = ({ members, onDeleteMember, type, isOwner }) => {
   if (type === "team") {
     return (
       <div className="w-full max-w-2xl mx-auto space-y-2">
-        <h2 className="text-xl font-medium text-gray-900">Members</h2>
+        
         {members.map((member) => (
           <div
             key={member.id}
@@ -17,12 +19,18 @@ const TeamMembersListView = ({ members, onDeleteMember, type, isOwner }) => {
             <div className="flex items-center space-x-3">
               {member.user.profilePic ? (
                 <img
-                  src='https://via.placeholder.com/150'
+                  src='{member.user.profilePic}'
                   alt={member.user.firstName}
                   className="w-10 h-10 rounded-full object-cover"
                 />
               ) : (
-                <div>profile image</div>
+                <div>
+                  <img
+                  src={Avatar}
+                  alt={member.user.firstName}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+                </div>
               )}
               <div>
                 <h3 className="font-medium text-gray-900">{member.user.firstName}</h3>

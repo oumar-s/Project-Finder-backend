@@ -24,9 +24,9 @@ export default function TeamMembersPage() {
     }
 
     const tabs = [
-        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" }, 
-        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" }, 
-        { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" }, 
+        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+        { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
         { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
     ];
 
@@ -37,12 +37,16 @@ export default function TeamMembersPage() {
     };
 
     return (
-        <div >
+        <div className='' >
             <Navbar />
 
             <TabNav tabs={tabs} />
-
-            <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="team" isOwner={auth.user?.id === team?.ownerID ? true : false } />
+            <div className='h-screen max-w-4xl mx-auto p-6'>
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-semibold text-gray-700">Team members</h2>
+                </div>
+                <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="team" isOwner={auth.user?.id === team?.ownerID ? true : false} />
+            </div>
 
             <Footer />
         </div>

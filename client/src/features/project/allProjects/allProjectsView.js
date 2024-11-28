@@ -35,24 +35,10 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
         }
       };
     return (
-        <div className="max-w-4xl mx-auto p-6">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900">All Projects</h2>
-            {/*projects.length > 0 && (empty state <>No projects</>)*/}
-            {/* <div className="flex gap-2">
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-emerald-100 text-emerald-700">
-                Open
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-amber-100 text-amber-700">
-                Waitlist
-              </span>
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
-                Closed
-              </span>
-            </div> */}
-          </div>
+        <div className="flex flex-col gap-4">
+          
         {  console.log("all projects view: ", projects)}
-          <div className="space-y-4">
+          {/* <div className="space-y-4"> */}
             {projects.map((project) => (
               <div 
                 key={project.id} 
@@ -136,7 +122,7 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
                 </div>
               </div>
             ))}
-          </div>
+          {/* </div> */}
         </div>
       );
 }
