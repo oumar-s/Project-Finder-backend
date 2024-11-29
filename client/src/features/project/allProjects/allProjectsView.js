@@ -34,6 +34,9 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
             return 'bg-gray-100 text-gray-700';
         }
       };
+    if (!projects.length) {
+        return <div className="h-screen text-center py-8 text-gray-500" >There are no projects.</div>
+    }
     return (
         <div className="flex flex-col gap-4">
           

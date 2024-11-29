@@ -27,8 +27,9 @@ export default function TeamMembersPage() {
         { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
         { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
         { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+        { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
         { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
-    ];
+    ]
 
     const handleDelete = (memberId) => {
         // Handle member deletion

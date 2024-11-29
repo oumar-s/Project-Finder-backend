@@ -1,32 +1,127 @@
-const AddTeamFormView = (props) => {
-    const { handleTeamNameChange, handleTeamDescriptionChange, handleTeamIconChange, handleTeamBannerChange, handleAdd, formData } = props;
+import { Users, Type, Upload, Image, ExternalLink, FileText, GitBranch, MessageCircle } from "lucide-react";
+const AddTeamFormView = ({handleChange, handleAdd, handleTeamIconUpload, handleTeamBannerUpload, setTeamImage, teamImage, teamBanner, setTeamBanner, formData}) => {
     return (
-        <div className="flex flex-col items-center gap-8 m-8 " style={{ minHeight: "100vh" }}>
-            <form className="bg-[#f6f8fa]" onSubmit={(e) => handleAdd(e)}>
-                <div className="mb-3">
-                    <label className="">Team Name: </label>
-                    <input value={formData.title} type="text" className="border p-3 rounded-md h-8" name="projectTitle" onChange={(e) => handleTeamNameChange(e)} />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Team Description: </label>
-                    <textarea value={formData.description} className="border p-3 rounded-md h-8" name="projectDescription" onChange={(e) => handleTeamDescriptionChange(e)} />
-                </div>
-
-                <div className="mb-3">
-                    <label className="form-label">Team Icon: </label>
-                    <input type="file"  className="" name="teamIcon"  onChange={(e) => handleTeamIconChange(e)} />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label">Team Banner: </label>
-                    <input type="file"  className="" name="teamBanner"  onChange={(e) => handleTeamBannerChange(e)} />
-                </div>
-
-                <div className="d-grid col-3 mx-auto">
-                    <button type="submit" className="btn btn-success" >Add </button>
-                </div>
-            </form>
+        <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold text-blue-700 mb-6 flex items-center">
+        
+            Create New Team
+          </h2>
+          
+          <form onSubmit={handleAdd} className="space-y-6">
+            {/* Team Name Input */}
+            <div>
+              <label htmlFor="teamName" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                <Type className="mr-2 text-blue-500 w-5 h-5" />
+                Team Name
+              </label>
+              <input
+                type="text"
+                id="teamName"
+                name="teamName"
+                value={formData.teamName}
+                onChange={handleChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter team name"
+              />
+            </div>
+    
+            {/* Team Description Input */}
+            <div>
+              <label htmlFor="teamDescription" className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                <MessageCircle className="mr-2 text-purple-500 w-5 h-5" />
+                Team Description
+              </label>
+              <textarea
+                id="teamDescription"
+                name="teamDescription"
+                value={formData.teamDescription}
+                onChange={handleChange}
+                required
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Describe your team's mission and goals"
+              />
+            </div>
+    
+            {/* Team Image Upload */}
+            <div>
+              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                <Users className="mr-2 text-teal-500 w-5 h-5" />
+                Team Image
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="cursor-pointer">
+                  <input
+                    type="file"
+                    name="teamImage"
+                    accept="image/*"
+                    onChange={handleTeamIconUpload(setTeamImage)}
+                    className="hidden"
+                  />
+                  <div className="w-24 h-24 border-2 border-dashed border-blue-300 rounded-lg flex items-center justify-center hover:bg-blue-50 transition">
+                    {teamImage ? (
+                      <img 
+                        src={teamImage} 
+                        alt="Team" 
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    ) : (
+                      <Upload className="text-blue-500" />
+                    )}
+                  </div>
+                </label>
+                <p className="text-sm text-gray-500">
+                  Upload a square image (recommended: 200x200px)
+                </p>
+              </div>
+            </div>
+    
+            {/* Team Banner Upload */}
+            <div>
+              <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                <Image className="mr-2 text-emerald-500 w-5 h-5" />
+                Team Banner
+              </label>
+              <div className="flex items-center space-x-4">
+                <label className="cursor-pointer w-full">
+                  <input
+                    type="file"
+                    name="teamBanner"
+                    accept="image/*"
+                    onChange={handleTeamBannerUpload(setTeamBanner)}
+                    className="hidden"
+                  />
+                  <div className="h-32 w-full border-2 border-dashed border-purple-300 rounded-lg flex items-center justify-center hover:bg-purple-50 transition">
+                    {teamBanner ? (
+                      <img 
+                        src={teamBanner} 
+                        alt="Team Banner" 
+                        className="w-full h-full object-cover rounded-lg"
+                      />
+                    ) : (
+                      <Upload className="text-purple-500" />
+                    )}
+                  </div>
+                </label>
+              </div>
+              <p className="text-sm text-gray-500 mt-2">
+                Upload a wide banner image (recommended: 1200x300px)
+              </p>
+            </div>
+    
+            {/* Submit Button */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Create Team
+              </button>
+            </div>
+          </form>
         </div>
-    );
+      );
 }
 
 export default AddTeamFormView;

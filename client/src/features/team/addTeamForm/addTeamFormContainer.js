@@ -12,6 +12,8 @@ export function AddTeamFormContainer() {
         teamIcon: '',
         teamBanner: ''
     });
+    const [teamImage, setTeamImage] = useState(null);
+    const [teamBanner, setTeamBanner] = useState(null);
     const [addTeam] = useAddTeamMutation();
     
     //These event handlers keeps track of changes as the user fills out the form.
@@ -29,6 +31,40 @@ export function AddTeamFormContainer() {
     const handleTeamBannerChange = (event) => {
         setTeamForm({...teamForm, teamBanner: event.target.files[0]});
     }
+
+    const handleTeamIconUpload = (setter) => (event) => {
+        const file = event.target.files[0];
+        setTeamForm({...teamForm, teamIcon: event.target.files[0]});
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setter(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+    };
+
+    const handleTeamBannerUpload = (setter) => (event) => {
+        const file = event.target.files[0];
+        setTeamForm({...teamForm, teamBanner: event.target.files[0]});
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setter(reader.result);
+          };
+          reader.readAsDataURL(file);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        console.log(name, " : ", value);
+        setTeamForm(prev => ({
+          ...prev,
+          [name]: value
+        }));
+      };
+
     const handleAdd = async event => {
         event.preventDefault();
         //upload team icon and banner to firebase storage
@@ -49,17 +85,22 @@ export function AddTeamFormContainer() {
             teamName: '',
             teamDescription: '',
             teamIcon: '',
-            teamBanner: ''
+            teamBanner: '',
         });
+        setTeamImage(null);
+        setTeamBanner(null);
     }
     
     return (
         <AddTeamFormView
-            handleTeamNameChange = {handleTeamNameChange} 
-            handleTeamDescriptionChange = {handleTeamDescriptionChange}
-            handleTeamIconChange = {handleTeamIconChange}
-            handleTeamBannerChange = {handleTeamBannerChange}
+            handleChange = {handleChange}
             handleAdd = {handleAdd}
+            handleTeamIconUpload = {handleTeamIconUpload}
+            handleTeamBannerUpload = {handleTeamBannerUpload}
+            setTeamImage = {setTeamImage}
+            setTeamBanner = {setTeamBanner}
+            teamImage = {teamImage}
+            teamBanner = {teamBanner}
             formData = {teamForm}
         />
     );

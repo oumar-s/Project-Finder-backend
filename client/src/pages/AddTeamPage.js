@@ -5,8 +5,9 @@ function AddTeamPage() {
   return (
     <div >
       <Navbar />
-
-      <AddTeamFormContainer />
+      <div className='min-h-screen p-8'>
+        <AddTeamFormContainer />
+      </div>
 
       <Footer />
     </div>

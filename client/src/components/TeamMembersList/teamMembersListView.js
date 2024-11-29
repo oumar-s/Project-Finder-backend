@@ -7,6 +7,13 @@ import { useAuth } from '../../context/authContext';
 const TeamMembersListView = ({ members, onDeleteMember, type, isOwner }) => {
   const auth = useAuth();
   console.log("members", members);
+  if(!members.length ){
+    return(
+    <div className="text-center py-8 text-gray-500">
+      There are no members
+    </div>
+    )
+  }
   if (type === "team") {
     return (
       <div className="w-full max-w-2xl mx-auto space-y-2">

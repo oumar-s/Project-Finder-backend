@@ -9,6 +9,7 @@ import Dashboard from '../pages/Dashboard';
 import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
 import PostPage from '../pages/PostPage';
+import AddProjectPage from '../pages/AddProjectPage';
 import ProjectPage from '../pages/ProjectPage';
 import FilteredProjectsPage from '../pages/FilteredProjectsPage';
 import CreateTaskPage from '../pages/CreateTaskPage';
@@ -54,6 +55,14 @@ function App() {
 						element={
 							<PrivateRouteRequiresAuth>
 								<PostPage />
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/new-project"
+						element={
+							<PrivateRouteRequiresAuth>
+								<AddProjectPage />
 							</PrivateRouteRequiresAuth>
 						}
 					/>

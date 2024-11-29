@@ -7,16 +7,22 @@ function PostPage() {
 
   let params = useParams();
 
-    const tabs = [
-        {id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview"}, {id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects"}, {id: 3, name: "Members", link: "/teams/" + params.teamId + "/members"}, {id: 2, name: "New project", link: "/teams/" + params.teamId + "/new-project"},
-    ];
+  const tabs = [
+    { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+    { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+    { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+    { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
+    { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+]
   return (
     <div >
       <Navbar />
 
       <TabNav tabs={tabs}/>
-
+      <div className='h-screen  p-8'>
+            
       <AddProjectFormContainer />
+      </div>
 
       <Footer />
     </div>

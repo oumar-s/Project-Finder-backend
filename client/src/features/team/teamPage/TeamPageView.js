@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectsListContainer } from '../../../components/ProjectsList/projectsListContainer';
 import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer'; 
-import { Users, Briefcase } from 'lucide-react';
+import { Users, Briefcase, Users2 } from 'lucide-react';
 const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
     const members = [
         { name: "Alex Rodriguez", role: "JavaScript, SQL" },
@@ -59,7 +59,7 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className="flex items-center mb-6">
-                            <Briefcase className="mr-2 text-blue-600" />
+                            <Users2 className="mr-2 text-blue-600" />
                             <h3 className="text-xl font-semibold text-blue-800">Team Projects</h3>
                         </div>
 
@@ -89,6 +89,11 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             </div>
                         ))}
                     </div>
+                    {teamMembers.length === 0 && (
+                        <div className="text-center py-4 text-gray-500" >
+                            No team members yet
+                        </div>
+                    )}
                 </div>
 
                 {/* Team Members for Mobile (MD screens and below) */}
@@ -108,6 +113,11 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             </div>
                         ))}
                     </div>
+                    {teamMembers.length === 0 && (
+                        <div className="text-center py-4 text-gray-500" >
+                            No team members yet
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

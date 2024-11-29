@@ -2,7 +2,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 import { RequestsListContainer } from '../components/RequestsList/requestsListContainer'; 
-import { useGetTeamRequestsQuery, useChangeTeamRequestStatusMutation, useAddMemberToTeamMutation } from '../features/api/apiSlice';
+import { useGetTeamQuery, useGetTeamRequestsQuery, useChangeTeamRequestStatusMutation, useAddMemberToTeamMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
@@ -11,21 +11,22 @@ export default function TeamRequestsPage() {
     const auth = useAuth();
 
     const { data: requests, error: requestsError, isLoading: requestsLoading } = useGetTeamRequestsQuery(params.teamId);
+    const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
 
     const [changeTeamRequestStatus] = useChangeTeamRequestStatusMutation();
 
     const [addMemberToTeam] = useAddMemberToTeamMutation();
 
-    if (requestsLoading) {
+    if (requestsLoading || teamLoading) {
         return <div>Loading...</div>
     }
-    if (requestsError) {
+    if (requestsError || teamError) {
         return <div>There was an error. Please try again.</div>
     }
 
     const tabs = [
-        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" }, 
-        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" }, 
+        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
         { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
         { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
         { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
@@ -48,9 +49,12 @@ export default function TeamRequestsPage() {
             <Navbar />
 
             <TabNav tabs={tabs} />
-
-            <RequestsListContainer requests={requests} requestType="team" acceptRequest={acceptRequest} declineRequest={declineRequest}/>
-
+            <div className='h-screen max-w-4xl mx-auto p-6'>
+                <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold text-gray-700">Team requests</h2>
+                </div>
+            <RequestsListContainer requests={requests} teamOwnerID={team.ownerID} requestType="team" acceptRequest={acceptRequest} declineRequest={declineRequest}/>
+                </div>
             <Footer />
         </div>
     );

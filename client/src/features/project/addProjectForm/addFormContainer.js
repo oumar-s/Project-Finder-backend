@@ -9,7 +9,8 @@ export function AddProjectFormContainer() {
     const [projectForm, setProjectForm] = useState({
         projectTitle: '',
         projectDescription: '',
-        projectRepository: ''
+        projectRepository: '',
+        teamId: ''
     });
     const [addPost] = useAddProjectMutation();
     
@@ -22,26 +23,43 @@ export function AddProjectFormContainer() {
         setProjectForm({...projectForm, projectDescription: event.target.value});
     }
 
+    const handleTeamChange = (event) => {
+        setProjectForm({...projectForm, teamId: event.target.value});
+    }
+
     const handleRepositoryChange = (event) => {
         setProjectForm({...projectForm, projectRepository: event.target.value});
     }
     const handleSubmit = async event => {
         event.preventDefault();
+        console.log('projectForm', projectForm);
         let project = {...projectForm};
         await addPost({project: project, teamId: params.teamId});
         //set each input to empty
         setProjectForm({
             projectTitle: '',
             projectDescription: '',
-            projectRepository: ''
+            projectRepository: '',
+            teamId: ''
         });
     }
+    // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, " : ", value);
+    setProjectForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
     
     return (
         <AddProjectFormView
             handleTitleChange = {handleTitleChange} 
             handleDescriptionChange = {handleDescriptionChange}
             handleRepositoryChange = {handleRepositoryChange}
+            handleTeamChange = {handleTeamChange}
+            handleChange = {handleChange}
             handleSubmit = {handleSubmit}
             formData = {projectForm}
         />

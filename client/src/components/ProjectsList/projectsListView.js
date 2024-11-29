@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import { Users, UserCheck} from 'lucide-react';
 
 const ProjectsListView = ({ projects }) => {
+  if(!projects.length ){
+    return(
+    <div className="text-center py-8 text-gray-500">
+      There are no projects
+    </div>
+    )
+  }
   return (
     <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
       {/* <div className="flex items-center justify-between mb-8">

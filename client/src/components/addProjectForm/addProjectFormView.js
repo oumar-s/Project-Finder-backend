@@ -68,7 +68,7 @@ const AddProjectFormView = (props) => {
               />
             </div>
     
-            {/* Team Selection
+            {/* Team Selection*/}
             <div>
               <label htmlFor="team" className="block text-sm font-medium text-gray-700 mb-2">
                 <Users className="inline-block mr-2 text-emerald-500" size={18} />
@@ -89,7 +89,7 @@ const AddProjectFormView = (props) => {
                   </option>
                 ))}
               </select>
-            </div> */}
+            </div> 
     
             {/* Submit Button */}
             <div className="pt-4">

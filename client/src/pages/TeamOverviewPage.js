@@ -25,25 +25,25 @@ export default function TeamOverviewPage() {
         return <div>There was an error. Please try again.</div>
     }
 
-    let tabs = [];
+    //let tabs = [];
 
-    if (team?.ownerID === auth.user?.id) {
-        tabs = [
+    // if (team?.ownerID === auth.user?.id) {
+    const tabs = [
             { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
             { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
             { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
             { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
             { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
         ]
-    } else {
+    // } else {
 
-        tabs = [
-            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
-            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
-            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
-            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
-        ];
-    }
+    //     tabs = [
+    //         { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+    //         { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+    //         { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+    //         { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+    //     ];
+    // }
     return (
         <div >
             <Navbar />

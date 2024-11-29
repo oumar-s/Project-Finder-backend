@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api', credentials: 'include' }),
-  tagTypes: ['getProjects',],
+  tagTypes: ['getProjects', 'getTeamRequests'],
   endpoints: (builder) => ({
     //User
     getUser: builder.query({
@@ -142,7 +142,7 @@ export const apiSlice = createApi({
     //team requests
     getTeamRequests: builder.query({
       query: (teamId) => `/teamRequests/${teamId}`,
-      providesTags: []
+      providesTags: ['getTeamRequests']
     }),
 
     addRequestToTeam: builder.mutation({
@@ -160,7 +160,7 @@ export const apiSlice = createApi({
         method: 'PATCH',
         body: { status: data.status },
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getTeamRequests']
     }),
     
 
