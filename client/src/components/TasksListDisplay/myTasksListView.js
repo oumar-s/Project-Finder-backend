@@ -12,13 +12,10 @@ const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
     </div>
   );
   return (
-    <div className="">
+    <div className="max-h-96 overflow-y-auto">
       {/* Tasks Section */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <CheckSquare className="h-5 w-5 text-blue-500" />
-          My Tasks
-        </h2>
+        
         {tasks.length > 0 ? (
           <div className="grid gap-4">
             {tasks.map((task) => (
@@ -60,7 +57,7 @@ const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
             icon={CheckSquare}
             title="No tasks assigned"
             description="You're all caught up! No tasks are currently assigned to you."
-            className="bg-white rounded-lg border border-gray-200 shadow-sm"
+            className="bg-white rounded-lg border border-gray-200 shadow-sm m-8 p-8"
           />
         )}
       </div>

@@ -12,6 +12,7 @@ export function AddProjectFormContainer() {
         projectRepository: '',
         teamId: ''
     });
+    
     const [addPost] = useAddProjectMutation();
     
     //These event handlers keeps track of changes as the user fills out the form.
@@ -55,10 +56,6 @@ export function AddProjectFormContainer() {
     
     return (
         <AddProjectFormView
-            handleTitleChange = {handleTitleChange} 
-            handleDescriptionChange = {handleDescriptionChange}
-            handleRepositoryChange = {handleRepositoryChange}
-            handleTeamChange = {handleTeamChange}
             handleChange = {handleChange}
             handleSubmit = {handleSubmit}
             formData = {projectForm}

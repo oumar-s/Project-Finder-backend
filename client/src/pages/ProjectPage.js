@@ -2,6 +2,8 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { TasksListContainer } from '../components/TasksList/tasksListContainer';
 import { useGetProjectQuery } from '../features/api/apiSlice';
+import { useGetProjectTasksQuery, useGetProjectMembersQuery, useAssignTaskMutation, useChangeTaskStatusMutation, useDeleteTaskMutation } from '../features/api/apiSlice';
+import { React, useState } from 'react';
 import { useAuth } from '../context/authContext';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
@@ -14,39 +16,40 @@ export default function ProjectPage() {
     const auth = useAuth();
     const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
 
-    if (projectLoading) {
+    const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
+    const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
+
+
+    const [assignTask] = useAssignTaskMutation();
+    const [changeTaskStatus] = useChangeTaskStatusMutation();
+    const [deleteTask] = useDeleteTaskMutation();
+
+    if (tasksLoading || membersLoading || projectLoading) {
         return <div>Loading...</div>
     }
-    if (projectError) {
-        return <div>There was an error.</div>
+    if (tasksError || membersError || projectError) {
+        return <div>There was an error</div>
     }
 
-    let tabs = [];
-    if (project?.ownerID === auth.user?.id) {
-        tabs = [
-            { id: 1, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-            { id: 2, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-            { id: 3, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-            { id: 4, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
-            { id: 5, name: "Project Info", link: "/projects/" + params.projectId + "/info" }
+    const isOwner = project?.ownerID === auth.user?.id;
+    let tabs = [
+            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+            { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+            { id: 4, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+            
+            
         ];
-    }
-    else {
-        tabs = [
-        { id: 1, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-        { id: 2, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-        { id: 3, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-        { id: 4, name: "Project Info", link: "/projects/" + params.projectId + "/info" }
-        ];
-    }
 
     return (
         <div >
             <Navbar />
 
             <TabNav tabs={tabs} />
-
-            <TasksListContainer />
+            <div className='min-h-screen'>
+            <TasksListContainer tasks={tasks} members={members} assignTask={assignTask} changeTaskStatus={changeTaskStatus} deleteTask={deleteTask} isOwner={isOwner} />
+            </div>
 
             <Footer />
         </div>

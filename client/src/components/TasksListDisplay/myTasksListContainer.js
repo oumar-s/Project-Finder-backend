@@ -6,12 +6,12 @@ import { useParams } from "react-router-dom";
 import { useAuth } from '../../context/authContext';
 
 
-export const MyTasksListContainer = () => {
+export const MyTasksListContainer = ({tasks}) => {
   const params = useParams();
   const auth = useAuth();
 
   const [selectedTask, setSelectedTask] = useState(null);
-  const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetIncompleteTasksForUserQuery(auth.user?.id);
+  //const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetIncompleteTasksForUserQuery(auth.user?.id);
 
   const task = [
     {
@@ -47,15 +47,6 @@ export const MyTasksListContainer = () => {
         return 'bg-gray-100 text-gray-800';
     }
   };
-
-  if(tasksError) {
-    console.error(tasksError);
-    return <div>Error loading tasks</div>;
-  }
-
-  if(tasksLoading) {
-    return <div>Loading...</div>;
-  }
 
   console.log('tasks: ', tasks);
   return (

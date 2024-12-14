@@ -1,6 +1,6 @@
-import { MyTasksListContainer } from "../DashboardTasksList/myTasksListContainer";
+import { MyTasksListContainer } from "../TasksListDisplay/myTasksListContainer";
 import { Link } from "react-router-dom";
-import { ChevronDown, Eye, Users, FolderGit2, ExternalLink, AlertCircle, LinkIcon } from 'lucide-react';
+import { ChevronDown, CheckSquare, Users, FolderGit2, ExternalLink, AlertCircle, LinkIcon } from 'lucide-react';
 const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamSelect, isTeamDropdownOpen, setIsTeamDropdownOpen, tasks, getStatusColor }) => {
   console.log('selected team', selectedTeam);
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -222,7 +222,11 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
             </div>
             {/**Tasks */}
             <div className="">  
-              <MyTasksListContainer />
+            <h2 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+          <CheckSquare className="h-5 w-5 text-blue-500" />
+          My tasks
+        </h2>
+              <MyTasksListContainer tasks={tasks} />
             </div>
 
 

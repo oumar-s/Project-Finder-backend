@@ -1,6 +1,6 @@
 import { Plus, GitBranch, Users, ExternalLink, FileText, Image, Type, MessageCircle } from 'lucide-react';
 const AddProjectFormView = (props) => {
-    const { handleTitleChange, handleDescriptionChange, handleRepositoryChange, handleTeamChange, handleChange, handleSubmit, formData } = props;
+    const { handleChange, handleSubmit, formData } = props;
     const teams = [
         { id: 1, name: 'Open Source Collective'},
         { id: 2, name: 'Innovation Accelerator'},

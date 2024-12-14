@@ -24,11 +24,13 @@ export default function ProjectRequestsPage() {
     }
 
     const tabs = [
-        { id: 1, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-        { id: 2, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-        { id: 3, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-        { id: 4, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
-        { id: 5, name: "Project Info", link: "/projects/" + params.projectId + "/info" }
+        { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+        { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+        { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+        { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+        { id: 4, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+        
+        
     ];
 
     const acceptRequest = async (request) => {

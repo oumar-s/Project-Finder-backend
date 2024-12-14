@@ -3,7 +3,7 @@ import Footer from '../components/footer';
 import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
 import { TeamMembersListContainer } from '../components/TeamMembersList/teamMembersListContainer';
 import TabNav from '../components/TabNav';
-import {useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation } from '../features/api/apiSlice';
+import {useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksAssignedToUserQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
@@ -16,19 +16,23 @@ export default function ProjectInfoPage() {
     const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
     const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
 
+    const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksAssignedToUserQuery({projectId: params.projectId, userId: auth.user?.id});
+
     const [removeUserFromProject] = useRemoveUserFromProjectMutation();
 
-    if (membersLoading || projectLoading) {
+    if (membersLoading || projectLoading || tasksLoading) {
         return <div>Loading...</div>
     }
-    if (membersError || projectError) {
+    if (membersError || projectError || tasksError) {
         return <div>Error: {membersError.message}</div>
     }
 
-    const tabs = [{id: 1, name: 'All Tasks', link: "/projects/" + params.projectId + "/all"}, 
-        {id: 2, name: "My Tasks", link: "/projects/" + params.projectId + "/my"}, 
-        {id: 4, name: "New Task", link: "/projects/" + params.projectId + "/new-task"}, 
-        {id: 5, name: "Project Info", link: "/projects/" + params.projectId + "/info"}
+    const tabs = [
+        { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+        { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+        { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+        { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+        { id: 4, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
     ];
 
     const handleDelete = (memberId) => {
@@ -36,16 +40,18 @@ export default function ProjectInfoPage() {
         removeUserFromProject(memberId);
         console.log(`Deleting member ${memberId}`);
     };
-
+     
     return (
         <div >
             <Navbar />
 
             <TabNav tabs={tabs}/>
 
-            <ProjectPageContainer />
+            <div className='min-h-screen bg-gray-50'>
+            <ProjectPageContainer tasks={tasks} members={members}/>
 
-            <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="project" isOwner={project?.ownerID === auth.user?.id ? true : false} />
+            {/* <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="project" isOwner={project?.ownerID === auth.user?.id ? true : false} /> */}
+            </div>
 
             <Footer />
         </div>

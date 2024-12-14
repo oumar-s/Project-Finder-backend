@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 
 
-export function ProjectPageContainer() {
+export function ProjectPageContainer({tasks, members}) {
   const params = useParams();
   const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
 
@@ -13,10 +13,10 @@ export function ProjectPageContainer() {
     return <div>Loading...</div>
   }
   if(projectError) {
-    return <div>Error: {projectError.message}</div>
+    return <div>There was an error.</div>
   }
   return (
-    <ProjectPageView project={project}/>
+    <ProjectPageView project={project} tasks={tasks} members={members}/>
   );
   
 }

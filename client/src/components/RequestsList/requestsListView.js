@@ -19,9 +19,15 @@ const RequestsListView = ({ requests, requestType, handleAction, teamOwnerID, ac
                         <div className="flex items-center justify-between">
                             <div className="flex flex-col">
                                 <span className="font-medium text-gray-900">{request.user.firstName}</span>
+                                {requestType === 'team'? 
                                 <span className="text-sm text-gray-500">
-                                    Requesting to join <span className="text-blue-600">{request.team.teamName}</span>
-                                </span>
+                                Requesting to join <span className="text-blue-600">{request.team.teamName}</span>
+                            </span>:
+                            <span className="text-sm text-gray-500">
+                                Requesting to join <span className="text-blue-600">{request.project.projectTitle}</span>
+                            </span>
+                                }
+                                
                             </div>
 
                             {request.status === 'Pending' ? (

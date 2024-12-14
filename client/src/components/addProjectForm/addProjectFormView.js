@@ -1,6 +1,6 @@
 import { Plus, GitBranch, Users, ExternalLink, FileText, Image, Type, MessageCircle } from 'lucide-react';
 const AddProjectFormView = (props) => {
-    const { handleTitleChange, handleDescriptionChange, handleRepositoryChange, handleTeamChange, handleChange, handleSubmit, formData } = props;
+    const {handleChange, userTeams, handleSubmit, formData } = props;
     const teams = [
         { id: 1, name: 'Open Source Collective'},
         { id: 2, name: 'Innovation Accelerator'},
@@ -69,6 +69,7 @@ const AddProjectFormView = (props) => {
             </div>
     
             {/* Team Selection*/}
+            {console.log('userTeams', userTeams)}
             <div>
               <label htmlFor="team" className="block text-sm font-medium text-gray-700 mb-2">
                 <Users className="inline-block mr-2 text-emerald-500" size={18} />
@@ -83,9 +84,9 @@ const AddProjectFormView = (props) => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
                 <option value="">Choose a team</option>
-                {teams.map((team, index) => (
-                  <option key={index} value={team.id}>
-                    {team.name}
+                {userTeams.map((teamMember, index) => (
+                  <option key={index} value={teamMember.team.id}>
+                    {teamMember.team.teamName}
                   </option>
                 ))}
               </select>

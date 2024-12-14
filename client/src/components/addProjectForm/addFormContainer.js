@@ -1,15 +1,26 @@
 import { useState } from "react";
 import AddProjectFormView from "./addProjectFormView";
-import { useAddProjectMutation } from "../../features/api/apiSlice";
+import { useAddProjectMutation, useGetUserTeamsQuery } from "../../features/api/apiSlice";
+import { useAuth } from "../../context/authContext";
 
 export function AddProjectFormContainer() {
+  const { user } = useAuth();
     const [projectForm, setProjectForm] = useState({
         projectTitle: '',
         projectDescription: '',
         projectRepository: '',
         teamId: ''
     });
+    const { data: userTeams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(user?.id);
     const [addPost] = useAddProjectMutation();
+
+    if (teamsLoading) {
+        return <div>Loading...</div>;
+      }
+    
+    if (teamsError) {
+        return <div>Error: {teamsError?.message}</div>;
+      }
     
     const handleSubmit = async event => {
         event.preventDefault();
@@ -37,6 +48,7 @@ export function AddProjectFormContainer() {
     return (
         <AddProjectFormView
             handleChange = {handleChange}
+            userTeams = {userTeams}
             handleSubmit = {handleSubmit}
             formData = {projectForm}
         />

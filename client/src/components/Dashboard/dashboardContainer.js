@@ -3,7 +3,7 @@ import { useGetUserTeamsQuery, useGetAllProjectsForUserQuery } from "../../featu
 import React, { useState } from 'react';
 
 import { useAuth } from "../../context/authContext";
-export function DashboardContainer() {
+export function DashboardContainer({tasks}) {
   const auth = useAuth();
   //const teams = ['Team A', 'Team B', 'Team C'];
   const { data: teams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(auth.user?.id);
@@ -69,6 +69,7 @@ export function DashboardContainer() {
           setIsTeamDropdownOpen={setIsTeamDropdownOpen}
           //tasks={tasks}
           getStatusColor={getStatusColor}
+          tasks={tasks}
         />
       </div>
     );

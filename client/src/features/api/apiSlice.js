@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api', credentials: 'include' }),
-  tagTypes: ['getProjects', 'getTeamRequests'],
+  tagTypes: ['getProjects', 'getTeamRequests', 'getProjectTasks', 'myTasksInProject'],
   endpoints: (builder) => ({
     //User
     getUser: builder.query({
@@ -177,30 +177,36 @@ export const apiSlice = createApi({
 
     getProjectTasksAssignedToUser: builder.query({
       query: (params) => `/tasks/${params.projectId}/${params.userId}`,
-      providesTags: []
+      providesTags: ['myTasksInProject']
     }),
 
     getProjectTasks: builder.query({
       query: (projectId) => `/tasks/${projectId}`,
-      providesTags: []
+      providesTags: ['getProjectTasks']
     }),
 
     assignTask: builder.mutation({
-      query: (taskId, userId) => ({
-        url: `/tasks/${taskId}/${userId}`,
+      query: (data) => ({
+        url: `/tasks/${data.taskId}/${data.userId}`,
         method: 'PUT',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: (result, error, arg) => {
+        console.log('Invalidation Args:', arg);
+        return ['getProjectTasks', 'myTasksInProject'];
+      }
     }),
 
     changeTaskStatus: builder.mutation({
-      query: (data, taskId) => ({
-        url: `/tasks/${taskId}`,
-        method: 'PATCH',
-        body: data
+      query: (data) => ({
+        url: `/tasks/${data.taskId}`,
+        method: 'PUT',
+        body: data.body
       }),
-      invalidatesTags: []
+      invalidatesTags: (result, error, arg) => {
+        console.log('Invalidation Args:', arg);
+        return ['getProjectTasks', 'myTasksInProject'];
+      }
     }),
 
     addTask: builder.mutation({
@@ -211,6 +217,15 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: []
     }),
+
+    deleteTask: builder.mutation({
+      query: (taskId) => ({
+        url: `/tasks/${taskId}`,
+        method: 'DELETE',
+        body: {}
+      }),
+      invalidatesTags: ['getProjectTasks']
+    })
   }),
 });
 
@@ -244,5 +259,6 @@ export const {
   useGetProjectTasksQuery,
   useAssignTaskMutation,
   useChangeTaskStatusMutation,
-  useAddTaskMutation
+  useAddTaskMutation,
+  useDeleteTaskMutation
 } = apiSlice;

@@ -145,7 +145,7 @@ router.put('/:taskId/:userId', async (req, res) => {
         const taskId = req.params.taskId;
         const userId = req.params.userId;
         const task = await Task.findByPk(taskId);
-        task.assigneeID = userId;
+        task.assignedTo = userId;
         await task.save();
         return res.status(200).json(task);
     } catch (err) {
@@ -156,12 +156,12 @@ router.put('/:taskId/:userId', async (req, res) => {
 
 //Change the status of a task
 
-router.patch('/:taskId', async (req, res) => {
+router.put('/:taskId', async (req, res) => {
     try {
         const taskId = req.params.taskId;
         const status = req.body.status;
         const task = await Task.findByPk(taskId);
-        task.status = status;
+        task.taskStatus = status;
         await task.save();
         return res.status(200).json(task);
     } catch (err) {
@@ -189,6 +189,18 @@ router.post('/:projectId', async (req, res) => {
         res.status(400).json(err);
     }
     
+});
+
+router.delete('/:taskId', async (req, res) => {
+    try {
+        const taskId = req.params.taskId;
+        const task = await Task.findByPk(taskId);
+        await task.destroy();
+        return res.status(200).json(task);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 module.exports = router;
