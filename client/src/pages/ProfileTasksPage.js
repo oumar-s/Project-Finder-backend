@@ -25,7 +25,7 @@ export default function ProfileTasksPage() {
             <Navbar page="Profile" />
 
             <TabNav tabs={tabs}/>
-            <div className='h-screen max-w-4xl mx-auto p-6'>
+            <div className='min-h-screen max-w-4xl mx-auto p-6'>
             <h2 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
           <CheckSquare className="h-5 w-5 text-blue-500" />
           My tasks history

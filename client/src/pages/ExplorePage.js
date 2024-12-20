@@ -29,7 +29,7 @@ export default function ExplorePage() {
                 <Navbar page='Explore' />
                 <TabNav page='explore' tabs={tabs} />
 
-                <div className='max-w-4xl mx-auto p-6'>
+                <div className='min-h-screen max-w-4xl mx-auto p-6'>
                     <div className="flex items-center justify-between mb-6">
                         <h2 className="text-2xl font-semibold text-gray-700">All projects</h2>
                     </div>

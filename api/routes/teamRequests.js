@@ -61,7 +61,7 @@ router.patch('/:requestId', async (req, res) => {
 				id: teamRequestId
 			}
 		})
-		res.status(201).json(team);
+		res.status(200).json(team);
 	} catch (err) {
 		res.status(400).json(err);
 	}

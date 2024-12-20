@@ -1,10 +1,11 @@
 import { useState } from "react";
 import AddTaskFormView from "./addTaskFormView";
-import { useAddTaskMutation } from "../../features/api/apiSlice";
+import { useAddTaskMutation, useGetProjectMembersQuery } from "../../features/api/apiSlice";
 import { useParams } from "react-router-dom";
 
 export function AddTaskFormContainer() {
     const params = useParams();
+    const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
     console.log('params', params);
     const [taskForm, setTaskForm] = useState({
         taskName: '',
@@ -13,6 +14,12 @@ export function AddTaskFormContainer() {
     });
     const [addPost] = useAddTaskMutation();
     
+    if (membersLoading) {
+        return <div>Loading...</div>;
+      }
+    if (membersError) {
+        return <div>There was an error</div>;
+    }
     //These event handlers keeps track of changes as the user fills out the form.
     //these event handlers will be passed to the AddProjectFormView as a prop.
     const handleTaskNameChange = (event) => {
@@ -25,6 +32,15 @@ export function AddTaskFormContainer() {
     const handleAssignedToChange = (event) => {
         setTaskForm({...taskForm, assignedTo: event.target.value});
     }
+     // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, " : ", value);
+    setTaskForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
     const handleSubmit = async event => {
         event.preventDefault();
         let task = {...taskForm};
@@ -39,9 +55,8 @@ export function AddTaskFormContainer() {
     
     return (
         <AddTaskFormView
-            handleTaskNameChange = {handleTaskNameChange} 
-            handleDescriptionChange = {handleDescriptionChange}
-            handleAssignedToChange = {handleAssignedToChange}
+            members = {members}
+            handleChange = {handleChange}
             handleSubmit = {handleSubmit}
             formData = {taskForm}
         />

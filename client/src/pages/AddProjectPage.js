@@ -11,7 +11,7 @@ function AddProjectPage() {
         <Navbar />
   
         <TabNav tabs={tabs}/>
-        <div className='h-screen p-8'>
+        <div className='min-h-screen p-8'>
             <AddProjectFormContainer />
         </div>
   

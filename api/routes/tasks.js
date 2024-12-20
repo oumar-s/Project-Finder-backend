@@ -63,7 +63,6 @@ router.get('/incomplete/:userId', async (req, res) => {
                 
             ]
         })
-        console.log(tasks);
         return res.status(200).json(tasks);
     } catch (err) {
         console.error(err);
@@ -106,7 +105,6 @@ router.get('/:projectId/:userId', async (req, res) => {
 });
 
 //Get all task for a specific project.
-
 router.get('/:projectId', async (req, res) => {
     try {
         const projectId = req.params.projectId;
@@ -130,7 +128,6 @@ router.get('/:projectId', async (req, res) => {
                 
             ]
         })
-        console.log(tasks);
         return res.status(200).json(tasks);
     } catch (err) {
         console.error(err);
@@ -139,7 +136,6 @@ router.get('/:projectId', async (req, res) => {
 });
 
 //Assign a task to a user
-
 router.put('/:taskId/:userId', async (req, res) => {
     try {
         const taskId = req.params.taskId;
@@ -155,7 +151,6 @@ router.put('/:taskId/:userId', async (req, res) => {
 });
 
 //Change the status of a task
-
 router.put('/:taskId', async (req, res) => {
     try {
         const taskId = req.params.taskId;
@@ -171,7 +166,6 @@ router.put('/:taskId', async (req, res) => {
 });
 
 //Add a new task
-
 router.post('/:projectId', async (req, res) => {
     console.log("body", req.body)
     try {
@@ -179,16 +173,16 @@ router.post('/:projectId', async (req, res) => {
         const task = await Task.create({
             taskName: req.body.taskName,
             taskDescription: req.body.taskDescription,
-            taskStatus: "Pending",
+            taskStatus: "In Progress",
             ownerID: req.user.id,
-            assignedTo: Number(req.body.assignedTo),
+            assignedTo: req.body.assignedTo,
             projectID: projectId,
         })
         res.status(201).json(task);
     } catch (err) {
+        console.error("Error creating task:", err);
         res.status(400).json(err);
     }
-    
 });
 
 router.delete('/:taskId', async (req, res) => {

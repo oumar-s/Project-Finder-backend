@@ -1,26 +1,88 @@
+import { Type, MessageCircle, ExternalLink, Users } from 'lucide-react';
 const AddTaskFromView = (props) => {
-    const { handleTaskNameChange, handleDescriptionChange, handleAssignedToChange, handleSubmit, formData } = props;
+    const { members, handleChange, handleSubmit, formData } = props;
+    const teams = [];
     return (
-        <form className="container col-6 my-5" style={{ minHeight: "100vh" }} onSubmit={(e) => handleSubmit(e)}>
-            <div className="mb-3">
-                <label className="form-label">Task Name</label>
-                <input value={formData.taskName} type="text" className="border rounded-md" name="projectTitle" onChange={(e) => handleTaskNameChange(e)} />
+        <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+          <div className="flex items-center mb-6 text-gray-700">
+            <h2 className="text-2xl font-semibold">Add New Task</h2>
+          </div>
+    
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Task name */}
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+                <Type className="inline-block mr-2 text-blue-500" size={18} />
+                Task Name
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="taskName"
+                required
+                value={formData.taskName}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter project name"
+              />
             </div>
-            <div className="mb-3">
-                <label className="form-label">Description</label>
-                <textarea value={formData.taskDescription} className="border rounded-md" name="projectDescription" rows="3" onChange={(e) => handleDescriptionChange(e)} />
+    
+            {/* Task description */}
+            <div>
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+                <MessageCircle className="inline-block mr-2 text-purple-500" size={18} />
+                Task Description
+              </label>
+              <textarea
+                id="description"
+                name="taskDescription"
+                required
+                value={formData.taskDescription}
+                onChange={handleChange}
+                rows={4}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                placeholder="Describe your project's goals and impact"
+              />
             </div>
-
-            <div className="mb-3">
-                <label className="form-label">Assigned To</label>
-                <input value={formData.assignedTo} className="border rounded-md" name="" rows="3" onChange={(e) => handleAssignedToChange(e)} />
+    
+            
+    
+            { /*Team Selection */}
+            <div>
+              <label htmlFor="team" className="block text-sm font-medium text-gray-700 mb-2">
+                <Users className="inline-block mr-2 text-emerald-500" size={18} />
+                Select Member
+              </label>
+              <select
+                id="member"
+                name="assignedTo"
+                required
+                value={formData.assignedTo}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              >
+                <option value="">Choose a member</option>
+                {members.map((member, index) => (
+                  <option key={index} value={member.user.id}>
+                    {member.user.firstName} {member.user.lastName}
+                  </option>
+                ))}
+              </select>
             </div>
-
-            <div className="d-grid col-3 mx-auto">
-                <button type="submit" className="" >Add </button>
+    
+            {/* Submit Button */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                className="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition-colors duration-300 flex items-center justify-center"
+              >
+                
+                Create project
+              </button>
             </div>
-        </form>
-    );
+          </form>
+        </div>
+      );
 }
 
 export default AddTaskFromView;

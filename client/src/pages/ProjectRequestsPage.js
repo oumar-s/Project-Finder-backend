@@ -34,8 +34,8 @@ export default function ProjectRequestsPage() {
     ];
 
     const acceptRequest = async (request) => {
-        await changeProjectRequestStatus({ requestId: request.id, status: 'Accepted' });
         await addUserToProject({ projectId: request.projectID, userId: request.userID });
+        await changeProjectRequestStatus({ requestId: request.id, status: 'Accepted' });
         console.log('accept team request', request);
 
     }
@@ -50,8 +50,13 @@ export default function ProjectRequestsPage() {
             <Navbar />
 
             <TabNav tabs={tabs} />
-
+            <div className='min-h-screen max-w-4xl mx-auto p-6'>
+                <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-semibold text-gray-700">Project requests</h2>
+                </div>
             <RequestsListContainer requests={requests} requestType="project" acceptRequest={acceptRequest} declineRequest={declineRequest}/>
+            </div>
+
 
             <Footer />
         </div>

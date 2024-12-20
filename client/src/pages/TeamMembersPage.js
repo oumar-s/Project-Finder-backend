@@ -42,7 +42,7 @@ export default function TeamMembersPage() {
             <Navbar />
 
             <TabNav tabs={tabs} />
-            <div className='h-screen max-w-4xl mx-auto p-6'>
+            <div className='min-h-screen max-w-4xl mx-auto p-6'>
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-2xl font-semibold text-gray-700">Team members</h2>
                 </div>

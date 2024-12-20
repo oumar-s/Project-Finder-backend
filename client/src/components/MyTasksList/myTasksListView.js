@@ -33,7 +33,7 @@ const TasksListView = ({
     return (
       <div className="container mx-auto px-4 py-8 mb-32">
         <h2 className="text-2xl font-bold mb-6 text-gray-700">Tasks</h2>
-        <div className="bg-white rounded-lg shadow overflow-x-auto">
+        <div className="bg-white rounded-lg shadow overflow-x-auto pb-32">
           <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-gray-50 border-b border-gray-200">
@@ -51,7 +51,7 @@ const TasksListView = ({
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-white divide-y divide-gray-200 border-b border-gray-200">
               {tasks.map((task) => (
                 <tr key={task.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">

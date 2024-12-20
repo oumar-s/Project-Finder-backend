@@ -22,8 +22,9 @@ export default function CreateTaskPage() {
             <Navbar />
 
             <TabNav tabs={tabs}/>
-
+            <div className='min-h-screen p-8'>
             <AddTaskFormContainer />
+            </div>
 
             <Footer />
         </div>
