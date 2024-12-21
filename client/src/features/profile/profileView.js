@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ProjectsListContainer } from "../../components/ProjectsList/projectsListContainer";
 import {
     Mail,
     Code2,
@@ -8,6 +9,13 @@ import {
 } from 'lucide-react';
 const ProfileView = ({ members, profile }) => {
     const skills = profile.skills ? profile.skills.split(",") : [];
+    let projects = [];
+    if(members.length > 4){
+        const slicedMembers = members.slice(0, 4);
+        projects = slicedMembers.map((member) => member.project);
+    } else {
+        projects = members.map((member) => member.project);
+    }
     return (
         <div className="flex min-h-screen bg-gray-50">
             {/* Left Sidebar */}
@@ -72,7 +80,7 @@ const ProfileView = ({ members, profile }) => {
                         <h2 className="text-xl font-semibold text-gray-900">Featured Projects</h2>
                     </div>
                     <div className="grid gap-6">
-                        
+                        <ProjectsListContainer projects={projects} />
                     </div>
                 </section>
 
