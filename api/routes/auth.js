@@ -60,4 +60,29 @@ router.get('/user', async (req, res) => {
   }
 });
 
+router.put('/user/update', async (req, res) => {
+  try {
+    const { firstName, lastName, /*email,*/ bio, skills, profilePic } = req.body;
+    const user = await User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    //user.email = email || user.email;
+    user.bio = bio || user.bio;
+    user.skills = skills || user.skills;
+    user.profilePic = profilePic || user.profilePic;
+
+    await user.save();
+
+    res.json({ message: 'Profile updated successfully', user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 module.exports = router;

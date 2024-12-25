@@ -53,13 +53,13 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
           <Link className="" to="/profile">Profile</Link>
         </div>
         <div className="">
-          <Link className="" to="/profile/projects">Projects</Link>
+          <Link className="" to="/profile/projects">My projects</Link>
         </div>
         <div className="">
-          <Link className="" to="/profile/teams">Teams</Link>
+          <Link className="" to="/profile/teams">My teams</Link>
         </div>
         <div className="">
-          <Link className="" to="/profile/requests">Requests</Link>
+          <Link className="" to="/profile/tasks">My tasks</Link>
         </div>
         <div className="">
           <Link className="" to="/account">Account</Link>

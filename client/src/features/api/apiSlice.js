@@ -9,6 +9,13 @@ export const apiSlice = createApi({
     getUser: builder.query({
       query: () => '/auth/user'
     }),
+    updateUserProfile: builder.mutation({
+      query: (data) => ({
+        url: '/auth/user/update',
+        method: 'PUT',
+        body: data
+      }) 
+    }),
 
     //Project
     getAllProjects: builder.query({
@@ -231,6 +238,7 @@ export const apiSlice = createApi({
 
 export const {
   useGetUserQuery,
+  useUpdateUserProfileMutation,
   useGetAllProjectsQuery,
   useGetProjectQuery,
   useAddProjectMutation,

@@ -15,22 +15,23 @@ const ProjectsListView = ({ projects }) => {
       {/* <div className="flex items-center justify-between mb-8">
         <h2 className="text-2xl font-semibold text-gray-900">Team Projects</h2>
       </div> */}
-    {console.log("team projects view: ", projects)}
+    {console.log("projectsList view: ", projects)}
       {/* <div className=""> */}
         {projects.map((project) => (
           <div 
             key={project.id} 
             className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
           >
+            {console.log("a single project: ", project)}
             <div className="flex justify-between items-start mb-4">
               <div>
                 <Link 
                     to={`/projects/${project.id}/info`}
                     className="text-lg font-semibold text-purple-600 mb-1 hover:underline ">
-                  {project.projectTitle}
+                  {project.projectTitle || project.project.projectTitle}
                 </Link>
                 <p className="text-gray-600 text-sm mb-3">
-                  {project.projectDescription}
+                  {project.projectDescription || project.project.projectDescription}
                 </p>
               </div>
               {/* <span 
@@ -45,13 +46,13 @@ const ProjectsListView = ({ projects }) => {
                 <div className="flex items-center text-gray-600">
                   <Users size={18} className="mr-2 text-blue-500" />
                   <span className="text-sm">
-                    {project.team.teamName}
+                    {project.team?.teamName || project.project.team.teamName}
                   </span>
                 </div>
                 <div className="flex items-center text-gray-600">
                   <UserCheck size={18} className="mr-2" />
                   <span className="text-sm font-medium">
-                    {project.owner.firstName} 
+                    {project.owner?.firstName || project.project.owner.firstName} 
                   </span>
                 </div>
               </div>

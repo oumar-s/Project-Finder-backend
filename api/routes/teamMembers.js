@@ -42,6 +42,12 @@ router.get('/teams/:userId', async (req, res) => {
                 {
                     model: Team,
                     as: "team",
+                    include: [
+                        {
+                            model: User,
+                            as: "owner",
+                        }
+                    ]
                 }
             ]
         })

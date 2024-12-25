@@ -44,7 +44,7 @@ router.get('/incomplete/:userId', async (req, res) => {
                 assignedTo: userId,
                 //status does not equal completed
                 taskStatus: {
-                    [Op.ne]: "Completed"
+                    [Op.ne]: "Done"
                 }
             },
             include: [

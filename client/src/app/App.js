@@ -15,7 +15,7 @@ import FilteredProjectsPage from '../pages/FilteredProjectsPage';
 import CreateTaskPage from '../pages/CreateTaskPage';
 import ProjectRequestsPage from '../pages/ProjectRequestsPage';
 import ProjectInfoPage from '../pages/ProjectInfoPage';
-import AccountPage from '../pages/AccountPage';
+import SettingsPage from '../pages/SettingsPage';
 import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
 import ProfileTeamsPage from '../pages/ProfileTeamsPage';
@@ -78,7 +78,7 @@ function App() {
 						path="/account"
 						element={
 							<PrivateRouteRequiresAuth>
-								<AccountPage />
+								<SettingsPage />
 							</PrivateRouteRequiresAuth>
 						}
 					/>

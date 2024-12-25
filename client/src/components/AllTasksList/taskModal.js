@@ -1,4 +1,4 @@
-const TaskModal = ({ task, onClose, getStatusColor }) => {
+const TaskModal = ({ task, onClose }) => {
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
           year: 'numeric',
@@ -6,6 +6,16 @@ const TaskModal = ({ task, onClose, getStatusColor }) => {
           day: 'numeric'
         });
       };
+
+    const getStatusColor = (status) => {
+      const statusColors = {
+        'Done': 'bg-green-100 text-green-800',
+        'In Progress': 'bg-blue-100 text-blue-800',
+        'Todo': 'bg-yellow-100 text-yellow-800',
+      };
+      return statusColors[status] || 'bg-gray-100 text-gray-800';
+    };
+
     if (!task) return null;
 
     return (

@@ -12,7 +12,7 @@ const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
     </div>
   );
   return (
-    <div className="max-h-96 overflow-y-auto">
+    <div className="overflow-y-auto">
       {/* Tasks Section */}
       <div>
         

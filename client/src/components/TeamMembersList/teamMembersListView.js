@@ -26,9 +26,9 @@ const TeamMembersListView = ({ members, onDeleteMember, type, isOwner }) => {
             <div className="flex items-center space-x-3">
               {member.user.profilePic ? (
                 <img
-                  src='{member.user.profilePic}'
+                  src={member.user.profilePic}
                   alt={member.user.firstName}
-                  className="w-10 h-10 rounded-full object-cover"
+                  className="w-10 h-10 rounded-full border-2 border-blue-100"
                 />
               ) : (
                 <div>
