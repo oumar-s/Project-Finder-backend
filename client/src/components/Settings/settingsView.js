@@ -12,7 +12,7 @@ import {
     AtSign,
     Code2,
 } from 'lucide-react';
-const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, setProfilePic, profilePic, activeTab, setActiveTab, handleChange, userForm, updateProfileInfo, handleEmailChange, emailForm, updateEmail, emailError, handlePasswordChange, passwordForm, updatePassword, passwordError, showEmailConfirm, setShowEmailConfirm, showPasswordConfirm, setShowPasswordConfirm, confirmEmailUpdate, confirmPasswordUpdate }) => {
+const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTeam, uploadProfilePic, setProfilePic, profilePic, activeTab, setActiveTab, handleChange, userForm, updateProfileInfo, handleEmailChange, emailForm, handleUpdateEmail, emailError, handlePasswordChange, passwordForm, handleUpdatePassword, passwordError, showEmailConfirm, setShowEmailConfirm, showPasswordConfirm, setShowPasswordConfirm, confirmEmailUpdate, confirmPasswordUpdate, emailSuccess, passwordSuccess, showLeaveProjectConfirm, setShowLeaveProjectConfirm, confirmLeaveProject, showLeaveTeamConfirm, setShowLeaveTeamConfirm, confirmLeaveTeam, projectLeaveSuccess, teamLeaveSuccess }) => {
     const tabs = [
         { id: 'profile', label: 'Profile', icon: User },
         { id: 'account', label: 'Account', icon: Lock },
@@ -20,13 +20,12 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
         { id: 'teams', label: 'Manage Teams', icon: Users }
     ];
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen">
             <div className="max-w-6xl mx-auto px-4 py-8">
                 <h1 className="text-2xl font-semibold text-gray-900 mb-8">Settings</h1>
-
                 <div className="flex gap-6">
                     {/* Sidebar */}
-                    <div className="w-64 flex-shrink-0">
+                    <div className="bg-white w-64 flex-shrink-0">
                         <nav className="space-y-1">
                             {tabs.map((tab) => {
                                 const Icon = tab.icon;
@@ -48,11 +47,14 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                     </div>
 
                     {/* Main Content */}
-                    <div className="flex-1 bg-white rounded-lg border border-gray-200 p-6">
+                    <div className="flex-1 rounded-lg border border-gray-200 p-6 bg-gray-50">
                         {activeTab === 'profile' && (
                             <div className="space-y-6">
                                 <form onSubmit={updateProfileInfo} className="space-y-6">
                                     <h2 className="text-xl font-medium text-gray-900">Profile Settings</h2>
+                                    {/* Feedback Messages */}
+                                    {emailSuccess && <p className="text-green-500 text-sm mb-4">{emailSuccess}</p>}
+                                    {passwordSuccess && <p className="text-green-500 text-sm mb-4">{passwordSuccess}</p>}
                                     <div className="">
                                         <label className="cursor-pointer">
                                             <input
@@ -180,7 +182,9 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                                             <AtSign className="h-5 w-5 mr-2 text-gray-500" />
                                             Change Email
                                         </h3>
-                                        <form onSubmit={(e) => { e.preventDefault(); updateEmail(); }}>
+                                        {/* Feedback Messages */}
+                                        {emailSuccess && <p className="text-green-500 text-sm mb-4">{emailSuccess}</p>}
+                                        <form onSubmit={(e) => { e.preventDefault(); handleUpdateEmail(); }}>
                                             <div className="space-y-2">
                                                 <input
                                                     type="email"
@@ -212,7 +216,9 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                                             <KeyRound className="h-5 w-5 mr-2 text-gray-500" />
                                             Change Password
                                         </h3>
-                                        <form onSubmit={(e) => { e.preventDefault(); updatePassword(); }}>
+                                        {/* Feedback Messages */}
+                                        {passwordSuccess && <p className="text-green-500 text-sm mb-4">{passwordSuccess}</p>}
+                                        <form onSubmit={(e) => { e.preventDefault(); handleUpdatePassword(); }}>
                                             <div className="space-y-2">
                                                 <input
                                                     type="password"
@@ -244,15 +250,21 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                         {activeTab === 'projects' && (
                             <div className="space-y-6">
                                 <h2 className="text-xl font-medium text-gray-900">Manage Projects</h2>
-
+                                {projectLeaveSuccess && <p className="text-green-500 text-sm mb-4">{projectLeaveSuccess}</p>}
+                                {!projectMembers.length && (
+                                    <p className="text-gray-500 text-sm mb-4">No projects found.</p>
+                                )}
                                 <div className="space-y-4">
-                                    {['Project Alpha', 'Project Beta', 'Project Gamma'].map((project) => (
-                                        <div key={project} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                    {projectMembers.map((projectMember) => (
+                                        <div key={projectMember.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                                             <div className="flex items-center">
                                                 <Building2 className="h-5 w-5 text-purple-500 mr-3" />
-                                                <span className="font-medium text-gray-900">{project}</span>
+                                                <span className="font-medium text-gray-900">{projectMember.project.projectTitle}</span>
                                             </div>
-                                            <button className="px-3 py-1 text-sm text-red-600 hover:text-red-700 flex items-center">
+                                            <button 
+                                             className="px-3 py-1 text-sm text-red-600 hover:text-red-700 flex items-center"
+                                             onClick={() => setShowLeaveProjectConfirm(projectMember.id)}
+                                             >
                                                 <LogOut className="h-4 w-4 mr-1" />
                                                 Leave
                                             </button>
@@ -265,15 +277,21 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                         {activeTab === 'teams' && (
                             <div className="space-y-6">
                                 <h2 className="text-xl font-medium text-gray-900">Manage Teams</h2>
-
+                                {teamLeaveSuccess && <p className="text-green-500 text-sm mb-4">{teamLeaveSuccess}</p>}
+                                {!teamMembers.length && (
+                                    <p className="text-gray-500 text-sm mb-4">No teams found.</p>
+                                )}
                                 <div className="space-y-4">
-                                    {['Frontend Team', 'Backend Team', 'Design Team'].map((team) => (
-                                        <div key={team} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                                    {teamMembers.map((teamMember) => (
+                                        <div key={teamMember.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
                                             <div className="flex items-center">
                                                 <Users className="h-5 w-5 text-blue-500 mr-3" />
-                                                <span className="font-medium text-gray-900">{team}</span>
+                                                <span className="font-medium text-gray-900">{teamMember.team.teamName}</span>
                                             </div>
-                                            <button className="px-3 py-1 text-sm text-red-600 hover:text-red-700 flex items-center">
+                                            <button 
+                                             className="px-3 py-1 text-sm text-red-600 hover:text-red-700 flex items-center"
+                                             onClick={() => setShowLeaveTeamConfirm(teamMember.id)}
+                                            >
                                                 <LogOut className="h-4 w-4 mr-1" />
                                                 Leave
                                             </button>
@@ -328,6 +346,54 @@ const SettingsView = ({ user, projectMembers, teamMembers, uploadProfilePic, set
                                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                             >
                                 Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Leave Project Confirmation Modal */}
+            {showLeaveProjectConfirm && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-medium text-gray-900 mb-4">Confirm Leave Project</h2>
+                        <p className="mb-4">Are you sure you want to leave this project?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={() => setShowLeaveProjectConfirm(null)}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={confirmLeaveProject}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                            >
+                                Leave
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Leave Team Confirmation Modal */}
+            {showLeaveTeamConfirm && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h2 className="text-lg font-medium text-gray-900 mb-4">Confirm Leave Team</h2>
+                        <p className="mb-4">Are you sure you want to leave this team?</p>
+                        <div className="flex justify-end space-x-4">
+                            <button
+                                onClick={() => setShowLeaveTeamConfirm(null)}
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={confirmLeaveTeam}
+                                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                            >
+                                Leave
                             </button>
                         </div>
                     </div>

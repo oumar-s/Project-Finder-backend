@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import { AllProjectsListContainer} from '../components/AllProjectsList/allProjectsListContainer';
 import { AllTeamsListContainer } from '../components/AllTeamsList/allTeamsListContainer';
 import { SettingsContainer } from '../components/Settings/settingsContainer';
-import { useRemoveMemberFromTeamMutation, useRemoveUserFromProjectMutation, useGetAllProjectsForUserQuery, useGetUserTeamsQuery, useUpdateUserProfileMutation } from '../features/api/apiSlice';
+import { useRemoveMemberFromTeamMutation, useRemoveUserFromProjectMutation, useGetAllProjectsForUserQuery, useGetUserTeamsQuery, useUpdateUserProfileMutation, useUpdateEmailMutation, useUpdatePasswordMutation } from '../features/api/apiSlice';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { useAuth } from '../context/authContext';
@@ -14,6 +15,8 @@ export default function SettingsPage() {
     const [updateUserProfile] = useUpdateUserProfileMutation();
     const [removeMemberFromTeam] = useRemoveMemberFromTeamMutation();
     const [removeUserFromProject] = useRemoveUserFromProjectMutation();
+    const [updateEmail] = useUpdateEmailMutation();
+    const [updatePassword] = useUpdatePasswordMutation();
 
     const leaveProject = async (projectId) => {
         await removeUserFromProject(projectId);
@@ -24,6 +27,24 @@ export default function SettingsPage() {
         await removeMemberFromTeam(teamId);
         console.log("leave team clicked");
     }
+
+    const handleEmailUpdate = async (newEmail) => {
+        try {
+            await updateEmail({ userId: user.id, newEmail });
+            // handle success
+        } catch (error) {
+            // handle error
+        }
+    };
+
+    const handlePasswordUpdate = async (newPassword) => {
+        try {
+            await updatePassword({ userId: user.id, newPassword });
+            // handle success
+        } catch (error) {
+            // handle error
+        }
+    };
 
     if (projectsIsLoading || teamsIsLoading) {
         return <div>Loading...</div>
@@ -54,7 +75,7 @@ export default function SettingsPage() {
             <Navbar page="Account" />
 
             <div className="min-h-screen">
-            <SettingsContainer user={user} updateUserProfile={updateUserProfile} projectMembers={projects} teamMembers={teams}/>
+            <SettingsContainer user={user} updateUserProfile={updateUserProfile} updateEmail={updateEmail}  updatePassword={updatePassword} projectMembers={projects} teamMembers={teams} removeUserFromProject={removeUserFromProject} removeMemberFromTeam={removeMemberFromTeam} />
             </div>
 
             <Footer />

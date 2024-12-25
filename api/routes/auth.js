@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { User } = require("../models");
 const passport = require("../middlewares/authentication");
 const admin = require('firebase-admin');
+const bcrypt = require('bcryptjs');
 
 router.post("/signup", async (req, res) => {
   try {
@@ -79,6 +80,40 @@ router.put('/user/update', async (req, res) => {
     await user.save();
 
     res.json({ message: 'Profile updated successfully', user });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to update email
+router.put('/update-email', async (req, res) => {
+  try {
+    const { userId, newEmail } = req.body;
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    user.email = newEmail;
+    await user.save();
+    return res.status(200).json({ message: 'Email updated successfully' });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to update password
+router.put('/update-password', async (req, res) => {
+  try {
+    const { userId, newPassword } = req.body;
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    user.password = newPassword; // Set the virtual password field
+    await user.save(); // This will trigger the beforeSave hook to hash the password
+    return res.status(200).json({ message: 'Password updated successfully' });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal server error' });

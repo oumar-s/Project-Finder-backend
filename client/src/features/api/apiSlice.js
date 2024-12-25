@@ -16,6 +16,20 @@ export const apiSlice = createApi({
         body: data
       }) 
     }),
+    updateEmail: builder.mutation({
+      query: (data) => ({
+        url: '/auth/update-email',
+        method: 'PUT',
+        body: data
+      })
+    }),
+    updatePassword: builder.mutation({
+      query: (data) => ({
+        url: '/auth/update-password',
+        method: 'PUT',
+        body: data
+      })
+    }),
 
     //Project
     getAllProjects: builder.query({
@@ -239,6 +253,8 @@ export const apiSlice = createApi({
 export const {
   useGetUserQuery,
   useUpdateUserProfileMutation,
+  useUpdateEmailMutation,
+  useUpdatePasswordMutation,
   useGetAllProjectsQuery,
   useGetProjectQuery,
   useAddProjectMutation,
