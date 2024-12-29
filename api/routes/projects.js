@@ -63,7 +63,7 @@ router.post('/:teamId', async (req, res) => {
       projectTitle: req.body.projectTitle,
       projectDescription: req.body.projectDescription,
       projectRepository: req.body.projectRepository,
-      projectStatus: "New",
+      projectStatus: "Open",
       ownerID: ownerId
     })
     return res.status(200).json(project);

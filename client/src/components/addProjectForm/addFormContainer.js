@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AddProjectFormView from "./addProjectFormView";
-import { useAddProjectMutation, useGetUserTeamsQuery } from "../../features/api/apiSlice";
+import { useAddProjectMutation, useGetUserTeamsQuery, useAddUserToProjectMutation } from "../../features/api/apiSlice";
 import { useAuth } from "../../context/authContext";
 
 export function AddProjectFormContainer() {
@@ -13,6 +13,7 @@ export function AddProjectFormContainer() {
     });
     const { data: userTeams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(user?.id);
     const [addPost] = useAddProjectMutation();
+    const [addUserToProject] = useAddUserToProjectMutation();
 
     if (teamsLoading) {
         return <div>Loading...</div>;
@@ -26,7 +27,11 @@ export function AddProjectFormContainer() {
         event.preventDefault();
         console.log('projectForm', projectForm);
         let project = {...projectForm};
-        await addPost({project: project, teamId: projectForm.teamId});
+        const addedProject = await addPost({project: project, teamId: projectForm.teamId});
+        console.log('addedProject', addedProject);
+        //add user to project
+        await addUserToProject({projectId: addedProject.data.id, userId: user.id});
+
         //set each input to empty
         setProjectForm({
             projectTitle: '',

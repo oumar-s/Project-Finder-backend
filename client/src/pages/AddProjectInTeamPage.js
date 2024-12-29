@@ -3,7 +3,7 @@ import Footer from '../components/footer';
 import { AddProjectFormContainer } from '../features/project/addProjectForm/addFormContainer';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
-function PostPage() {
+function AddProjectInTeamPage() {
 
   let params = useParams();
 
@@ -29,4 +29,4 @@ function PostPage() {
   );
 }
 
-export default PostPage;
+export default AddProjectInTeamPage;

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import AddTeamFormView from "./addTeamFormView";
-import { useAddTeamMutation } from "../../api/apiSlice";
+import { useAddTeamMutation, useAddMemberToTeamMutation } from "../../api/apiSlice";
+import { useAuth } from "../../../context/authContext";
 import { storage } from "../../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 
 export function AddTeamFormContainer() {
+    const auth = useAuth();
     const [teamForm, setTeamForm] = useState({
         teamName: '',
         teamDescription: '',
@@ -15,6 +17,7 @@ export function AddTeamFormContainer() {
     const [teamImage, setTeamImage] = useState(null);
     const [teamBanner, setTeamBanner] = useState(null);
     const [addTeam] = useAddTeamMutation();
+    const [addMemberToTeam] = useAddMemberToTeamMutation();
     
     //These event handlers keeps track of changes as the user fills out the form.
     //these event handlers will be passed to the AddProjectFormView as a prop.
@@ -86,7 +89,9 @@ export function AddTeamFormContainer() {
 
         let team = {...teamForm};
         console.log('team form', team);
-        await addTeam(team);
+        const addedTeam = await addTeam(team);
+        addMemberToTeam({teamId: addedTeam.data.id, userId: auth.user?.id});
+        console.log('added team', addedTeam);
         setTeamForm({
             teamName: '',
             teamDescription: '',

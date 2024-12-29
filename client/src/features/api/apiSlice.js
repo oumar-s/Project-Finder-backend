@@ -3,32 +3,36 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api', credentials: 'include' }),
-  tagTypes: ['getProjects', 'getTeamRequests', 'getProjectTasks', 'myTasksInProject'],
+  tagTypes: ['getProjects', 'getTeamRequests', 'getProjectTasks', 'myTasksInProject', 'getUser', 'getProjectRequests', 'getProjectMembers', 'getProject', 'getProjectsForTeam', 'getUserProjectsInTeam', 'getAllProjectsForUser', 'getAllTeams', 'getTeam', 'getTeamMembers', 'getUserTeams', 'getTasksForUser', 'getIncompleteTasksForUser'],
   endpoints: (builder) => ({
     //User
     getUser: builder.query({
-      query: () => '/auth/user'
+      query: () => '/auth/user',
+      providesTags: ['getUser']
     }),
     updateUserProfile: builder.mutation({
       query: (data) => ({
         url: '/auth/user/update',
         method: 'PUT',
         body: data
-      }) 
+      }),
+      invalidatesTags: ['getUser']
     }),
     updateEmail: builder.mutation({
       query: (data) => ({
         url: '/auth/update-email',
         method: 'PUT',
         body: data
-      })
+      }),
+      invalidatesTags: ['getUser']
     }),
     updatePassword: builder.mutation({
       query: (data) => ({
         url: '/auth/update-password',
         method: 'PUT',
         body: data
-      })
+      }),
+      invalidatesTags: ['getUser']
     }),
 
     //Project
@@ -38,7 +42,8 @@ export const apiSlice = createApi({
     }),
 
     getProject: builder.query({
-      query: (projectId) => `/projects/${projectId}`
+      query: (projectId) => `/projects/${projectId}`,
+      providesTags: ['getProject']
     }),
 
     addProject: builder.mutation({
@@ -47,26 +52,28 @@ export const apiSlice = createApi({
         method: 'POST',
         body: arg.project
       }),
-      invalidatesTags: ['getProjects']
+      invalidatesTags: ['getProjects', 'getProject', 'getProjectsForTeam','getUserProjectsInTeam' , 'getAllProjectsForUser', 'getProjectMembers']
     }),
     
     getProjectsForTeam: builder.query({
-      query: (teamId) => `/projects/teams/${teamId}`
+      query: (teamId) => `/projects/teams/${teamId}`,
+      providesTags: ['getProjectsForTeam']
     }),
 
     getUserProjectsInTeam: builder.query({
-      query: (params) => `/projects/${params.teamId}/${params.userId}`
+      query: (params) => `/projects/${params.teamId}/${params.userId}`,
+      providesTags: ['getUserProjectsInTeam']
     }),
     
     //project members
     getAllProjectsForUser: builder.query({
       query: (userId) => `/projectMembers/${userId}`,
-      providesTags: []
+      providesTags: ['getAllProjectsForUser']
     }),
 
     getProjectMembers: builder.query({
       query: (projectId) => `/projectMembers/members/${projectId}`,
-      providesTags: []
+      providesTags: ['getProjectMembers']
     }),
 
     addUserToProject: builder.mutation({
@@ -75,7 +82,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getProjectMembers', 'getAllProjectsForUser', 'getUserProjectsInTeam']
     }),
 
     removeUserFromProject: builder.mutation({
@@ -84,13 +91,13 @@ export const apiSlice = createApi({
         method: 'DELETE',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getProjectMembers']
     }),
 
     //project requests
     getProjectRequests: builder.query({
       query: (projectId) => `/projectRequests/${projectId}`,
-      providesTags: []
+      providesTags: ['getProjectRequests']
     }),
 
     addRequestToProject: builder.mutation({
@@ -99,27 +106,27 @@ export const apiSlice = createApi({
         method: 'POST',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getProjectRequests']
     }),
 
     changeProjectRequestStatus: builder.mutation({
       query: (data) => ({
         url: `/projectRequests/${data.requestId}`,
-        method: 'PATCH',
+        method: 'PUT',
         body: {status: data.status}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getProjectRequests']
     }),
 
     //teams
     getAllTeams: builder.query({
       query: () => '/teams',
-      providesTags: []
+      providesTags: ['getAllTeams']
     }),
     
     getTeam: builder.query({
       query: (teamId) => `/teams/${teamId}`,
-      providesTags: []
+      providesTags: ['getTeam']
     }),
 
     addTeam: builder.mutation({
@@ -128,18 +135,18 @@ export const apiSlice = createApi({
         method: 'POST',
         body: team
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getAllTeams', 'getTeam', 'getUserTeams', 'getTeamMembers']
     }),
 
     //team members
     getTeamMembers: builder.query({
       query: (teamId) => `/teamMembers/${teamId}`,
-      providesTags: []
+      providesTags: ['getTeamMembers']
     }),
 
     getUserTeams: builder.query({
       query: (userId) => `/teamMembers/teams/${userId}`,
-      providesTags: []
+      providesTags: ['getUserTeams']
     }),
 
     addMemberToTeam: builder.mutation({
@@ -148,7 +155,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getTeamMembers']
     }),
 
     removeMemberFromTeam: builder.mutation({
@@ -157,7 +164,7 @@ export const apiSlice = createApi({
         method: 'DELETE',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getTeamMembers']
     }),
 
     //team requests
@@ -172,13 +179,13 @@ export const apiSlice = createApi({
         method: 'POST',
         body: {}
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getTeamRequests']
     }),
 
     changeTeamRequestStatus: builder.mutation({
       query: (data) => ({
         url: `/teamRequests/${data.requestId}`,
-        method: 'PATCH',
+        method: 'PUT',
         body: { status: data.status },
       }),
       invalidatesTags: ['getTeamRequests']
@@ -188,12 +195,12 @@ export const apiSlice = createApi({
     //tasks
     getTasksForUser: builder.query({
       query: (userId) => `/tasks/user/${userId}`,
-      providesTags: []
+      providesTags: ['getTasksForUser']
     }),
 
     getIncompleteTasksForUser: builder.query({
       query: (userId) => `/tasks/incomplete/${userId}`,
-      providesTags: []
+      providesTags: ['getIncompleteTasksForUser']
     }),
 
     getProjectTasksAssignedToUser: builder.query({
@@ -214,7 +221,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => {
         console.log('Invalidation Args:', arg);
-        return ['getProjectTasks', 'myTasksInProject'];
+        return ['getProjectTasks', 'myTasksInProject', 'getTasksForUser', 'getIncompleteTasksForUser'];
       }
     }),
 
@@ -226,7 +233,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => {
         console.log('Invalidation Args:', arg);
-        return ['getProjectTasks', 'myTasksInProject'];
+        return ['getProjectTasks', 'myTasksInProject', 'getTasksForUser', 'getIncompleteTasksForUser'];
       }
     }),
 
@@ -236,7 +243,7 @@ export const apiSlice = createApi({
         method: 'POST',
         body: data.task
       }),
-      invalidatesTags: []
+      invalidatesTags: ['getProjectTasks', 'myTasksInProject', 'getTasksForUser', 'getIncompleteTasksForUser']
     }),
 
     deleteTask: builder.mutation({
@@ -245,7 +252,7 @@ export const apiSlice = createApi({
         method: 'DELETE',
         body: {}
       }),
-      invalidatesTags: ['getProjectTasks']
+      invalidatesTags: ['getProjectTasks', 'myTasksInProject', 'getTasksForUser', 'getIncompleteTasksForUser']
     })
   }),
 });

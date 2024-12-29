@@ -6,7 +6,8 @@ import Footer from '../components/footer';
 
 export default function ExplorePage() {
     const tabs = [
-        { id: 1, name: 'Home', link: "/home" }, { id: 2, name: "Teams", link: "/teams" }
+        { id: 1, name: "Teams", link: "/teams" },
+        { id: 2, name: 'Projects', link: "/projects" }, 
     ];
 
     const { data, isSuccess, error, isLoading } = useGetAllProjectsQuery();

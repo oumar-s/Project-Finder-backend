@@ -4,7 +4,7 @@ import { AddProjectFormContainer } from '../components/addProjectForm/addFormCon
 import TabNav from '../components/TabNav';
 function AddProjectPage() {
   
-    const tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/home"}];
+    const tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
 
     return (
       <div >

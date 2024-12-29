@@ -59,13 +59,19 @@ const LandingPage = () => (
 		  	The hub for developer collaborator
           </p>
           <div className="flex gap-4 justify-center">
-            <button className="inline-flex items-center px-6 py-3 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 transition-colors">
+            <Link 
+              className="inline-flex items-center px-6 py-3 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 transition-colors"
+              to="/sign-up"
+              >
               Get Started
               <ArrowRight className="ml-2 w-4 h-4" />
-            </button>
-            <button className="inline-flex items-center px-6 py-3 rounded-md border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+            </Link>
+            <Link 
+              className="inline-flex items-center px-6 py-3 rounded-md border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+              to="/teams"
+            >
               Browse Projects
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -144,10 +150,11 @@ const LandingPage = () => (
           <p className="text-xl mb-8 text-blue-100">
 		  Synergy is more than just a platform—it’s a vibrant community where developers come together to create, learn, and grow. Sign up today and start building something amazing.
           </p>
-          <button className="inline-flex items-center px-6 py-3 rounded-md bg-white text-blue-500 font-medium hover:bg-blue-50 transition-colors">
+          <Link className="inline-flex items-center px-6 py-3 rounded-md bg-white text-blue-500 font-medium hover:bg-blue-50 transition-colors"
+            to="/sign-up">
 		  Get Started
             <ArrowRight className="ml-2 w-4 h-4" />
-          </button>
+          </Link>
         </div>
       </div>
     </section>

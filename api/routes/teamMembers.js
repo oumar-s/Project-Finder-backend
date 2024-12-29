@@ -34,7 +34,7 @@ router.get('/:teamId', async (req, res) => {
 router.get('/teams/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
-        const user = await TeamMember.findAll({
+        const member = await TeamMember.findAll({
             where: {
                 userID: userId
             },
@@ -51,8 +51,8 @@ router.get('/teams/:userId', async (req, res) => {
                 }
             ]
         })
-        console.log(user);
-        return res.status(200).json(user);
+        console.log(member);
+        return res.status(200).json(member);
     } catch (err) {
         console.error(err);
         return res.status(500).json({ error: 'Internal server error' });

@@ -11,13 +11,13 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
         { name: "Taylor Wong", role: "billyfil@example.com" }
     ]
     return (
-        <div className="bg-gray-50 min-h-screen">
+        <div className="bg-gray-50 min-h-screen pt-4">
             {/* Section 1: Team Banner */}
-            <div className="w-full h-64 object-cover">
+            <div className="w-11/12 h-64 mx-auto rounded-2xl object-cover">
                 <img
                     src={team.teamBanner}
                     alt="Team Banner"
-                    className="w-full h-full"
+                    className="w-full h-full rounded-2xl"
                 />
                 {/* <div className="absolute inset-0 flex items-center justify-center">
               <h1 className="text-white text-4xl font-bold text-center drop-shadow-lg">
@@ -54,7 +54,9 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             <Briefcase className="mr-2 text-blue-600" />
                             <h3 className="text-xl font-semibold text-blue-800">Your Projects</h3>
                         </div>
-                        <ProjectsListContainer projects={myProjects} />
+                        <div className='max-h-96 overflow-y-auto'>
+                            <ProjectsListContainer projects={myProjects} />
+                        </div>
 
                     </div>
                     <div className='flex flex-col w-full'>
@@ -62,8 +64,9 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             <Users2 className="mr-2 text-blue-600" />
                             <h3 className="text-xl font-semibold text-blue-800">Team Projects</h3>
                         </div>
-
-                        <ProjectsContainer projects={teamProjects} />
+                        <div className='max-h-96 overflow-y-auto'>
+                            <ProjectsContainer projects={teamProjects} />
+                        </div>
                     </div>
                 </div>
 

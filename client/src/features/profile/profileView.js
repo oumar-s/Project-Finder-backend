@@ -9,6 +9,7 @@ import {
 } from 'lucide-react';
 const ProfileView = ({ members, profile }) => {
     const skills = profile.skills ? profile.skills.split(",") : [];
+    console.log('skills', skills);
     let projects = [];
     if(members.length > 4){
         const slicedMembers = members.slice(0, 4);
@@ -80,7 +81,11 @@ const ProfileView = ({ members, profile }) => {
                         <h2 className="text-xl font-semibold text-gray-900">Featured Projects</h2>
                     </div>
                     <div className="grid gap-6">
-                        <ProjectsListContainer projects={projects} />
+                        {projects.length > 0 ? (
+                            <ProjectsListContainer projects={projects} />
+                        ) : (
+                            <p className="text-gray-500">No Projects found</p>
+                        )}
                     </div>
                 </section>
 

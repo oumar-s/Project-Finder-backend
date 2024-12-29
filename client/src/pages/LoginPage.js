@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
-
-//import Navbar from "../components/navbar";
-//import Footer from "../components/footer";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 function LoginPage() {
   const auth = useAuth();
@@ -53,8 +52,8 @@ function LoginPage() {
 
   return (
     <div className="">
-      {/* <Navbar /> */}
-      <div className="flex flex-col items-center gap-8 m-8 ">
+      <Navbar />
+      <div className="min-h-screen flex flex-col items-center gap-8 m-8 ">
 
         <div className="text-xl">
           <Link className="" to="/">Synergy</Link>
@@ -111,7 +110,7 @@ function LoginPage() {
         </div>
 
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

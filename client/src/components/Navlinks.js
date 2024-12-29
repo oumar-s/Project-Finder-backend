@@ -15,7 +15,7 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
     return (
       <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-8">
         <div className="">
-          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/home">Explore</Link>
+          <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/teams">Explore</Link>
         </div>
         <div className="">
           <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/about">About</Link>

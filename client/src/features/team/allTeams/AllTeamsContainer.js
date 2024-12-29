@@ -1,8 +1,11 @@
 import { useAddRequestToTeamMutation } from "../../api/apiSlice";
+import { useAuth } from "../../../context/authContext";
 import AllTeamsView from "./allTeamsView";
 import { useState } from "react";
 
 export function AllTeamsContainer({teams, type}) {
+  const { user } = useAuth();
+  const isAuthenticated = user ? true : false;
   const [joinedTeams, setJoinedTeams] = useState(new Set());
   const [loadingTeams, setLoadingTeams] = useState(new Set());
   const [showAlert, setShowAlert] = useState({ visible: false, teamId: null });
@@ -30,6 +33,7 @@ export function AllTeamsContainer({teams, type}) {
     console.log("all teams: ", teams);
     return (
       <AllTeamsView teams={teams} 
+      isAuthenticated={isAuthenticated}
       type={type} 
       handleJoinTeam={handleJoinTeam} 
       joinedTeams={joinedTeams} 

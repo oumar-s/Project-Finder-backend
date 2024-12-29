@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { AllProjectsListContainer} from '../components/AllProjectsList/allProjectsListContainer';
 import { AllTeamsListContainer } from '../components/AllTeamsList/allTeamsListContainer';
 import { SettingsContainer } from '../components/Settings/settingsContainer';
-import { useRemoveMemberFromTeamMutation, useRemoveUserFromProjectMutation, useGetAllProjectsForUserQuery, useGetUserTeamsQuery, useUpdateUserProfileMutation, useUpdateEmailMutation, useUpdatePasswordMutation } from '../features/api/apiSlice';
+import { useGetUserQuery, useRemoveMemberFromTeamMutation, useRemoveUserFromProjectMutation, useGetAllProjectsForUserQuery, useGetUserTeamsQuery, useUpdateUserProfileMutation, useUpdateEmailMutation, useUpdatePasswordMutation } from '../features/api/apiSlice';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { useAuth } from '../context/authContext';
 
 export default function SettingsPage() {
     const auth = useAuth();
-    const user = auth?.user;
+    //const user = auth?.user;
+    const { data: user, error: userError, isLoading: userIsLoading } = useGetUserQuery();
     const { data: projects, projectsError, projectsIsLoading } = useGetAllProjectsForUserQuery(user?.id);
     const { data: teams, teamsError, teamsIsLoading } = useGetUserTeamsQuery(user?.id);
     const [updateUserProfile] = useUpdateUserProfileMutation();
@@ -46,10 +47,10 @@ export default function SettingsPage() {
         }
     };
 
-    if (projectsIsLoading || teamsIsLoading) {
+    if (projectsIsLoading || teamsIsLoading || userIsLoading) {
         return <div>Loading...</div>
     }   
-    if (projectsError || teamsError) {
+    if (projectsError || teamsError || userError) {
         return <div>There was an error.</div>
     }
 

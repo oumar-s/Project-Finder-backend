@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 
 
 
-export default function ProjectPage() {
+export default function ProjectAllTasksPage() {
 
     const params = useParams();
     const auth = useAuth();
@@ -32,15 +32,14 @@ export default function ProjectPage() {
     }
 
     const isOwner = project?.ownerID === auth.user?.id;
-    let tabs = [
-            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
-            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-            { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
-            { id: 4, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-            
-            
-        ];
+    const tabs = [
+        { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+        { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+        { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+        { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
+        { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+        { id: 6, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+    ];
 
     return (
         <div >

@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import ErrorAlert from "../components/ErrorAlert";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 // sign up a user with first name, last name, email, and password and put the data into sql database with post request
 function SignUpPage() {
@@ -58,7 +59,7 @@ function SignUpPage() {
 	return (
 		<>
 			<Navbar />
-			<div className="flex flex-col items-center gap-8 m-8">
+			<div className="min-h-screen flex flex-col items-center gap-8 m-8">
 				{error && <ErrorAlert details={"Failed to save the content"} />}
 				<h1 className="text-xl">Welcome to Synergy!</h1>
 				<p className="text-2xl">Sign up now to get started</p>
@@ -122,6 +123,7 @@ function SignUpPage() {
 					</div>
 				</form>
 			</div>
+			<Footer />
 		</>
 	);
 }

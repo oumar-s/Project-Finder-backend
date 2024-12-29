@@ -86,12 +86,12 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
     console.log('user form', user);
     await updateUserProfile(user);
     setUserForm({
-        profilePic: '',
-        firstName: '',
-        lastName: '',
-        //email: '',
-        bio: '',
-        skills: '',
+      profilePic: user.profilePic,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      //email: user.email,
+      bio: user.bio,
+      skills: user.skills,
     });
     //setProfilePic(null);
 }

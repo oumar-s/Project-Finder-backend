@@ -8,7 +8,8 @@ export default function AllTeamsPage() {
     const { data,  error, isLoading } = useGetAllTeamsQuery();
 
     const tabs = [
-        {id: 1, name: 'Home', link: "/home"}, {id: 2, name: "Teams", link: "/teams"}
+        { id: 1, name: "Teams", link: "/teams" },
+        { id: 2, name: 'Projects', link: "/projects" }, 
     ];
 
     if (isLoading) {

@@ -21,7 +21,7 @@ const Toast = ({ children, onClose }) => (
   );
 
 
-const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, joinedProjects, showAlert, setShowAlert}) => {
+const AllProjectsView = ({projects, isAuthenticated, type, handleJoinProject,  loadingProjects, joinedProjects, showAlert, setShowAlert}) => {
     const getStatusStyles = (status) => {
         switch (status) {
           case 'open':
@@ -39,7 +39,11 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
     }
     return (
         <div className="flex flex-col gap-4">
-          
+          {!isAuthenticated && (
+            <div className="mb-4 text-red-500">
+              You must login to join a project
+            </div>
+          )}
         {  console.log("all projects view: ", projects)}
           {/* <div className="space-y-4"> */}
             {projects.map((project) => (
@@ -55,7 +59,7 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <Link 
-                        to={`/projects/${project.id}/info`}
+                        to={isAuthenticated ? `/projects/${project.id}/info` : '/project-info-view/' + project.id}
                         className="text-lg font-semibold text-purple-600 mb-1 hover:underline ">
                       {project.projectTitle}
                     </Link>
@@ -86,7 +90,7 @@ const AllProjectsView = ({projects, type, handleJoinProject,  loadingProjects, j
                     </div>
                   </div>
                   
-                  {project.projectStatus === 'Open' && (
+                  {isAuthenticated && project.projectStatus === 'Open' && (
                   joinedProjects.has(project.id) ? (
                     <button 
                       disabled 

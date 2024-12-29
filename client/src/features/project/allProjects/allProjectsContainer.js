@@ -1,8 +1,11 @@
 import {useAddRequestToProjectMutation } from "../../api/apiSlice";
+import { useAuth } from "../../../context/authContext";
 import AllProjectsView from "./allProjectsView";
 import { useState } from "react";
 
 export function ProjectsContainer({projects, type, title}) {
+  const { user } = useAuth();
+  const isAuthenticated = user ? true : false;
   const [joinedProjects, setJoinedProjects] = useState(new Set());
   const [loadingProjects, setLoadingProjects] = useState(new Set());
   const [showAlert, setShowAlert] = useState({ visible: false, projectId: null });
@@ -37,6 +40,7 @@ export function ProjectsContainer({projects, type, title}) {
       loadingProjects={loadingProjects}
       showAlert={showAlert}
       setShowAlert={setShowAlert}
+      isAuthenticated={isAuthenticated}
        />
       </div>
     );

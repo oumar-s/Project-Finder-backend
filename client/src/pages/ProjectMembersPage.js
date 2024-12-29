@@ -1,29 +1,25 @@
 import Navbar from '../components/navbar';
-import Footer from '../components/footer';
-import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
-import { TeamMembersListContainer } from '../components/TeamMembersList/teamMembersListContainer';
 import TabNav from '../components/TabNav';
-import {useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksQuery } from '../features/api/apiSlice';
+import Footer from '../components/footer';
+import { TeamMembersListContainer } from '../components/TeamMembersList/teamMembersListContainer';
+import { useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
+export default function ProjectMembersPage() {
 
-export default function ProjectInfoPage() { 
-
-    const params = useParams();
+    let params = useParams();
     const auth = useAuth();
 
     const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
-    // const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
+    const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
 
-    const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
+    const [removeMemberFromProject] = useRemoveUserFromProjectMutation();
 
-    const [removeUserFromProject] = useRemoveUserFromProjectMutation();
-
-    if (membersLoading || tasksLoading) {
+    if (membersLoading || projectLoading) {
         return <div>Loading...</div>
     }
-    if (membersError || tasksError) {
+    if (membersError || projectError) {
         return <div>There was an error.</div>
     }
 
@@ -38,20 +34,20 @@ export default function ProjectInfoPage() {
 
     const handleDelete = (memberId) => {
         // Handle member deletion
-        removeUserFromProject(memberId);
+        removeMemberFromProject(memberId);
         console.log(`Deleting member ${memberId}`);
     };
-     
+
     return (
-        <div >
+        <div className='' >
             <Navbar />
 
-            <TabNav tabs={tabs}/>
-
-            <div className='min-h-screen bg-gray-50'>
-            <ProjectPageContainer tasks={tasks} members={members}/>
-
-            {/* <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="project" isOwner={project?.ownerID === auth.user?.id ? true : false} /> */}
+            <TabNav tabs={tabs} />
+            <div className='min-h-screen max-w-4xl mx-auto p-6'>
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-semibold text-gray-700">Team members</h2>
+                </div>
+                <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="team" isOwner={auth.user?.id === project?.ownerID ? true : false} />
             </div>
 
             <Footer />

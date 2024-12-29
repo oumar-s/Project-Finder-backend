@@ -1,11 +1,11 @@
-import { MyTasksListContainer } from '../../../components/TasksListDisplay/myTasksListContainer';
+import { MyTasksListContainer } from '../../components/TasksListDisplay/myTasksListContainer';
 import { 
     UsersIcon, 
     ClipboardIcon, 
     ExternalLinkIcon 
   } from 'lucide-react';
   
-const ProjectPageView = ({project, tasks, members}) => {
+const ProjectInfoViewView = ({project, tasks, members}) => {
     console.log('ProjectPageView', project)
     const project1 = {
         title: "Open Source Collaboration Platform",
@@ -118,5 +118,5 @@ const ProjectPageView = ({project, tasks, members}) => {
         </div>
       );
 }
-export default ProjectPageView;
+export default ProjectInfoViewView;
 

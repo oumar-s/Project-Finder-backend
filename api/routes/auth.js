@@ -47,7 +47,7 @@ router.get('/user', async (req, res) => {
     //console.log("user request log", req);
     //console.log("user Id:", req.user.id);
     const user = await User.findByPk(req.user.id, {
-      attributes: ['firstName', 'lastName', 'email']
+      attributes: { exclude: ['passwordHash'] }
     });
 
     if (!user) {

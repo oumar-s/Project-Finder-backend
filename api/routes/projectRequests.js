@@ -50,18 +50,15 @@ router.post('/:projectId', async (req, res) => {
 });
 
 //update a request
-router.patch('/:requestId', async (req, res) => {
+router.put('/:requestId', async (req, res) => {
 	console.log('body', req.body);
 	try {
-		const projectRequestId = req.params.requestId;
-		const project = await ProjectRequest.update({
-			status: req.body.status,
-		}, {
-			where: {
-				id: projectRequestId
-			}
-		})
-		res.status(201).json(project);
+		const requestId = req.params.requestId;
+		const status = req.body.status;
+		const request = await ProjectRequest.findByPk(requestId);
+		request.status = status;
+		await request.save();
+		res.status(200).json(request);
 	} catch (err) {
 		res.status(400).json(err);
 	}

@@ -8,13 +8,15 @@ import LandingPage from '../pages/LandingPage';
 import Dashboard from '../pages/Dashboard';
 import LoginPage from '../pages/LoginPage';
 import SignUpPage from '../pages/SignUpPage';
-import PostPage from '../pages/PostPage';
+import AddProjectInTeamPage from '../pages/AddProjectInTeamPage';
 import AddProjectPage from '../pages/AddProjectPage';
-import ProjectPage from '../pages/ProjectPage';
+import ProjectAllTasksPage from '../pages/ProjectAllTasksPage';
 import FilteredProjectsPage from '../pages/FilteredProjectsPage';
+import ProjectMembersPage from '../pages/ProjectMembersPage';
 import CreateTaskPage from '../pages/CreateTaskPage';
 import ProjectRequestsPage from '../pages/ProjectRequestsPage';
 import ProjectInfoPage from '../pages/ProjectInfoPage';
+import ProjectInfoViewPage from '../pages/ProjectInfoViewPage';
 import SettingsPage from '../pages/SettingsPage';
 import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
@@ -27,6 +29,7 @@ import TeamMembersPage from '../pages/TeamMembersPage';
 import TeamProjectsPage from '../pages/TeamProjectsPage';
 import TeamOverviewPage from '../pages/TeamOverviewPage';
 import TeamRequestsPage from '../pages/TeamRequestsPage';
+import TeamInfoViewPage from '../pages/TeamInfoViewPage';
 import Test from '../components/test';
 
 
@@ -38,9 +41,11 @@ function App() {
 					<Route path="/" element={<LandingPage />} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/sign-up" element={<SignUpPage />} />
-					<Route path="/home" element={<ExplorePage />} />
+					<Route path="/projects" element={<ExplorePage />} />
 					<Route path="/teams" element={<AllTeamsPage />} />
 					<Route path="/about" element={<AboutPage />} />
+					<Route path="/project-info-view/:projectId" element={<ProjectInfoViewPage />} />
+					<Route path="/team-info-view/:teamId" element={<TeamInfoViewPage />} />
 					<Route path="/test" element={<Test />} />
 					<Route
 						path="/dashboard"
@@ -54,7 +59,7 @@ function App() {
 						path="/teams/:teamId/new-project"
 						element={
 							<PrivateRouteRequiresAuth>
-								<PostPage />
+								<AddProjectInTeamPage />
 							</PrivateRouteRequiresAuth>
 						}
 					/>
@@ -128,7 +133,7 @@ function App() {
 						element={
 							<PrivateRouteRequiresAuth>
 								{" "}
-								<ProjectPage />{" "}
+								<ProjectAllTasksPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>
@@ -138,6 +143,15 @@ function App() {
 							<PrivateRouteRequiresAuth>
 								{" "}
 								<FilteredProjectsPage />{" "}
+							</PrivateRouteRequiresAuth>
+						}
+					/>
+					<Route
+						path="/projects/:projectId/members"
+						element={
+							<PrivateRouteRequiresAuth>
+								{" "}
+								<ProjectMembersPage />{" "}
 							</PrivateRouteRequiresAuth>
 						}
 					/>

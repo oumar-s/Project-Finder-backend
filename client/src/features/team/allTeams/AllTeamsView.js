@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
 
-const AllTeamsView = ({teams, type, handleJoinTeam, loadingTeams, joinedTeams, showAlert, setShowAlert}) => {
+const AllTeamsView = ({teams, isAuthenticated, type, handleJoinTeam, loadingTeams, joinedTeams, showAlert, setShowAlert}) => {
     if (!teams.length) {
         return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no projects.</div>
     }
@@ -51,6 +51,11 @@ const Toast = ({ children, onClose }) => (
               </span>
             </div> */}
           </div>
+          {!isAuthenticated && (
+            <div className="mb-8 text-red-500">
+              You must login to join a team
+            </div>
+          )}
         {  console.log("all projects view: ", teams)}
           <div className="space-y-4">
             {teams.map((team) => (
@@ -66,7 +71,7 @@ const Toast = ({ children, onClose }) => (
                 <div className="flex justify-between items-start mb-4">
                   <div>
                     <Link 
-                        to={`/teams/${team.id}/overview`}
+                        to={isAuthenticated ? `/teams/${team.id}/overview` : '/team-info-view/' + team.id}
                         className="text-lg font-semibold text-blue-500 mb-1 hover:underline ">
                       {team.teamName}
                     </Link>
@@ -97,32 +102,32 @@ const Toast = ({ children, onClose }) => (
                     </div>
                   </div>
                   
-                  {team.teamStatus === 'Open' && (
-                  joinedTeams.has(team.id) ? (
-                    <button 
-                      disabled 
-                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
-                    >
-                      <Check className="mr-2 h-4 w-4" />
-                      Joined
-                    </button>
-                  ) : (
-                    <button 
-                      onClick={() => handleJoinTeam(team.id)}
-                      disabled={loadingTeams.has(team.id)}
-                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-500 rounded-md hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {loadingTeams.has(team.id) ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Joining...
-                        </>
-                      ) : (
-                        'Join Team'
-                      )}
-                    </button>
-                  )
-                )}
+                  {isAuthenticated && team.teamStatus === 'Open' && (
+                    joinedTeams.has(team.id) ? (
+                      <button 
+                        disabled 
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
+                      >
+                        <Check className="mr-2 h-4 w-4" />
+                        Joined
+                      </button>
+                    ) : (
+                      <button 
+                        onClick={() => handleJoinTeam(team.id)}
+                        disabled={loadingTeams.has(team.id)}
+                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-500 rounded-md hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {loadingTeams.has(team.id) ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Joining...
+                          </>
+                        ) : (
+                          'Join Team'
+                        )}
+                      </button>
+                    )
+                  )}
                   {team.teamStatus === 'Waitlist' && (
                     <button className="px-4 py-2 text-sm font-medium text-white bg-amber-500 rounded-md hover:bg-amber-600 transition-colors">
                       Join Waitlist

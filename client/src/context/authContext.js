@@ -2,12 +2,14 @@ import React, { useState, useEffect, createContext } from "react";
 import { apiSlice } from "../features/api/apiSlice";
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
 //const url = 'https://project-finder-backend-production.up.railway.app';
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
   const dispatch = useDispatch();
 
   //UseEffect to check if the user is logged in.
@@ -45,36 +47,41 @@ const AuthProvider = ({ children }) => {
   }, [user, dispatch]);
 
   const authenticate = async (email, password) => {
-    let response = await fetch('/api/auth/login', {
-      method: "POST",
-      credentials: 'include',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setAuthLoading(true);
+    try {
+      let response = await fetch('/api/auth/login', {
+        method: "POST",
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error("Login Failed");
+      if (!response.ok) {
+        throw new Error("Login Failed");
+      }
+
+      let res = await response.json();
+
+      let loggedInUser = res.user;
+      setUser(loggedInUser);
+
+      // Sign in to Firebase with custom token
+      const firebaseToken = await res.token;
+      const auth = getAuth();
+      await signInWithCustomToken(auth, firebaseToken);
+
+      //check if user logged in in firebase
+      const firebaseUser = auth.currentUser;
+      if (!firebaseUser) {
+        throw new Error("Firebase login failed");
+      }
+
+      return loggedInUser;
+    } finally {
+      setAuthLoading(false);
     }
-
-    let res = await response.json();
-
-    let loggedInUser = res.user;
-    setUser(loggedInUser);
-
-    // Sign in to Firebase with custom token
-    const firebaseToken = await res.token;
-    const auth = getAuth();
-    await signInWithCustomToken(auth, firebaseToken);
-
-    //check if user logged in in firebase
-    const firebaseUser = auth.currentUser;
-    if (!firebaseUser) {
-      throw new Error("Firebase login failed");
-    }
-
-    return loggedInUser;
   };
 
   const signout = async () => {
@@ -108,7 +115,7 @@ const AuthProvider = ({ children }) => {
         user,
       }}
     >
-      {children}
+      {authLoading ? <LoadingSpinner /> : children}
     </Provider>
   );
 };
