@@ -33,17 +33,12 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
         </Toast>
       )}
       {/* Section 1: Team Banner */}
-      <div className="w-11/12 h-64 mx-auto border rounded-2xl object-cover">
-        <img
-          src={team.teamBanner}
-          alt="Team Banner"
-          className="w-full h-full border rounded-2xl"
-        />
-        {/* <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-white text-4xl font-bold text-center drop-shadow-lg">
-                {team.teamName}
-              </h1>
-            </div> */}
+      <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
+          <img
+              src={team.teamBanner}
+              alt="Team Banner"
+              className="absolute inset-0 w-full h-full rounded-2xl object-cover"
+          />
       </div>
 
       {/* Section 2: Team Details */}

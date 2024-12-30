@@ -10,6 +10,7 @@ const { Provider } = AuthContext;
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const dispatch = useDispatch();
 
   //UseEffect to check if the user is logged in.
@@ -30,6 +31,8 @@ const AuthProvider = ({ children }) => {
       } catch (error) {
         console.log("Error: User not logged in.")
         setUser(false);
+      } finally {
+        setInitialLoading(false);
       }
     }
     checkIfUserIsLoggedIn();
@@ -113,6 +116,7 @@ const AuthProvider = ({ children }) => {
         signout,
         isAuthenticated: user ? true : false,
         user,
+        initialLoading
       }}
     >
       {authLoading ? <LoadingSpinner /> : children}
