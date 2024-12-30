@@ -1,6 +1,23 @@
-import { Plus, GitBranch, Users, ExternalLink, FileText, Image, Type, MessageCircle } from 'lucide-react';
-const AddProjectFormView = (props) => {
-    const { handleChange, handleSubmit, formData } = props;
+import { Plus, GitBranch, Users, ExternalLink, FileText, Image, Type, MessageCircle, Check, X } from 'lucide-react';
+
+const Toast = ({ children, onClose }) => (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+      <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
+        <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+          <Check className="h-4 w-4 text-emerald-600" />
+        </div>
+        <span className="text-sm font-medium text-gray-700">{children}</span>
+        <button 
+          onClick={onClose} 
+          className="ml-2 text-gray-400 hover:text-gray-600"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+);
+
+const AddProjectFormView = ({ handleChange, handleSubmit, formData, showToast, setShowToast }) => {
     const teams = [
         { id: 1, name: 'Open Source Collective'},
         { id: 2, name: 'Innovation Accelerator'},
@@ -10,6 +27,11 @@ const AddProjectFormView = (props) => {
       ];
     return (
         <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
+            {showToast && (
+                <Toast onClose={() => setShowToast(false)}>
+                    Project created successfully!
+                </Toast>
+            )}
           <div className="flex items-center mb-6 text-purple-600">
             <h2 className="text-2xl font-semibold">Add New Project</h2>
           </div>

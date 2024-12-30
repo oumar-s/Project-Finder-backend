@@ -1,8 +1,32 @@
-import { Users, Type, Upload, Image, ExternalLink, FileText, GitBranch, MessageCircle } from "lucide-react";
-const AddTeamFormView = ({handleChange, handleAdd, handleTeamIconUpload, handleTeamBannerUpload, setTeamImage, teamImage, teamBanner, setTeamBanner, formData}) => {
+import { Users, Type, Upload, Image, ExternalLink, FileText, GitBranch, MessageCircle, Check, X } from "lucide-react";
+
+const Toast = ({ children, onClose }) => (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+      <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
+        <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+          <Check className="h-4 w-4 text-emerald-600" />
+        </div>
+        <span className="text-sm font-medium text-gray-700">{children}</span>
+        <button 
+          onClick={onClose} 
+          className="ml-2 text-gray-400 hover:text-gray-600"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+);
+
+const AddTeamFormView = ({ handleChange, handleAdd, handleTeamIconUpload, handleTeamBannerUpload, 
+    setTeamImage, teamImage, teamBanner, setTeamBanner, formData, showToast, setShowToast }) => {
     return (
         <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-2xl font-bold text-blue-700 mb-6 flex items-center">
+            {showToast && (
+                <Toast onClose={() => setShowToast(false)}>
+                    Team created successfully!
+                </Toast>
+            )}
+            <h2 className="text-2xl font-bold text-blue-700 mb-6 flex items-center">
         
             Create New Team
           </h2>

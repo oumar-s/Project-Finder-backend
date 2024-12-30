@@ -14,6 +14,7 @@ export function AddProjectFormContainer() {
     const { data: userTeams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(user?.id);
     const [addPost] = useAddProjectMutation();
     const [addUserToProject] = useAddUserToProjectMutation();
+    const [showToast, setShowToast] = useState(false);
 
     if (teamsLoading) {
         return <div>Loading...</div>;
@@ -39,6 +40,11 @@ export function AddProjectFormContainer() {
             projectRepository: '',
             teamId: ''
         });
+
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
     }
     // Handle input changes
   const handleChange = (e) => {
@@ -56,6 +62,8 @@ export function AddProjectFormContainer() {
             userTeams = {userTeams}
             handleSubmit = {handleSubmit}
             formData = {projectForm}
+            showToast={showToast}
+            setShowToast={setShowToast}
         />
     );
 }

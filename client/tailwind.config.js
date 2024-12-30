@@ -14,7 +14,16 @@ module.exports = {
       },
       fontFamily: {
         'mono-sans': ['Mona Sans', 'Mona Sans Header Fallback', '-apple-system', 'BlinkMacSystemFont', "Segoe UI", 'Helvetica', 'Arial', 'sans-serif', "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"],
-      }
+      },
+      keyframes: {
+        slideDown: {
+          '0%': { transform: 'translateY(-100%) translateX(-50%)', opacity: 0 },
+          '100%': { transform: 'translateY(0) translateX(-50%)', opacity: 1 },
+        },
+      },
+      animation: {
+        slideDown: 'slideDown 0.3s ease-out',
+      },
     },
   },
   plugins: [],

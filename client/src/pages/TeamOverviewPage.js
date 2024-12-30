@@ -2,6 +2,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 import { TeamPageContainer } from '../features/team/teamPage/TeamPageContainer';
+import TeamInfoViewContainer from '../components/TeamInfoView/TeamInfoViewContainer';
 import { useGetTeamQuery, useGetProjectsForTeamQuery, useGetTeamMembersQuery, useGetUserProjectsInTeamQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
@@ -25,32 +26,44 @@ export default function TeamOverviewPage() {
         return <div>There was an error. Please try again.</div>
     }
 
-    //let tabs = [];
+    const isOwner = team?.ownerID === auth.user?.id;
+    const isMember = teamMembers?.some(member => member.user.id === auth.user?.id);
+    console.log('team members', teamMembers);
+    console.log('isOwner', isOwner);
+    console.log('isMember', isMember);
 
-    // if (team?.ownerID === auth.user?.id) {
-    const tabs = [
+    let tabs = [];
+
+    if (isOwner) {
+        tabs = [
             { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
             { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
             { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
             { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
             { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
         ]
-    // } else {
+    } else if(isMember) {
+        tabs = [
+            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+        ]
+    } else {
 
-    //     tabs = [
-    //         { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
-    //         { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
-    //         { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
-    //         { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
-    //     ];
-    // }
+        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+    }
     return (
         <div >
             <Navbar />
 
             <TabNav tabs={tabs} />
+            
+            {(isMember || isOwner) ?  <TeamPageContainer team={team} teamMembers={teamMembers} teamProjects={teamProjects} myProjects={myProjects} />
+            : 
+            <TeamInfoViewContainer team={team} teamMembers={teamMembers} teamProjects={teamProjects} />
+            }
 
-            <TeamPageContainer team={team} teamMembers={teamMembers} teamProjects={teamProjects} myProjects={myProjects} />
 
             <Footer />
         </div>

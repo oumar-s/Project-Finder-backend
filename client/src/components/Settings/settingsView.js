@@ -11,8 +11,36 @@ import {
     KeyRound,
     AtSign,
     Code2,
+    FolderGit2,
+    Check,
+    X
 } from 'lucide-react';
-const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTeam, uploadProfilePic, setProfilePic, profilePic, activeTab, setActiveTab, handleChange, userForm, updateProfileInfo, handleEmailChange, emailForm, handleUpdateEmail, emailError, handlePasswordChange, passwordForm, handleUpdatePassword, passwordError, showEmailConfirm, setShowEmailConfirm, showPasswordConfirm, setShowPasswordConfirm, confirmEmailUpdate, confirmPasswordUpdate, emailSuccess, passwordSuccess, showLeaveProjectConfirm, setShowLeaveProjectConfirm, confirmLeaveProject, showLeaveTeamConfirm, setShowLeaveTeamConfirm, confirmLeaveTeam, projectLeaveSuccess, teamLeaveSuccess }) => {
+
+const Toast = ({ children, onClose }) => (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+      <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
+        <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+          <Check className="h-4 w-4 text-emerald-600" />
+        </div>
+        <span className="text-sm font-medium text-gray-700">{children}</span>
+        <button 
+          onClick={onClose} 
+          className="ml-2 text-gray-400 hover:text-gray-600"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+);
+
+const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTeam, uploadProfilePic, setProfilePic, profilePic, activeTab, setActiveTab, handleChange, userForm, updateProfileInfo, handleEmailChange, emailForm, handleUpdateEmail, emailError, handlePasswordChange, passwordForm, handleUpdatePassword, passwordError, showEmailConfirm, setShowEmailConfirm, showPasswordConfirm, setShowPasswordConfirm, confirmEmailUpdate, confirmPasswordUpdate, emailSuccess, passwordSuccess, showLeaveProjectConfirm, setShowLeaveProjectConfirm, confirmLeaveProject, showLeaveTeamConfirm, setShowLeaveTeamConfirm, confirmLeaveTeam, projectLeaveSuccess, teamLeaveSuccess, profileSuccess, showProfileToast, showEmailToast, showPasswordToast, showProjectToast, showTeamToast, setShowProfileToast, setShowEmailToast, setShowPasswordToast, setShowProjectToast, setShowTeamToast }) => {
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+        <div className={`text-center p-6 ${className}`}>
+          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+          <p className="text-sm text-gray-500">{description}</p>
+        </div>
+      );
     const tabs = [
         { id: 'profile', label: 'Profile', icon: User },
         { id: 'account', label: 'Account', icon: Lock },
@@ -21,22 +49,49 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
     ];
     return (
         <div className="min-h-screen">
+            {/* Toast Notifications */}
+            {showProfileToast && (
+                <Toast onClose={() => setShowProfileToast(false)}>
+                    Profile updated successfully!
+                </Toast>
+            )}
+            {showEmailToast && (
+                <Toast onClose={() => setShowEmailToast(false)}>
+                    Email updated successfully!
+                </Toast>
+            )}
+            {showPasswordToast && (
+                <Toast onClose={() => setShowPasswordToast(false)}>
+                    Password updated successfully!
+                </Toast>
+            )}
+            {showProjectToast && (
+                <Toast onClose={() => setShowProjectToast(false)}>
+                    Project left successfully!
+                </Toast>
+            )}
+            {showTeamToast && (
+                <Toast onClose={() => setShowTeamToast(false)}>
+                    Team left successfully!
+                </Toast>
+            )}
             <div className="max-w-6xl mx-auto px-4 py-8">
                 <h1 className="text-2xl font-semibold text-gray-900 mb-8">Settings</h1>
-                <div className="flex gap-6">
-                    {/* Sidebar */}
-                    <div className="bg-white w-64 flex-shrink-0">
-                        <nav className="space-y-1">
+                <div className="flex flex-col md:flex-row gap-6">
+                    {/* Sidebar - grid with 2 columns on mobile, vertical column on md+ screens */}
+                    <div className="w-full md:w-64 flex-shrink-0">
+                        <nav className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-1">
                             {tabs.map((tab) => {
                                 const Icon = tab.icon;
                                 return (
                                     <button
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
-                                        className={`w-full flex items-center px-4 py-2 text-sm font-medium rounded-lg ${activeTab === tab.id
-                                            ? 'bg-blue-50 text-blue-700'
-                                            : 'text-gray-900 hover:bg-gray-50'
-                                            }`}
+                                        className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg ${
+                                            activeTab === tab.id
+                                                ? 'bg-blue-50 text-blue-700'
+                                                : 'text-gray-900 hover:bg-gray-50'
+                                        }`}
                                     >
                                         <Icon className="mr-3 h-5 w-5" />
                                         {tab.label}
@@ -46,15 +101,12 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                         </nav>
                     </div>
 
-                    {/* Main Content */}
-                    <div className="flex-1 rounded-lg border border-gray-200 p-6 bg-gray-50">
+                    {/* Main Content - full width on all screens */}
+                    <div className="flex-1 rounded-lg border border-gray-200 p-4 md:p-6 bg-gray-50">
                         {activeTab === 'profile' && (
                             <div className="space-y-6">
                                 <form onSubmit={updateProfileInfo} className="space-y-6">
                                     <h2 className="text-xl font-medium text-gray-900">Profile Settings</h2>
-                                    {/* Feedback Messages */}
-                                    {emailSuccess && <p className="text-green-500 text-sm mb-4">{emailSuccess}</p>}
-                                    {passwordSuccess && <p className="text-green-500 text-sm mb-4">{passwordSuccess}</p>}
                                     <div className="">
                                         <label className="cursor-pointer">
                                             <input
@@ -70,7 +122,7 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                                                         <img
                                                             alt='user avatar'
                                                             src={profilePic}
-                                                            className="w-12 h-12 text-gray-400" />
+                                                            className="w-20 h-20 object-cover rounded-full text-gray-400" />
                                                         :
                                                         <UserCircle className="h-12 w-12 text-gray-400" />
                                                     }
@@ -182,8 +234,6 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                                             <AtSign className="h-5 w-5 mr-2 text-gray-500" />
                                             Change Email
                                         </h3>
-                                        {/* Feedback Messages */}
-                                        {emailSuccess && <p className="text-green-500 text-sm mb-4">{emailSuccess}</p>}
                                         <form onSubmit={(e) => { e.preventDefault(); handleUpdateEmail(); }}>
                                             <div className="space-y-2">
                                                 <input
@@ -216,8 +266,6 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                                             <KeyRound className="h-5 w-5 mr-2 text-gray-500" />
                                             Change Password
                                         </h3>
-                                        {/* Feedback Messages */}
-                                        {passwordSuccess && <p className="text-green-500 text-sm mb-4">{passwordSuccess}</p>}
                                         <form onSubmit={(e) => { e.preventDefault(); handleUpdatePassword(); }}>
                                             <div className="space-y-2">
                                                 <input
@@ -250,9 +298,12 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                         {activeTab === 'projects' && (
                             <div className="space-y-6">
                                 <h2 className="text-xl font-medium text-gray-900">Manage Projects</h2>
-                                {projectLeaveSuccess && <p className="text-green-500 text-sm mb-4">{projectLeaveSuccess}</p>}
                                 {!projectMembers.length && (
-                                    <p className="text-gray-500 text-sm mb-4">No projects found.</p>
+                                    <EmptyState
+                                        icon={FolderGit2}
+                                        title="No projects found"
+                                        description="Join a project to get started."
+                                    />
                                 )}
                                 <div className="space-y-4">
                                     {projectMembers.map((projectMember) => (
@@ -277,9 +328,12 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
                         {activeTab === 'teams' && (
                             <div className="space-y-6">
                                 <h2 className="text-xl font-medium text-gray-900">Manage Teams</h2>
-                                {teamLeaveSuccess && <p className="text-green-500 text-sm mb-4">{teamLeaveSuccess}</p>}
                                 {!teamMembers.length && (
-                                    <p className="text-gray-500 text-sm mb-4">No teams found.</p>
+                                    <EmptyState
+                                        icon={Users}
+                                        title="No teams found"
+                                        description="Join a team to get started."
+                                    />
                                 )}
                                 <div className="space-y-4">
                                     {teamMembers.map((teamMember) => (

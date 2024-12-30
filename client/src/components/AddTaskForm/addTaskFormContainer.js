@@ -13,6 +13,7 @@ export function AddTaskFormContainer() {
         assignedTo: ''
     });
     const [addPost] = useAddTaskMutation();
+    const [showToast, setShowToast] = useState(false);
     
     if (membersLoading) {
         return <div>Loading...</div>;
@@ -51,6 +52,11 @@ export function AddTaskFormContainer() {
             taskDescription: '',
             assignedTo: ''
         });
+
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
     }
     
     return (
@@ -59,6 +65,8 @@ export function AddTaskFormContainer() {
             handleChange = {handleChange}
             handleSubmit = {handleSubmit}
             formData = {taskForm}
+            showToast={showToast}
+            setShowToast={setShowToast}
         />
     );
 }

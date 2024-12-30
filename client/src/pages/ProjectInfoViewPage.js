@@ -3,7 +3,7 @@ import { ProjectInfoViewContainer } from "../components/ProjectInfoView/ProjectI
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useParams } from "react-router-dom";
-import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectTasksQuery } from '../features/api/apiSlice';
+import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectTasksQuery} from '../features/api/apiSlice';
 import TabNav from '../components/TabNav';
 
 function ProjectInfoViewPage() {
@@ -11,7 +11,7 @@ function ProjectInfoViewPage() {
   const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
   const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
   const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
-
+  
   if (membersLoading || tasksLoading || projectLoading) {
     return <div>Loading...</div>;
   }

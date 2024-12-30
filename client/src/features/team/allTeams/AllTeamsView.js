@@ -65,7 +65,7 @@ const Toast = ({ children, onClose }) => (
               >
                 {showAlert.visible && showAlert.teamId === team.id && (
                 <Toast onClose={() => setShowAlert({ visible: false, teamId: null })}>
-                  Successfully joined {team.teamName}!
+                  A request has been made to join {team.teamName}!
                 </Toast>
               )}
                 <div className="flex justify-between items-start mb-4">
@@ -109,7 +109,7 @@ const Toast = ({ children, onClose }) => (
                         className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
                       >
                         <Check className="mr-2 h-4 w-4" />
-                        Joined
+                        Request made
                       </button>
                     ) : (
                       <button 
@@ -120,7 +120,7 @@ const Toast = ({ children, onClose }) => (
                         {loadingTeams.has(team.id) ? (
                           <>
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Joining...
+                            Requesting...
                           </>
                         ) : (
                           'Join Team'

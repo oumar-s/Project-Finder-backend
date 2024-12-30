@@ -10,7 +10,7 @@ const TabNav = (props) => {
     }
 
     return (
-        <div className="bg-gray-50 flex gap-6 pl-6  text-base text-gray-600 h-10 border-b">
+        <div className="bg-gray-50 flex gap-6 pl-6 flex-wrap text-base text-gray-600 min-h-10 border-b">
             {props.tabs.map((tab) => (
                 <Link key={tab.id} to={tab.link}>
                     <button

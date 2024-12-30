@@ -3,10 +3,21 @@ import { Check, X, Clock } from 'lucide-react';
 
 const RequestsListView = ({ requests, requestType, handleAction, teamOwnerID, acceptRequest, declineRequest }
 ) => {
-    // if (!requests.length) {
-    //     return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no requests.</div>
-   // 
-    // }
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+        <div className={`text-center p-6 ${className}`}>
+          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+          <p className="text-sm text-gray-500">{description}</p>
+        </div>
+      );
+    if(!requests.length ){
+        return <EmptyState 
+          icon={Clock}
+          title="No requests found"
+          description="New requests will appear here."
+        />
+        
+      }
 
     return (
         <div className="flex flex-col gap-4">
@@ -68,11 +79,7 @@ const RequestsListView = ({ requests, requestType, handleAction, teamOwnerID, ac
                     </div>
                 ))}
 
-            {requests.length === 0 && (
-                <div className="text-center py-8 text-gray-500">
-                    No pending requests
-                </div>
-            )}
+            
         </div>
     );
 }

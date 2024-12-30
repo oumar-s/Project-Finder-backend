@@ -2,38 +2,54 @@ import { MyTasksListContainer } from '../../components/TasksListDisplay/myTasksL
 import { 
     UsersIcon, 
     ClipboardIcon, 
-    ExternalLinkIcon 
+    ExternalLinkIcon,
+    Check,
+    X,
+    Loader2
   } from 'lucide-react';
   
-const ProjectInfoViewView = ({project, tasks, members}) => {
+const ProjectInfoViewView = ({
+  project, tasks, members,
+  isAuthenticated, handleJoinProject,
+  showAlert, setShowAlert,
+  loadingProject, joinedProject
+}) => {
     console.log('ProjectPageView', project)
-    const project1 = {
-        title: "Open Source Collaboration Platform",
-        description: "A web application designed to connect developers, streamline project collaboration, and accelerate open-source innovation.",
-        owner: "Jane Doe",
-        repositoryLink: "https://github.com/synergy/collaboration-platform",
-    };
-    const taskz = [
-        { id: 1, title: "Implement User Authentication", status: "In Progress" },
-        { id: 2, title: "Design Database Schema", status: "Completed" },
-        { id: 3, title: "Create API Endpoints", status: "Pending" },
-        { id: 4, title: "Develop Frontend Components", status: "In Progress" }
-      ]
-      const memberz = [
-        { id: 1, name: "Jane Doe", role: "Project Lead", avatar: "/api/placeholder/40/40" },
-        { id: 2, name: "John Smith", role: "Backend Developer", avatar: "/api/placeholder/40/40" },
-        { id: 3, name: "Alex Johnson", role: "Frontend Developer", avatar: "/api/placeholder/40/40" },
-        { id: 4, name: "Sarah Williams", role: "UX Designer", avatar: "/api/placeholder/40/40" }
-      ]
-
-    
+    const Toast = ({ children, onClose }) => (
+      <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+        <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
+          <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+            <Check className="h-4 w-4 text-emerald-600" />
+          </div>
+          <span className="text-sm font-medium text-gray-700">{children}</span>
+          <button 
+            onClick={onClose} 
+            className="ml-2 text-gray-400 hover:text-gray-600"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    );
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+      <div className={`text-center p-6 ${className}`}>
+        <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+        <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
+      </div>
+    );
       return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">
+          {showAlert.visible && showAlert.projectId === project.id && (
+            <Toast onClose={() => setShowAlert({ visible: false, projectId: null })}>
+              A request has been made to join {project.projectTitle}!
+            </Toast>
+          )}
           {/* Section 1: Project Overview */}
           <section className="bg-white shadow-sm rounded-lg p-6 mb-8">
             <div className="flex flex-col md:flex-row items-start justify-between">
               <div className="flex-grow">
-                <h1 className="text-2xl font-bold text-blue-700 mb-3">{project.projectTitle}</h1>
+                <h1 className="text-2xl font-bold text-purple-600 mb-3">{project.projectTitle}</h1>
                 <p className="text-gray-600 mb-4">{project.projectDescription}</p>
                 
                 <div className="flex items-center space-x-4">
@@ -55,6 +71,35 @@ const ProjectInfoViewView = ({project, tasks, members}) => {
               </div>
             </div>
           </section>
+          { isAuthenticated ?
+        
+        <div className="container mx-auto px-4 my-4 flex justify-center md:justify-end">
+          <button 
+            onClick={() => handleJoinProject(project.id)}
+            disabled={joinedProject || loadingProject}
+            className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-md disabled:opacity-50"
+          >
+            {loadingProject ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin inline-block" />
+                Requesting...
+              </>
+            ) : joinedProject ? (
+              <>
+                <Check className="mr-2 h-4 w-4 inline-block" />
+                Request made
+              </>
+            ) : (
+              'Join Project'
+            )}
+          </button>
+        </div>
+        :
+        <div className="text-red-500 font-semibold my-4 text-center">
+        You must login to join this project
+        </div>
+        }
+
     
           {/* Section 2: Tasks and Members */}
           <section className="grid md:grid-cols-2 gap-6">
@@ -95,11 +140,11 @@ const ProjectInfoViewView = ({project, tasks, members}) => {
                 <UsersIcon className="mr-2 h-5 w-5 text-purple-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Members</h2>
               </div>
-              <ul className="space-y-4 max-h-96 overflow-y-auto">
+              <ul className="flex flex-col gap-2">
                 {members.map((teamMember) => (
                   <li 
                     key={teamMember.id} 
-                    className="flex items-center space-x-4 p-3 bg-gray-50 rounded-md"
+                    className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   >
                     {/* <img 
                       src={member.avatar} 
@@ -107,11 +152,18 @@ const ProjectInfoViewView = ({project, tasks, members}) => {
                       className="w-10 h-10 rounded-full"
                     /> */}
                     <div>
-                      <p className="font-medium text-gray-800">{teamMember.user.firstName} {teamMember.user.lastName}</p>
-                      <p className="text-sm text-gray-500">{teamMember.user.email}</p>
+                      <p className="font-medium text-teal-700">{teamMember.user.firstName} {teamMember.user.lastName}</p>
+                      <p className="text-gray-600 text-sm">{teamMember.user.email}</p>
                     </div>
                   </li>
                 ))}
+                {members.length === 0 && (
+                  <EmptyState
+                    icon={UsersIcon}
+                    title="No team members found"
+                    description="There are currently no team members in this project."
+                  />
+                )}
               </ul>
             </div>
           </section>

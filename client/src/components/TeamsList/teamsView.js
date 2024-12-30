@@ -2,10 +2,6 @@ import { Link } from "react-router-dom"
 import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
 
 const TeamsListView = ({ teams, isTeamMemberList }) => {
-  if (!teams.length) {
-    return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no projects.</div>
-  }
-
   const getStatusStyles = (status) => {
     switch (status) {
       case 'open':
@@ -18,6 +14,13 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
         return 'bg-gray-100 text-gray-700';
     }
   };
+  const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+    <div className={`text-center p-6 ${className}`}>
+      <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+      <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+      <p className="text-sm text-gray-500">{description}</p>
+    </div>
+  );
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
@@ -27,7 +30,15 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
       {console.log("all projects view: ", teams)}
       <div className="space-y-4">
         {isTeamMemberList === false ?
-          teams.map((team) => (
+          <div className="space-y-4">
+            {teams.length === 0 && (
+              <EmptyState 
+                icon={Users}
+                title="No teams found"
+                description="Create or join a new team to get started."
+              />
+            ) }
+          {teams.map((team) => (
             <div
               key={team.id}
               className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
@@ -68,9 +79,16 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
                 </div>
               </div>
             </div>
-          )) :
-
-          teams.map((teamMember) => (
+          )) }</div> :
+          <div className="space-y-4">
+            {teams.length === 0 && (
+              <EmptyState 
+                icon={Users}
+                title="No teams found"
+                description="Create or join a new team to get started."
+              />
+            ) }
+          {teams.map((teamMember) => (
             <div
               key={teamMember.id}
               className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
@@ -111,7 +129,8 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
                 </div>
               </div>
             </div>
-          ))
+          ))}
+          </div>
         }
 
       </div>

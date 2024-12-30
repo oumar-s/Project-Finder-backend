@@ -18,16 +18,16 @@ const ProfileView = ({ members, profile }) => {
         projects = members.map((member) => member.project);
     }
     return (
-        <div className="flex min-h-screen bg-gray-50">
+        <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
             {/* Left Sidebar */}
-            <aside className="w-80 bg-white p-6 border-r border-gray-200">
+            <aside className="w-full md:w-80 bg-white p-6 border-b md:border-b-0 md:border-r border-gray-200">
                 <div className="flex flex-col items-center space-y-4">
                     {/* Profile Picture */}
                     <div className="relative">
                         <img
                             src={profile.profilePic ? profile.profilePic : "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"}
                             alt="Profile"
-                            className="w-32 h-32 rounded-full border-4 border-blue-100"
+                            className="w-24 md:w-32 h-24 md:h-32 rounded-full border-4 border-blue-100"
                         />
                     </div>
 
@@ -62,7 +62,7 @@ const ProfileView = ({ members, profile }) => {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-8">
+            <main className="flex-1 p-4 md:p-8">
                 {/* Bio Section */}
                 <section className="mb-8">
                     <div className="flex items-center space-x-2 mb-4">

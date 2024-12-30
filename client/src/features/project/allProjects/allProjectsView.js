@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { Users, UserCheck, FolderPlus, Check, Loader2, X } from 'lucide-react';
+import { Users, UserCheck, FolderGit2, Check, Loader2, X } from 'lucide-react';
 
 // Custom Alert Component
 // Custom Toast Component
@@ -34,9 +34,21 @@ const AllProjectsView = ({projects, isAuthenticated, type, handleJoinProject,  l
             return 'bg-gray-100 text-gray-700';
         }
       };
-    if (!projects.length) {
-        return <div className="h-screen text-center py-8 text-gray-500" >There are no projects.</div>
-    }
+      const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+        <div className={`text-center p-6 ${className}`}>
+          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+          <p className="text-sm text-gray-500">{description}</p>
+        </div>
+      );
+      if(!projects.length ){
+        return <EmptyState 
+          icon={FolderGit2}
+          title="No projects found"
+          description="Create a new project to get started."
+        />
+        
+      }
     return (
         <div className="flex flex-col gap-4">
           {!isAuthenticated && (
@@ -53,7 +65,7 @@ const AllProjectsView = ({projects, isAuthenticated, type, handleJoinProject,  l
               >
                 {showAlert.visible && showAlert.projectId === project.id && (
                 <Toast onClose={() => setShowAlert({ visible: false, projectId: null })}>
-                  Successfully joined {project.projectTitle}!
+                  A request has been made to join {project.projectTitle}!
                 </Toast>
               )}
                 <div className="flex justify-between items-start mb-4">
@@ -97,7 +109,7 @@ const AllProjectsView = ({projects, isAuthenticated, type, handleJoinProject,  l
                       className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
                     >
                       <Check className="mr-2 h-4 w-4" />
-                      Joined
+                      Request made
                     </button>
                   ) : (
                     <button 
@@ -108,7 +120,7 @@ const AllProjectsView = ({projects, isAuthenticated, type, handleJoinProject,  l
                       {loadingProjects.has(project.id) ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Joining...
+                          Requesting...
                         </>
                       ) : (
                         'Join Project'

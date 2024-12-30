@@ -18,14 +18,15 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
   const [passwordError, setPasswordError] = useState('');
   const [showEmailConfirm, setShowEmailConfirm] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-  const [emailSuccess, setEmailSuccess] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState('');
   const [showLeaveProjectConfirm, setShowLeaveProjectConfirm] = useState(null);
   const [showLeaveTeamConfirm, setShowLeaveTeamConfirm] = useState(null);
-  const [projectLeaveSuccess, setProjectLeaveSuccess] = useState('');
-  const [teamLeaveSuccess, setTeamLeaveSuccess] = useState('');
-
   const [activeTab, setActiveTab] = useState('profile');
+  // Replace success states with toast states
+  const [showProfileToast, setShowProfileToast] = useState(false);
+  const [showEmailToast, setShowEmailToast] = useState(false);
+  const [showPasswordToast, setShowPasswordToast] = useState(false);
+  const [showProjectToast, setShowProjectToast] = useState(false);
+  const [showTeamToast, setShowTeamToast] = useState(false);
   console.log("user: ", user);
   console.log("projectMembers: ", projectMembers);
   console.log("teamMembers: ", teamMembers);
@@ -71,29 +72,34 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
 
   const updateProfileInfo = async event => {
     event.preventDefault();
-    console.log('submitting form');
-    console.log('user form', userForm);
-    //upload team icon and banner to firebase storage
-    if(userForm.profilePic?.name){
-      const profilePicRef = ref(storage, `profilePics/${userForm.profilePic.name}`);
-      const uploadTask = uploadBytesResumable(profilePicRef, userForm.profilePic);
-      await Promise.all([uploadTask]);
-      const profilePicUrl = await getDownloadURL(profilePicRef);
-      userForm.profilePic = profilePicUrl;
-    }
+    try {
+        console.log('submitting form');
+        console.log('user form', userForm);
+        if(userForm.profilePic?.name){
+            const profilePicRef = ref(storage, `profilePics/${userForm.profilePic.name}`);
+            const uploadTask = uploadBytesResumable(profilePicRef, userForm.profilePic);
+            await Promise.all([uploadTask]);
+            const profilePicUrl = await getDownloadURL(profilePicRef);
+            userForm.profilePic = profilePicUrl;
+        }
 
-    let user = {...userForm};
-    console.log('user form', user);
-    await updateUserProfile(user);
-    setUserForm({
-      profilePic: user.profilePic,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      //email: user.email,
-      bio: user.bio,
-      skills: user.skills,
-    });
-    //setProfilePic(null);
+        let user = {...userForm};
+        console.log('user form', user);
+        await updateUserProfile(user);
+        setUserForm({
+            profilePic: user.profilePic,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            bio: user.bio,
+            skills: user.skills,
+        });
+        setShowProfileToast(true);
+        setTimeout(() => {
+            setShowProfileToast(false);
+        }, 3000);
+    } catch (error) {
+        console.error('Error updating profile:', error);
+    }
 }
 
   const showEmailConfirmation = () => {
@@ -123,7 +129,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       setEmailForm({ newEmail: '', confirmEmail: '' });
       setEmailError('');
       setShowEmailConfirm(false);
-      setEmailSuccess('Email updated successfully.');
+      setShowEmailToast(true);
+      setTimeout(() => {
+          setShowEmailToast(false);
+      }, 3000);
     } else {
       setEmailError('Emails do not match');
     }
@@ -138,7 +147,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       setPasswordForm({ newPassword: '', confirmPassword: '' });
       setPasswordError('');
       setShowPasswordConfirm(false);
-      setPasswordSuccess('Password updated successfully.');
+      setShowPasswordToast(true);
+      setTimeout(() => {
+          setShowPasswordToast(false);
+      }, 3000);
     } else {
       setPasswordError('Passwords do not match');
     }
@@ -149,7 +161,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       await removeUserFromProject(projectId);
       console.log("leave project success");
       setShowLeaveProjectConfirm(null);
-      setProjectLeaveSuccess('Project left successfully.');
+      setShowProjectToast(true);
+      setTimeout(() => {
+          setShowProjectToast(false);
+      }, 3000);
     }
     catch (error) {
       console.log(error);
@@ -161,7 +176,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       await removeMemberFromTeam(teamId);
       console.log("leave team success");
       setShowLeaveTeamConfirm(null);
-      setTeamLeaveSuccess('Team left successfully.');
+      setShowTeamToast(true);
+      setTimeout(() => {
+          setShowTeamToast(false);
+      }, 3000);
     }
     catch (error) {
       console.log(error);
@@ -181,7 +199,7 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
   };
 
   return (
-    <ProfileView user={user} projectMembers={projectMembers} teamMembers={teamMembers} leaveProject={leaveProject} leaveTeam={leaveTeam} uploadProfilePic={handleProfilePicUpload} profilePic={profilePic} setProfilePic={setProfilePic} activeTab={activeTab} setActiveTab={setActiveTab} handleChange={handleChange} userForm={userForm} updateProfileInfo={updateProfileInfo} handleEmailChange={handleEmailChange} emailForm={emailForm} handleUpdateEmail={showEmailConfirmation} emailError={emailError} handlePasswordChange={handlePasswordChange} passwordForm={passwordForm} handleUpdatePassword={showPasswordConfirmation} passwordError={passwordError} showEmailConfirm={showEmailConfirm} setShowEmailConfirm={setShowEmailConfirm} showPasswordConfirm={showPasswordConfirm} setShowPasswordConfirm={setShowPasswordConfirm} confirmEmailUpdate={handleUpdateEmail} confirmPasswordUpdate={handleUpdatePassword} emailSuccess={emailSuccess} passwordSuccess={passwordSuccess} showLeaveProjectConfirm={showLeaveProjectConfirm} setShowLeaveProjectConfirm={setShowLeaveProjectConfirm} confirmLeaveProject={confirmLeaveProject} showLeaveTeamConfirm={showLeaveTeamConfirm} setShowLeaveTeamConfirm={setShowLeaveTeamConfirm} confirmLeaveTeam={confirmLeaveTeam} projectLeaveSuccess={projectLeaveSuccess} teamLeaveSuccess={teamLeaveSuccess} />
+    <ProfileView user={user} projectMembers={projectMembers} teamMembers={teamMembers} leaveProject={leaveProject} leaveTeam={leaveTeam} uploadProfilePic={handleProfilePicUpload} profilePic={profilePic} setProfilePic={setProfilePic} activeTab={activeTab} setActiveTab={setActiveTab} handleChange={handleChange} userForm={userForm} updateProfileInfo={updateProfileInfo} handleEmailChange={handleEmailChange} emailForm={emailForm} handleUpdateEmail={showEmailConfirmation} emailError={emailError} handlePasswordChange={handlePasswordChange} passwordForm={passwordForm} handleUpdatePassword={showPasswordConfirmation} passwordError={passwordError} showEmailConfirm={showEmailConfirm} setShowEmailConfirm={setShowEmailConfirm} showPasswordConfirm={showPasswordConfirm} setShowPasswordConfirm={setShowPasswordConfirm} confirmEmailUpdate={handleUpdateEmail} confirmPasswordUpdate={handleUpdatePassword} showLeaveProjectConfirm={showLeaveProjectConfirm} setShowLeaveProjectConfirm={setShowLeaveProjectConfirm} confirmLeaveProject={confirmLeaveProject} showLeaveTeamConfirm={showLeaveTeamConfirm} setShowLeaveTeamConfirm={setShowLeaveTeamConfirm} confirmLeaveTeam={confirmLeaveTeam} showProfileToast={showProfileToast} showEmailToast={showEmailToast} showPasswordToast={showPasswordToast} showProjectToast={showProjectToast} showTeamToast={showTeamToast} setShowProfileToast={setShowProfileToast} setShowEmailToast={setShowEmailToast} setShowPasswordToast={setShowPasswordToast} setShowProjectToast={setShowProjectToast} setShowTeamToast={setShowTeamToast} />
   )
 
 }

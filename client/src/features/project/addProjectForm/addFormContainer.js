@@ -7,7 +7,7 @@ import { useAuth } from "../../../context/authContext";
 export function AddProjectFormContainer() {
     const { user } = useAuth();
     const params = useParams();
-    console.log('params', params);
+    const [showToast, setShowToast] = useState(false);
     const [projectForm, setProjectForm] = useState({
         projectTitle: '',
         projectDescription: '',
@@ -49,6 +49,11 @@ export function AddProjectFormContainer() {
             projectRepository: '',
             teamId: ''
         });
+
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
     }
     // Handle input changes
   const handleChange = (e) => {
@@ -65,6 +70,8 @@ export function AddProjectFormContainer() {
             handleChange = {handleChange}
             handleSubmit = {handleSubmit}
             formData = {projectForm}
+            showToast={showToast}
+            setShowToast={setShowToast}
         />
     );
 }

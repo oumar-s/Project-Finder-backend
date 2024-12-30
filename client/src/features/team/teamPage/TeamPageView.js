@@ -9,21 +9,24 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
         { name: "Sam Chen", role: "JavaScript, SQL" },
         { name: "Jordan Kim", role: "billyfil@example.com" },
         { name: "Taylor Wong", role: "billyfil@example.com" }
-    ]
+    ];
+
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+        <div className={`text-center p-6 ${className}`}>
+          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+          <p className="text-sm text-gray-500">{description}</p>
+        </div>
+      );
     return (
         <div className="bg-gray-50 min-h-screen pt-4">
             {/* Section 1: Team Banner */}
-            <div className="w-11/12 h-64 mx-auto rounded-2xl object-cover">
+            <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
                 <img
                     src={team.teamBanner}
                     alt="Team Banner"
-                    className="w-full h-full rounded-2xl"
+                    className="absolute inset-0 w-full h-full rounded-2xl object-cover"
                 />
-                {/* <div className="absolute inset-0 flex items-center justify-center">
-              <h1 className="text-white text-4xl font-bold text-center drop-shadow-lg">
-                {team.teamName}
-              </h1>
-            </div> */}
             </div>
 
             {/* Section 2: Team Details */}
@@ -93,9 +96,11 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                         ))}
                     </div>
                     {teamMembers.length === 0 && (
-                        <div className="text-center py-4 text-gray-500" >
-                            No team members yet
-                        </div>
+                        <EmptyState
+                        icon={Users}
+                        title="No team members found"
+                        description="Add team members to get started."
+                    />
                     )}
                 </div>
 

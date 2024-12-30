@@ -45,23 +45,23 @@ const TasksListView = ({
     );
 };
 const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
-  <div className={`text-center p-6 ${className}`}>
-    <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-    <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
-    <p className="text-sm text-gray-500">{description}</p>
-  </div>
-);
-
-if (tasks.length === 0) {
-  return (
-    <EmptyState
-          icon={CheckSquare}
-          title="No tasks assigned"
-          description="You're all caught up! No tasks are currently assigned to you."
-          className="bg-white rounded-lg border border-gray-200 shadow-sm"
-        />
+    <div className={`text-center p-6${className}`}>
+      <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+      <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+      <p className="text-sm text-gray-500">{description}</p>
+    </div>
   );
-}
+
+  if (tasks.length === 0) {
+    return (
+      <EmptyState
+            icon={CheckSquare}
+            title="No tasks assigned"
+            description="There are currently no tasks."
+            className="bg-white rounded-lg m-8 p-8"
+          />
+    );
+  }
     return (
       <div className="container mx-auto px-4 py-8 mb-32">
         <h2 className="text-2xl font-bold mb-6 text-gray-700">Tasks</h2>

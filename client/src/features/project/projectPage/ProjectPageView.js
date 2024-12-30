@@ -7,33 +7,20 @@ import {
   
 const ProjectPageView = ({project, tasks, members}) => {
     console.log('ProjectPageView', project)
-    const project1 = {
-        title: "Open Source Collaboration Platform",
-        description: "A web application designed to connect developers, streamline project collaboration, and accelerate open-source innovation.",
-        owner: "Jane Doe",
-        repositoryLink: "https://github.com/synergy/collaboration-platform",
-    };
-    const taskz = [
-        { id: 1, title: "Implement User Authentication", status: "In Progress" },
-        { id: 2, title: "Design Database Schema", status: "Completed" },
-        { id: 3, title: "Create API Endpoints", status: "Pending" },
-        { id: 4, title: "Develop Frontend Components", status: "In Progress" }
-      ]
-      const memberz = [
-        { id: 1, name: "Jane Doe", role: "Project Lead", avatar: "/api/placeholder/40/40" },
-        { id: 2, name: "John Smith", role: "Backend Developer", avatar: "/api/placeholder/40/40" },
-        { id: 3, name: "Alex Johnson", role: "Frontend Developer", avatar: "/api/placeholder/40/40" },
-        { id: 4, name: "Sarah Williams", role: "UX Designer", avatar: "/api/placeholder/40/40" }
-      ]
-
-    
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+      <div className={`text-center p-6 ${className}`}>
+        <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+        <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
+      </div>
+    );
       return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">
           {/* Section 1: Project Overview */}
           <section className="bg-white shadow-sm rounded-lg p-6 mb-8">
             <div className="flex flex-col md:flex-row items-start justify-between">
               <div className="flex-grow">
-                <h1 className="text-2xl font-bold text-blue-700 mb-3">{project.projectTitle}</h1>
+                <h1 className="text-2xl font-bold text-purple-600 mb-3">{project.projectTitle}</h1>
                 <p className="text-gray-600 mb-4">{project.projectDescription}</p>
                 
                 <div className="flex items-center space-x-4">
@@ -95,11 +82,11 @@ const ProjectPageView = ({project, tasks, members}) => {
                 <UsersIcon className="mr-2 h-5 w-5 text-purple-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Members</h2>
               </div>
-              <ul className="space-y-4 max-h-96 overflow-y-auto">
+              <ul className="flex flex-col gap-2">
                 {members.map((teamMember) => (
                   <li 
                     key={teamMember.id} 
-                    className="flex items-center space-x-4 p-3 bg-gray-50 rounded-md"
+                    className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   >
                     {/* <img 
                       src={member.avatar} 
@@ -107,11 +94,18 @@ const ProjectPageView = ({project, tasks, members}) => {
                       className="w-10 h-10 rounded-full"
                     /> */}
                     <div>
-                      <p className="font-medium text-gray-800">{teamMember.user.firstName} {teamMember.user.lastName}</p>
-                      <p className="text-sm text-gray-500">{teamMember.user.email}</p>
+                      <p className="font-medium text-teal-700">{teamMember.user.firstName} {teamMember.user.lastName}</p>
+                      <p className="text-gray-600 text-sm">{teamMember.user.email}</p>
                     </div>
                   </li>
                 ))}
+                {members.length === 0 && (
+                  <EmptyState
+                    icon={UsersIcon}
+                    title="No team members found"
+                    description="There are currently no team members in this project."
+                  />
+                )}
               </ul>
             </div>
           </section>

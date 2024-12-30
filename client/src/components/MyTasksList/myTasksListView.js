@@ -26,7 +26,7 @@ const TasksListView = ({
             icon={CheckSquare}
             title="No tasks assigned"
             description="You're all caught up! No tasks are currently assigned to you."
-            className="bg-white rounded-lg border border-gray-200 shadow-sm m-8 p-8"
+            className="bg-white rounded-lg m-8 p-8"
           />
     );
   }

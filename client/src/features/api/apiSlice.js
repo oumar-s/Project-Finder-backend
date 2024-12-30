@@ -91,7 +91,7 @@ export const apiSlice = createApi({
         method: 'DELETE',
         body: {}
       }),
-      invalidatesTags: ['getProjectMembers']
+      invalidatesTags: ['getProjectMembers', 'getProjects', 'getProject', 'getProjectsForTeam','getUserProjectsInTeam' , 'getAllProjectsForUser', 'getUserProjectsInTeam']
     }),
 
     //project requests
@@ -164,7 +164,7 @@ export const apiSlice = createApi({
         method: 'DELETE',
         body: {}
       }),
-      invalidatesTags: ['getTeamMembers']
+      invalidatesTags: ['getTeamMembers', 'getAllTeams', 'getTeam', 'getUserTeams']
     }),
 
     //team requests

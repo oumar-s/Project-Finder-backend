@@ -17,7 +17,7 @@ export default function AllTeamsPage() {
     }
 
     if (error) {
-        return <div>Error! Try again: {error.message}</div>;
+        return <div>There was an error.</div>;
     }
 
     return (

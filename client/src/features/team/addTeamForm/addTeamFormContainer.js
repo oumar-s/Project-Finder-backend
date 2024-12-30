@@ -8,6 +8,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export function AddTeamFormContainer() {
     const auth = useAuth();
+    const [showToast, setShowToast] = useState(false);
     const [teamForm, setTeamForm] = useState({
         teamName: '',
         teamDescription: '',
@@ -90,7 +91,7 @@ export function AddTeamFormContainer() {
         let team = {...teamForm};
         console.log('team form', team);
         const addedTeam = await addTeam(team);
-        addMemberToTeam({teamId: addedTeam.data.id, userId: auth.user?.id});
+        await addMemberToTeam({teamId: addedTeam.data.id, userId: auth.user?.id});
         console.log('added team', addedTeam);
         setTeamForm({
             teamName: '',
@@ -100,6 +101,11 @@ export function AddTeamFormContainer() {
         });
         setTeamImage(null);
         setTeamBanner(null);
+
+        setShowToast(true);
+        setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
     }
     
     return (
@@ -113,6 +119,8 @@ export function AddTeamFormContainer() {
             teamImage = {teamImage}
             teamBanner = {teamBanner}
             formData = {teamForm}
+            showToast={showToast}
+            setShowToast={setShowToast}
         />
     );
 }

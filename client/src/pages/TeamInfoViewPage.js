@@ -10,8 +10,7 @@ function TeamInfoViewPage() {
   const params = useParams();
   const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
   const { data: teamMembers, error: teamMembersError, isLoading: teamMembersLoading } = useGetTeamMembersQuery(params.teamId);
-  const { data: teamProjects, error: teamProjectsError, isLoading: teamProjectsLoading } = useGetProjectsForTeamQuery(params.teamId);
-  
+  const { data: teamProjects, error: teamProjectsError, isLoading: teamProjectsLoading } = useGetProjectsForTeamQuery(params.teamId);  
 
   if (teamLoading || teamMembersLoading || teamProjectsLoading) {
     return <div>Loading...</div>;
