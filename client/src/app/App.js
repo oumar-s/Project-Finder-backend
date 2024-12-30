@@ -20,6 +20,7 @@ import ProjectInfoViewPage from '../pages/ProjectInfoViewPage';
 import SettingsPage from '../pages/SettingsPage';
 import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
+import PublicProfilePage from '../pages/PublicProfilePage';
 import ProfileTeamsPage from '../pages/ProfileTeamsPage';
 import ProfileProjectsPage from '../pages/ProfileProjectsPage';
 import ProfileTasksPage from '../pages/ProfileTasksPage';
@@ -47,6 +48,8 @@ function App() {
 					<Route path="/project-info-view/:projectId" element={<ProjectInfoViewPage />} />
 					<Route path="/team-info-view/:teamId" element={<TeamInfoViewPage />} />
 					<Route path="/test" element={<Test />} />
+					<Route path="/profile/:userId" element={<PublicProfilePage />} />
+
 					<Route
 						path="/dashboard"
 						element={

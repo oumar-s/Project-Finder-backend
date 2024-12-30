@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { MyTasksListContainer } from '../../../components/TasksListDisplay/myTasksListContainer';
 import { 
     UsersIcon, 
@@ -82,10 +83,11 @@ const ProjectPageView = ({project, tasks, members}) => {
                 <UsersIcon className="mr-2 h-5 w-5 text-purple-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Members</h2>
               </div>
-              <ul className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2">
                 {members.map((teamMember) => (
-                  <li 
+                  <Link
                     key={teamMember.id} 
+                    to={`/profile/${teamMember.user.id}`}
                     className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   >
                     {/* <img 
@@ -97,7 +99,7 @@ const ProjectPageView = ({project, tasks, members}) => {
                       <p className="font-medium text-teal-700">{teamMember.user.firstName} {teamMember.user.lastName}</p>
                       <p className="text-gray-600 text-sm">{teamMember.user.email}</p>
                     </div>
-                  </li>
+                  </Link>
                 ))}
                 {members.length === 0 && (
                   <EmptyState
@@ -106,7 +108,7 @@ const ProjectPageView = ({project, tasks, members}) => {
                     description="There are currently no team members in this project."
                   />
                 )}
-              </ul>
+              </div>
             </div>
           </section>
         </div>

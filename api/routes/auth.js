@@ -42,11 +42,32 @@ router.post("/logout", (req, res, next) => {
   });
 });
 
+// Route to get the current logged-in user
 router.get('/user', async (req, res) => {
   try {
     //console.log("user request log", req);
     //console.log("user Id:", req.user.id);
     const user = await User.findByPk(req.user.id, {
+      attributes: { exclude: ['passwordHash'] }
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.json(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Route to get a user by given id
+router.get('/user/:userId', async (req, res) => {
+  console.log("user Id:", req.params.userId);
+  const userId = req.params.userId;
+  try {
+    const user = await User.findByPk(userId, {
       attributes: { exclude: ['passwordHash'] }
     });
 

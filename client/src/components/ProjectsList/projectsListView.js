@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, UserCheck, FolderGit2} from 'lucide-react';
 
-const ProjectsListView = ({ projects }) => {
+const ProjectsListView = ({ projects, isPublicProfile }) => {
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
     <div className={`text-center p-6 ${className}`}>
       <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
@@ -30,11 +30,11 @@ const ProjectsListView = ({ projects }) => {
             key={project.id} 
             className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
           >
-            {console.log("a single project: ", project)}
+            {console.log("isPublic profile ", project)}
             <div className="flex justify-between items-start mb-4">
               <div>
                 <Link 
-                    to={`/projects/${project.project?.id || project.id}/info`}
+                    to={isPublicProfile ? `/project-info-view/${project.project?.id || project.id}` : `/projects/${project.project?.id || project.id}/info`}
                     className="text-lg font-semibold text-purple-600 mb-1 hover:underline ">
                   {project.projectTitle || project.project.projectTitle}
                 </Link>

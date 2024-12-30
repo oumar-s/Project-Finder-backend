@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from "../../assets/images/profile_image.png";
 import { useAuth } from '../../context/authContext';
 import { Users } from 'lucide-react';
@@ -65,8 +66,9 @@ const TeamMembersListView = ({
       <>
         <div className="w-full max-w-2xl mx-auto space-y-2">
           {members.map((member) => (
-            <div
+            <Link
               key={member.id}
+              to={`/profile/${member.user.id}`}
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center space-x-3">
@@ -102,7 +104,7 @@ const TeamMembersListView = ({
                   <div>X</div>
                 </button>
               }
-            </div>
+            </Link>
           ))}
         </div>
         
@@ -120,8 +122,9 @@ const TeamMembersListView = ({
         <div className="w-full max-w-2xl mx-auto space-y-2">
           <h2 className="text-xl font-medium text-gray-900">Members</h2>
           {members.map((member) => (
-            <div
+            <Link
               key={member.id}
+              to={`/profile/${member.user.id}`}
               className="flex items-center justify-between p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center space-x-3">
@@ -157,7 +160,7 @@ const TeamMembersListView = ({
                   <div>X</div>
                 </button>
               }
-            </div>
+            </Link>
           ))}
         </div>
         

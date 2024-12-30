@@ -3,12 +3,16 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: '/api', credentials: 'include' }),
-  tagTypes: ['getProjects', 'getTeamRequests', 'getProjectTasks', 'myTasksInProject', 'getUser', 'getProjectRequests', 'getProjectMembers', 'getProject', 'getProjectsForTeam', 'getUserProjectsInTeam', 'getAllProjectsForUser', 'getAllTeams', 'getTeam', 'getTeamMembers', 'getUserTeams', 'getTasksForUser', 'getIncompleteTasksForUser'],
+  tagTypes: ['getProjects', 'getTeamRequests', 'getProjectTasks', 'myTasksInProject', 'getUser', 'getUserById', 'getProjectRequests', 'getProjectMembers', 'getProject', 'getProjectsForTeam', 'getUserProjectsInTeam', 'getAllProjectsForUser', 'getAllTeams', 'getTeam', 'getTeamMembers', 'getUserTeams', 'getTasksForUser', 'getIncompleteTasksForUser'],
   endpoints: (builder) => ({
     //User
     getUser: builder.query({
       query: () => '/auth/user',
       providesTags: ['getUser']
+    }),
+    getUserById: builder.query({
+      query: (userId) => `auth/user/${userId}`,
+      providesTags: ['getUserById']
     }),
     updateUserProfile: builder.mutation({
       query: (data) => ({
@@ -16,7 +20,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser']
+      invalidatesTags: ['getUser', 'getUserById']
     }),
     updateEmail: builder.mutation({
       query: (data) => ({
@@ -24,7 +28,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser']
+      invalidatesTags: ['getUser', 'getUserById']
     }),
     updatePassword: builder.mutation({
       query: (data) => ({
@@ -32,7 +36,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser']
+      invalidatesTags: ['getUser', 'getUserById']
     }),
 
     //Project
@@ -259,6 +263,7 @@ export const apiSlice = createApi({
 
 export const {
   useGetUserQuery,
+  useGetUserByIdQuery,
   useUpdateUserProfileMutation,
   useUpdateEmailMutation,
   useUpdatePasswordMutation,
