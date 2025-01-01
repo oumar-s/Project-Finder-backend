@@ -3,7 +3,11 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
     const TeamMember = sequelize.define("TeamMember", {
-
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
     });
 
     TeamMember.associate = (models) => {

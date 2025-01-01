@@ -3,6 +3,11 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
     const Task = sequelize.define("Task", {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         taskName: {
             type: DataTypes.STRING,
             allowNull: false

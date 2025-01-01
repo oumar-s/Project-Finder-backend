@@ -3,7 +3,11 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
     const TeamRequest = sequelize.define("TeamRequest", {
-        
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         status: { //Pending, Accepted, Rejected
             type: DataTypes.STRING,
             default: 'Pending'

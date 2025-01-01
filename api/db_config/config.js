@@ -21,11 +21,10 @@ module.exports = {
     },
     production: {
         url: process.env.DATABASE_URL,
-        dialect: "postgres",
+        dialect: "mssql",
         dialectOptions: {
-            "ssl": {
-                "rejectUnauthorized": false
-            }
+            encrypt: true,               // Ensures the connection is encrypted
+            trustServerCertificate: false // Prevents bypassing strict SSL validation in production
         }
     }
 }
