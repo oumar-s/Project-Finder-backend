@@ -67,7 +67,7 @@ export default function ProjectInfoPage() {
      
     return (
         <div >
-            <Navbar />
+            <Navbar page="Project" />
 
             <TabNav tabs={tabs}/>
 

@@ -9,7 +9,6 @@ function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [data, setData] = useState({ email: "", password: "" });
-  const [error, setError] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
 
@@ -26,26 +25,17 @@ function LoginPage() {
 
     try {
       await auth.authenticate(email, password);
-      // setRedirectToReferrer(true); // used in react-router v5
-      // in react-router v6 navigate changes the pages directly.
-      // comment from official docs example:
-      //    Send them back to the page they tried to visit when they were
-      //    redirected to the login page. Use { replace: true } so we don't create
-      //    another entry in the history stack for the login page.  This means that
-      //    when they get to the protected page and click the back button, they
-      //    won't end up back on the login page, which is also really nice for the
-      //    user experience.
       navigate(from, { replace: true });
-    } catch (error) {
-      setError(true);
+    } catch(error) {
+      console.log("Error logging in", error);
     }
   };
 
   let errorMessage = "";
-  if (error) {
+  if (auth.authError) {
     errorMessage = (
-      <div className="alert alert-danger" role="alert">
-        Login Failed
+      <div className="alert alert-danger p-2 mb-4 text-red-600 bg-red-100 border border-red-400 rounded" role="alert">
+        {auth.authError}
       </div>
     );
   }

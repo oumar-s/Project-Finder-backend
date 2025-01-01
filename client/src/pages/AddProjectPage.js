@@ -8,7 +8,7 @@ function AddProjectPage() {
 
     return (
       <div >
-        <Navbar />
+        <Navbar page="Add project"/>
   
         <TabNav tabs={tabs}/>
         <div className='min-h-screen p-8'>

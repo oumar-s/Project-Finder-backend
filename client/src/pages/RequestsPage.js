@@ -6,7 +6,7 @@ export default function RequestsPage() {
 
     return (
         <div >
-            <Navbar />
+            <Navbar page="Requests" />
 
             <RequestsContainer />
 

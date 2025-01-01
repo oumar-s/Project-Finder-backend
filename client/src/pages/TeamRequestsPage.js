@@ -46,7 +46,7 @@ export default function TeamRequestsPage() {
 
     return (
         <div >
-            <Navbar />
+            <Navbar page="Team" />
 
             <TabNav tabs={tabs} />
             <div className='min-h-screen max-w-4xl mx-auto p-6'>

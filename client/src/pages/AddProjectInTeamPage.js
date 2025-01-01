@@ -16,7 +16,7 @@ function AddProjectInTeamPage() {
 ]
   return (
     <div >
-      <Navbar />
+      <Navbar page="Team" />
 
       <TabNav tabs={tabs}/>
       <div className='min-h-screen  p-8'>

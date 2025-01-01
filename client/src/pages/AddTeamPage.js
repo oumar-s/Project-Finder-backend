@@ -4,7 +4,7 @@ import { AddTeamFormContainer } from '../features/team/addTeamForm/addTeamFormCo
 function AddTeamPage() {
   return (
     <div >
-      <Navbar />
+      <Navbar page="Add team" />
       <div className='min-h-screen p-8'>
         <AddTeamFormContainer />
       </div>

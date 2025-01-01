@@ -55,7 +55,7 @@ export default function TeamOverviewPage() {
     }
     return (
         <div >
-            <Navbar />
+            <Navbar page="Team" />
 
             <TabNav tabs={tabs} />
             

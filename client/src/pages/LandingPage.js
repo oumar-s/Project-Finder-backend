@@ -3,8 +3,8 @@ import Footer from "../components/footer";
 
 import { Link } from "react-router-dom";
 
-import imageOpen from "../assets/images/image_3.png";
-import imageClosed from "../assets/images/image_1.png";
+import imageOpen from "../assets/images/opensource.png";
+import imageClosed from "../assets/images/closedsource.png";
 
 import {
 	Users,
@@ -24,7 +24,7 @@ const HeroPattern = ({ title, description, imageSide = 'right', imageUrl }) => (
 		<h3 className="text-2xl font-bold text-gray-900">{title}</h3>
 		<p className="text-lg text-gray-600 leading-relaxed">{description}</p>
 	  </div>
-	  <div className={`rounded-xl overflow-hidden shadow-lg ${imageSide === 'left' ? 'lg:order-1' : 'lg:order-2'}`}>
+	  <div className={`rounded-xl overflow-hidden ${imageSide === 'left' ? 'lg:order-1' : 'lg:order-2'}`}>
 		<img 
 		  src={imageUrl || "https://www.claudeusercontent.com/api/placeholder/800/600"}
 		  alt={title} 
@@ -47,7 +47,7 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
 const LandingPage = () => (
 	
   <div className="min-h-screen bg-gray-50 font-mono-sans">
-	<Navbar displayLogout={false} />
+	<Navbar page="Home" displayLogout={false} />
     {/* Hero Section */}
     <section className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">

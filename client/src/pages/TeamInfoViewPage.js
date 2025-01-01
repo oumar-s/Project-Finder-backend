@@ -29,7 +29,7 @@ function TeamInfoViewPage() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar page="Team" />
       {/* <TabNav tabs={tabs} /> */}
       <div className="min-h-screen">
         <TeamInfoViewContainer

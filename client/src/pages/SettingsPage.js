@@ -73,7 +73,7 @@ export default function SettingsPage() {
     // );
     return (
         <div >
-            <Navbar page="Account" />
+            <Navbar page="Settings" />
 
             <div className="min-h-screen">
             <SettingsContainer user={user} updateUserProfile={updateUserProfile} updateEmail={updateEmail}  updatePassword={updatePassword} projectMembers={projects} teamMembers={teams} removeUserFromProject={removeUserFromProject} removeMemberFromTeam={removeMemberFromTeam} />

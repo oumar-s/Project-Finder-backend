@@ -43,7 +43,7 @@ export default function ProjectAllTasksPage() {
 
     return (
         <div >
-            <Navbar />
+            <Navbar page="Project" />
 
             <TabNav tabs={tabs} />
             <div className='min-h-screen'>

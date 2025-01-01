@@ -35,7 +35,7 @@ export default function FilteredProjectsPage() {
     }
     return (
         <div >
-            <Navbar />
+            <Navbar page="Project" />
 
             <TabNav tabs={tabs}/>
             <div className='min-h-screen'>

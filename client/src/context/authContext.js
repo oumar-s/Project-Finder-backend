@@ -11,6 +11,7 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
   const dispatch = useDispatch();
 
   //UseEffect to check if the user is logged in.
@@ -51,6 +52,7 @@ const AuthProvider = ({ children }) => {
 
   const authenticate = async (email, password) => {
     setAuthLoading(true);
+    setAuthError(null);
     try {
       let response = await fetch('/api/auth/login', {
         method: "POST",
@@ -62,7 +64,8 @@ const AuthProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        throw new Error("Login Failed");
+        console.log("Error: ", response);
+        throw new Error("Incorrect email or password. Please try again.");
       }
 
       let res = await response.json();
@@ -78,10 +81,13 @@ const AuthProvider = ({ children }) => {
       //check if user logged in in firebase
       const firebaseUser = auth.currentUser;
       if (!firebaseUser) {
-        throw new Error("Firebase login failed");
+        throw new Error("There was an error autheticating you credentials. Please try again.");
       }
 
       return loggedInUser;
+    } catch (error) {
+      setAuthError(error.message);
+      throw error;
     } finally {
       setAuthLoading(false);
     }
@@ -116,7 +122,8 @@ const AuthProvider = ({ children }) => {
         signout,
         isAuthenticated: user ? true : false,
         user,
-        initialLoading
+        initialLoading,
+        authError
       }}
     >
       {authLoading ? <LoadingSpinner /> : children}
@@ -124,7 +131,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-// Our own hook for accessing the context from any functional component
+// A hook for accessing the context from any functional component
 function useAuth() {
   return React.useContext(AuthContext);
 }

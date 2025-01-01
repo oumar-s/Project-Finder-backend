@@ -40,7 +40,7 @@ export default function ProjectMembersPage() {
 
     return (
         <div className='' >
-            <Navbar />
+            <Navbar page="Project" />
 
             <TabNav tabs={tabs} />
             <div className='min-h-screen max-w-4xl mx-auto p-6'>

@@ -21,7 +21,7 @@ function ProjectInfoViewPage() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar page="Project" />
       <div className="min-h-screen">
         <ProjectInfoViewContainer
           project={project}
