@@ -1,6 +1,6 @@
 import { useAddRequestToTeamMutation } from "../../api/apiSlice";
 import { useAuth } from "../../../context/authContext";
-import AllTeamsView from "./allTeamsView";
+import AllTeamsView from "./AllTeamsView";
 import { useState } from "react";
 
 export function AllTeamsContainer({teams, type}) {

@@ -1,7 +1,7 @@
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import TabNav from '../components/TabNav';
-import { AllTeamsContainer } from '../features/team/allTeams/allTeamsContainer';
+import { AllTeamsContainer } from '../features/team/allTeams/AllTeamsContainer';
 import { useGetAllTeamsQuery } from "../features/api/apiSlice";
 
 export default function AllTeamsPage() {
