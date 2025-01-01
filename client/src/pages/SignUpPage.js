@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
-import ErrorAlert from "../common/ErrorAlert";
-import Navbar from "../common/navbar";
+
+import ErrorAlert from "../components/ErrorAlert";
+import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 
 // sign up a user with first name, last name, email, and password and put the data into sql database with post request
 function SignUpPage() {
@@ -57,60 +59,71 @@ function SignUpPage() {
 	return (
 		<>
 			<Navbar />
-			<div className="mx-auto my-5 col-10 col-md-8 col-lg-7">
+			<div className="min-h-screen flex flex-col items-center gap-8 m-8">
 				{error && <ErrorAlert details={"Failed to save the content"} />}
-				<form onSubmit={signUp}>
-					<div className="form-row my-3">
+				<h1 className="text-xl">Welcome to Synergy!</h1>
+				<p className="text-2xl">Sign up now to get started</p>
+
+				<form className="bg-[#f6f8fa]" onSubmit={signUp}>
+					<div className="flex flex-col w-80 p-4 border rounded-md">
+						<label htmlFor="email" className="">
+							First name
+						</label>
 						<input
 							type="text"
-							className="form-control"
+							className="border p-3 rounded-md h-8"
 							name="firstName"
-							placeholder="First Name"
+							//placeholder="First Name"
 							value={data.firstName}
 							onChange={fieldChanged("firstName")}
-							autoFocus
+							autoFocus = "true"
 						/>
-					</div>
-					<div className="form-row my-3">
+		
+						<label htmlFor="email" className="mt-4">
+							Last name
+						</label>
 						<input
 							type="text"
-							className="form-control"
+							className="border p-3 rounded-md h-8"
 							name="lastName"
-							placeholder="Last Name"
+							//placeholder="Last Name"
 							value={data.lastName}
 							onChange={fieldChanged("lastName")}
-							autoFocus
+							
 						/>
-					</div>
-					<div className="form-row my-3">
+
+						<label htmlFor="email" className="mt-4">
+							Email
+						</label>
 						<input
 							type="email"
-							className="form-control"
+							className="border p-3 rounded-md h-8"
 							name="email"
-							placeholder="Email"
+							//placeholder="Email"
 							value={data.email}
 							onChange={fieldChanged("email")}
-							autoFocus
+							
 						/>
-					</div>
-					<div className="form-row">
+
+						<label htmlFor="email" className="mt-4">
+							Password
+						</label>
 						<input
 							type="password"
-							className="form-control"
+							className="border p-3 rounded-md h-8"
 							name="password"
-							placeholder="Password"
+							//placeholder="Password"
 							value={data.password}
 							onChange={fieldChanged("password")}
-							autoFocus
+							
 						/>
-					</div>
-					<div className="form-row">
-						<button type="submit" className="d-grid col-3 mx-auto my-4 btn btn-primary">
+						<button type="submit" className="font-medium mt-4 py-1 text-white bg-emerald-600 border rounded-md h-8">
 							Sign Up
 						</button>
 					</div>
 				</form>
 			</div>
+			<Footer />
 		</>
 	);
 }

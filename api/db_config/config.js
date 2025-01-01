@@ -7,11 +7,17 @@ module.exports = {
         dialect: "postgres"
     },
     test: {
-        username: "pf_user",
-        password: "pf_password",
-        database: "pf_db_test",
-        host: "127.0.0.1",
-        dialect: "postgres"
+        username: "",
+        password: "",
+        database: "",
+        host: "",
+        port: "",
+        dialect: "",
+        dialectOptions: {
+            options: {
+                encrypt: true
+            }
+        }
     },
     production: {
         url: process.env.DATABASE_URL,

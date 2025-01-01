@@ -1,12 +1,12 @@
 import { RequestsContainer } from '../features/request/RequestsContainer';
-import Navbar from '../common/navbar';
-import Footer from '../common/footer';
+import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 
 export default function RequestsPage() {
 
     return (
         <div >
-            <Navbar />
+            <Navbar page="Requests" />
 
             <RequestsContainer />
 

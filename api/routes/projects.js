@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../models');
-const { Project, User } = db;
+const { Project, Team, User, ProjectMember } = db;
 
 router.get('/', (req, res) => {
   //console.log("Get all project user log: ", req.user);
@@ -12,6 +12,10 @@ router.get('/', (req, res) => {
         model: User,
         as: "owner",
         attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: Team,
+        as: "team",
       }
     ]
   })
@@ -23,6 +27,7 @@ router.get('/', (req, res) => {
     });
 });
 router.get('/:projectId', async (req, res) => {
+  console.log("Get all project user log");
   try {
     const projectId = req.params.projectId;
     const project = await Project.findByPk(projectId, {
@@ -47,23 +52,98 @@ router.get('/:projectId', async (req, res) => {
 });
 
 
-router.post('/', (req, res) => {
-  const ownerid = req.user.id;
-  const {
-    title: projectTitle,
-    description: projectDescription,
-  } = req.body;
-  Project.create({
-    projectTitle,
-    projectDescription,
-    ownerID: ownerid
-  })
-    .then((newProject) => {
-      res.status(201).json(newProject);
+//Add a new project
+
+router.post('/:teamId', async (req, res) => {
+  try {
+    console.log(req.user);
+    const ownerId = req.user.id;
+    const project = await Project.create({
+      teamID: req.params.teamId,
+      projectTitle: req.body.projectTitle,
+      projectDescription: req.body.projectDescription,
+      projectRepository: req.body.projectRepository,
+      projectStatus: "Open",
+      ownerID: ownerId
     })
-    .catch((err) => {
-      res.status(400).json(err);
-    })
+    return res.status(200).json(project);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
 });
+
+//Get all projects for a specific team.
+
+router.get('/teams/:teamId', async (req, res) => {
+  console.log("correct route");
+  try {
+    const teamId = req.params.teamId;
+    const team = await Project.findAll({
+      where: {
+        teamID: teamId
+      },
+      include: [
+        {
+          model: User,
+          as: "owner",
+          attributes: ["id", "firstName", "lastName"],
+        }, 
+        {
+          model: Team,
+          as: "team",
+        }
+      ]
+    })
+
+    return res.status(200).json(team);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+//Get all projects for a team the user belongs to.
+
+router.get('/:teamId/:userId', async (req, res) => {
+  try {
+      const teamId = req.params.teamId;
+      const userId = req.params.userId;
+
+      const projects = await Project.findAll({
+          where: {
+              teamID: teamId
+          },
+          include: [
+              {
+                  model: ProjectMember,
+                  as: "projectMembers",
+                  where: {
+                      userID: userId
+                  },
+                  required: true
+              },
+              {
+                  model: User,
+                  as: "owner"
+              },
+              {
+                  model: Team,
+                  as: "team"
+              }
+          ]
+      });
+
+      console.log("Get all projects for a team the user belongs to");
+      return res.status(200).json(projects);
+  } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
 
 module.exports = router;

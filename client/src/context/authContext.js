@@ -1,12 +1,17 @@
 import React, { useState, useEffect, createContext } from "react";
 import { apiSlice } from "../features/api/apiSlice";
 import { useDispatch } from "react-redux";
+import { getAuth, signInWithCustomToken } from "firebase/auth";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const AuthContext = createContext();
 const { Provider } = AuthContext;
 //const url = 'https://project-finder-backend-production.up.railway.app';
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(false);
+  const [authLoading, setAuthLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
   const dispatch = useDispatch();
 
   //UseEffect to check if the user is logged in.
@@ -27,6 +32,8 @@ const AuthProvider = ({ children }) => {
       } catch (error) {
         console.log("Error: User not logged in.")
         setUser(false);
+      } finally {
+        setInitialLoading(false);
       }
     }
     checkIfUserIsLoggedIn();
@@ -44,23 +51,46 @@ const AuthProvider = ({ children }) => {
   }, [user, dispatch]);
 
   const authenticate = async (email, password) => {
-    let response = await fetch('/api/auth/login', {
-      method: "POST",
-      credentials: 'include',
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    setAuthLoading(true);
+    setAuthError(null);
+    try {
+      let response = await fetch('/api/auth/login', {
+        method: "POST",
+        credentials: 'include',
+        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error("Login Failed");
+      if (!response.ok) {
+        console.log("Error: ", response);
+        throw new Error("Incorrect email or password. Please try again.");
+      }
+
+      let res = await response.json();
+
+      let loggedInUser = res.user;
+      setUser(loggedInUser);
+
+      // Sign in to Firebase with custom token
+      const firebaseToken = await res.token;
+      const auth = getAuth();
+      await signInWithCustomToken(auth, firebaseToken);
+
+      //check if user logged in in firebase
+      const firebaseUser = auth.currentUser;
+      if (!firebaseUser) {
+        throw new Error("There was an error autheticating you credentials. Please try again.");
+      }
+
+      return loggedInUser;
+    } catch (error) {
+      setAuthError(error.message);
+      throw error;
+    } finally {
+      setAuthLoading(false);
     }
-
-    let loggedInUser = await response.json();
-    setUser(loggedInUser);
-
-    return loggedInUser;
   };
 
   const signout = async () => {
@@ -76,6 +106,10 @@ const AuthProvider = ({ children }) => {
     }
 
     setUser(false);
+
+    // Sign out of Firebase
+    const auth = getAuth();
+    await auth.signOut();
     
     let body = await response.json();
     return body;
@@ -88,14 +122,16 @@ const AuthProvider = ({ children }) => {
         signout,
         isAuthenticated: user ? true : false,
         user,
+        initialLoading,
+        authError
       }}
     >
-      {children}
+      {authLoading ? <LoadingSpinner /> : children}
     </Provider>
   );
 };
 
-// Our own hook for accessing the context from any functional component
+// A hook for accessing the context from any functional component
 function useAuth() {
   return React.useContext(AuthContext);
 }

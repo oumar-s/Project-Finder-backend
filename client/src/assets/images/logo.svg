@@ -1,0 +1,57 @@
+
+
+<svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="10" stroke="#8b5cf6" stroke-width="2"/>
+  <path d="M8 10a4 4 0 1 1 4 4M16 14a4 4 0 1 1-4-4" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- <circle cx="8" cy="10" r="1.5" fill="#3B82F6"/>
+  <circle cx="16" cy="14" r="1.5" fill="#3B82F6"/> -->
+</svg>
+<svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="50" cy="50" r="40" stroke="#8b5cf6" stroke-width="3" fill="none"/>
+  <path d="M35 65 C 50 80, 50 20, 65 35" stroke="#3B82F6" stroke-width="3" fill="none"/>
+</svg>
+<svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Central circle -->
+  <circle cx="50" cy="50" r="10" fill="#8b5cf6" stroke="#8b5cf6" stroke-width="2"/>
+
+  <!-- Outer circles and connecting lines -->
+  <!-- Top circle -->
+  <line x1="50" y1="40" x2="50" y2="20" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="50" cy="15" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Bottom circle -->
+  <line x1="50" y1="60" x2="50" y2="80" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="50" cy="85" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Left circle -->
+  <line x1="40" y1="50" x2="20" y2="50" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="15" cy="50" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Right circle -->
+  <line x1="60" y1="50" x2="80" y2="50" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="85" cy="50" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Top-left circle -->
+  <line x1="43" y1="43" x2="28" y2="28" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="23" cy="23" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Top-right circle -->
+  <line x1="57" y1="43" x2="72" y2="28" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="77" cy="23" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Bottom-left circle -->
+  <line x1="43" y1="57" x2="28" y2="72" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="23" cy="77" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+
+  <!-- Bottom-right circle -->
+  <line x1="57" y1="57" x2="72" y2="72" stroke="#3b82f6" stroke-width="2"/>
+  <circle cx="77" cy="77" r="5" fill="transparent" stroke="#3b82f6" stroke-width="2"/>
+</svg>
+
+<svg width="37" height="37" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="12" r="10" stroke="#8b5cf6" stroke-width="1"/>
+  <path d="M8 10a4 4 0 1 1 4 4M16 14a4 4 0 1 1-4-4" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- <circle cx="8" cy="10" r="1.5" fill="#3B82F6"/>
+  <circle cx="16" cy="14" r="1.5" fill="#3B82F6"/> -->
+</svg>
