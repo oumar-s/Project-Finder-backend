@@ -13,6 +13,7 @@ const db = {};
 config.logging = false;
 let sequelize;
 if (config.url) {
+  console.log("Using database URL");
   sequelize = new Sequelize(config.url, config);
 } else {
   

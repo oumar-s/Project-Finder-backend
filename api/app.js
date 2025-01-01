@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 
+console.log('starting app');
 let serviceAccount;
 if(process.env.NODE_ENV === "production"){
   serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
