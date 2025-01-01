@@ -2,8 +2,21 @@ import { Link } from "react-router-dom"
 import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
 
 const AllTeamsView = ({teams, isAuthenticated, type, handleJoinTeam, loadingTeams, joinedTeams, showAlert, setShowAlert}) => {
+  const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+    <div className={`text-center p-6 ${className}`}>
+      <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+      <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+      <p className="text-sm text-gray-500">{description}</p>
+    </div>
+  );
     if (!teams.length) {
-        return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>There are no projects.</div>
+        return (
+          <EmptyState
+            icon={Users}
+            title="No teams"
+            description="There are no teams available at the moment."
+          />
+        );
     }
 // Custom Toast Component
 const Toast = ({ children, onClose }) => (

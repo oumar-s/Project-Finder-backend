@@ -11,7 +11,12 @@ const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 
-const serviceAccount = require("./firebase.json");
+let serviceAccount;
+if(process.env.NODE_ENV === "production"){
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  serviceAccount = require("./firebase.json");
+}
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });

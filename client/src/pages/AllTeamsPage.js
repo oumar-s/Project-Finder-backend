@@ -24,8 +24,9 @@ export default function AllTeamsPage() {
         <div >
             <Navbar page='Explore' />
             <TabNav page='explore' tabs={tabs}/>
-
-            <AllTeamsContainer teams={data} type="Join" />
+            <div className='min-h-screen'>
+                <AllTeamsContainer teams={data} type="Join" />
+            </div>
 
             <Footer />
         </div>
