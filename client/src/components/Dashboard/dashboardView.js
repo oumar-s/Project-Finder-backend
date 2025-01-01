@@ -14,7 +14,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
     <div className="bg-gray-50">
       <div className="md:flex">
         {/* Sidebar for large screens */}
-        <div className="hidden md:block md:w-96  md:pt-8 bg-white border-r border-gray-200">
+        <div className="hidden md:block md:w-96 md:min-h-screen  md:pt-8 bg-white border-r border-gray-200">
           <div className="p-4 h-full overflow-y-auto">
             {/* Team Selector */}
             <div className="mb-6">
