@@ -18,7 +18,6 @@ import ProjectRequestsPage from '../pages/ProjectRequestsPage';
 import ProjectInfoPage from '../pages/ProjectInfoPage';
 import ProjectInfoViewPage from '../pages/ProjectInfoViewPage';
 import SettingsPage from '../pages/SettingsPage';
-import RequestsPage from '../pages/RequestsPage';
 import ProfilePage from '../pages/ProfilePage';
 import PublicProfilePage from '../pages/PublicProfilePage';
 import ProfileTeamsPage from '../pages/ProfileTeamsPage';
@@ -87,14 +86,6 @@ function App() {
 						element={
 							<PrivateRouteRequiresAuth>
 								<SettingsPage />
-							</PrivateRouteRequiresAuth>
-						}
-					/>
-						<Route
-						path="/requests"
-						element={
-							<PrivateRouteRequiresAuth>
-								<RequestsPage />
 							</PrivateRouteRequiresAuth>
 						}
 					/>

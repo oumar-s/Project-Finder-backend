@@ -4,8 +4,6 @@ const db = require('../models');
 const { Project, Team, User, ProjectMember } = db;
 
 router.get('/', (req, res) => {
-  //console.log("Get all project user log: ", req.user);
-  //console.log("Get all project req log: ", req);
   Project.findAll({
     include: [
       {
@@ -27,7 +25,6 @@ router.get('/', (req, res) => {
     });
 });
 router.get('/:projectId', async (req, res) => {
-  console.log("Get all project user log");
   try {
     const projectId = req.params.projectId;
     const project = await Project.findByPk(projectId, {
@@ -56,7 +53,6 @@ router.get('/:projectId', async (req, res) => {
 
 router.post('/:teamId', async (req, res) => {
   try {
-    console.log(req.user);
     const ownerId = req.user.id;
     const project = await Project.create({
       teamID: req.params.teamId,
@@ -76,7 +72,6 @@ router.post('/:teamId', async (req, res) => {
 //Get all projects for a specific team.
 
 router.get('/teams/:teamId', async (req, res) => {
-  console.log("correct route");
   try {
     const teamId = req.params.teamId;
     const team = await Project.findAll({
@@ -88,7 +83,7 @@ router.get('/teams/:teamId', async (req, res) => {
           model: User,
           as: "owner",
           attributes: ["id", "firstName", "lastName"],
-        }, 
+        },
         {
           model: Team,
           as: "team",
@@ -104,41 +99,39 @@ router.get('/teams/:teamId', async (req, res) => {
 });
 
 //Get all projects for a team the user belongs to.
-
 router.get('/:teamId/:userId', async (req, res) => {
   try {
-      const teamId = req.params.teamId;
-      const userId = req.params.userId;
+    const teamId = req.params.teamId;
+    const userId = req.params.userId;
 
-      const projects = await Project.findAll({
+    const projects = await Project.findAll({
+      where: {
+        teamID: teamId
+      },
+      include: [
+        {
+          model: ProjectMember,
+          as: "projectMembers",
           where: {
-              teamID: teamId
+            userID: userId
           },
-          include: [
-              {
-                  model: ProjectMember,
-                  as: "projectMembers",
-                  where: {
-                      userID: userId
-                  },
-                  required: true
-              },
-              {
-                  model: User,
-                  as: "owner"
-              },
-              {
-                  model: Team,
-                  as: "team"
-              }
-          ]
-      });
+          required: true
+        },
+        {
+          model: User,
+          as: "owner"
+        },
+        {
+          model: Team,
+          as: "team"
+        }
+      ]
+    });
 
-      console.log("Get all projects for a team the user belongs to");
-      return res.status(200).json(projects);
+    return res.status(200).json(projects);
   } catch (err) {
-      console.error(err);
-      return res.status(500).json({ error: 'Internal server error' });
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 

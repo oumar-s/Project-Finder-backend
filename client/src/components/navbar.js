@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useRef } from 'react';
-
-import { useAuth } from "../context/authContext";
+import { UserCircle } from 'lucide-react';
+import { useAuth } from '../context/authContext';
 import { Link } from 'react-router-dom';
 import Navlinks from './Navlinks';
 import Avatar from './Avatar';
@@ -146,12 +146,21 @@ const Navbar = ({ page }) => {
           {/* Profile Image */}
           <div className="relative">
             <button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onClick={handleRightNav}>
-              {/* <img
-                  className="h-8 w-8 rounded-full"
-                  src="profile.jpg"
-                  alt="User profile"
-                /> */}
-              <Avatar type='1' />
+            {auth?.user?.profilePic ? (
+                  <div className='rounded-full border-2 border-blue-200'><img
+                    src={auth.user.profilePic}
+                    alt={auth.user.firstName}
+                    className="w-10 h-10 rounded-full object-cover"
+                  /></div>
+                ) : (
+                  <div className='rounded-full'>
+                    <div className='rounded-full'>
+                    <UserCircle
+                    className="w-10 h-10 rounded-full object-cover text-gray-600"
+                    />
+                  </div>
+                  </div>
+                )}
             </button>
           </div>
         </div>

@@ -51,7 +51,6 @@ router.post('/:projectId', async (req, res) => {
 
 //update a request
 router.put('/:requestId', async (req, res) => {
-	console.log('body', req.body);
 	try {
 		const requestId = req.params.requestId;
 		const status = req.body.status;

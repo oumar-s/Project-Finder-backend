@@ -41,20 +41,16 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  //console.log("User ID from serialize: ", user.id)
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  //console.log("Deserialize: Called", id)
   User.findByPk(id)
     .then((user) => {
       if (!user) {
-        //console.log("No User Found. From Deserialize: ", user)
         done(null, false);
         return;
       }
-      //console.log("User from Deserialize: ", user)
       done(null, user);
       
       return;

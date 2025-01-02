@@ -2,9 +2,7 @@ const express = require('express');
 const db = require('./models');
 const app = express();
 const path = require("path");
-//const cors = require('cors');
 const expressSession = require("express-session");
-//const pgSession = require('connect-pg-simple')(expressSession);
 const morgan = require("morgan");
 const passport = require("./middlewares/authentication");
 const PORT = process.env.PORT || 8080;
@@ -30,22 +28,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // setup passport and session cookies
 app.use(
   expressSession({
-    // store: new pgSession({
-    //   conString : process.env.DATABASE_URL,                // Connection pool
-    //   tableName : 'sessions',   // Use another table-name than the default "session" one
-    //   // Insert connect-pg-simple options here
-    //   createTableIfMissing: true
-    // }),
-    secret: process.env.SESSION_SECRET || "supersecretkey",
+    secret: process.env.SESSION_SECRET || "TRzOou3MMC@v#K6f8vz3PogYrz!jgjJ%E$@qzMlf^CEAUHjAEt",
     resave: false,
     saveUninitialized: true,
   })
 );
-// app.use(cors({
-//   origin: 'https://project-finder-frontend-production.up.railway.app',
-//   credentials: true,
-//   methods: 'GET, POST, PUT, DELETE'
-// }));
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     TeamRequest.associate = function (models) {
-        // associations can be defined here
         TeamRequest.belongsTo(models.User, {
             foreignKey: "userID",
             as: "user",

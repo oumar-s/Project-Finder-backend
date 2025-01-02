@@ -22,7 +22,6 @@ router.get('/:teamId', async (req, res) => {
                 }
             ]
         })
-        console.log(team);
         return res.status(200).json(team);
     } catch (err) {
         console.error(err);
@@ -51,7 +50,6 @@ router.get('/teams/:userId', async (req, res) => {
                 }
             ]
         })
-        console.log(member);
         return res.status(200).json(member);
     } catch (err) {
         console.error(err);

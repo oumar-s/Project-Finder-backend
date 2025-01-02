@@ -86,13 +86,14 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     </div>
                     <div className="flex flex-col gap-2">
                         {teamMembers.map((member, index) => (
-                            <div
+                            <Link
                                 key={index}
+                                to={`/profile/${member.user.id}`}
                                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                             >
                                 <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
                                 <p className="text-gray-600 text-sm">{member.user.email}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     {teamMembers.length === 0 && (
@@ -112,13 +113,14 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         {teamMembers.map((member, index) => (
-                            <div
+                            <Link
                                 key={index}
+                                to={`/profile/${member.user.id}`}
                                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                             >
                                 <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
                                 <p className="text-gray-600 text-sm">{member.user.email}</p>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     {teamMembers.length === 0 && (

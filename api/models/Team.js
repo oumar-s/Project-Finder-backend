@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         teamBanner: {
             type: DataTypes.STRING
         },
-        teamStatus: { //Open, Full, Closed
+        teamStatus: {
             type: DataTypes.STRING,
             default: "Open",
         },

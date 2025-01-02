@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
         }
       ]
     })
-    console.log(teams);
     return res.status(200).json(teams);
   } catch (err) {
     console.error(err);

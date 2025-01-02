@@ -96,7 +96,6 @@ router.get('/:projectId/:userId', async (req, res) => {
                 
             ]
         })
-        console.log(tasks);
         return res.status(200).json(tasks);
     } catch (err) {
         console.error(err);
@@ -167,7 +166,6 @@ router.put('/:taskId', async (req, res) => {
 
 //Add a new task
 router.post('/:projectId', async (req, res) => {
-    console.log("body", req.body)
     try {
         const projectId = req.params.projectId;
         const task = await Task.create({

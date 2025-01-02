@@ -1,7 +1,9 @@
 import { React } from 'react';
 import { Link } from 'react-router-dom';
 import AuthButton from './AuthButton';
+import { useAuth } from '../context/authContext';
 import Avatar from './Avatar';
+import { UserCircle } from 'lucide-react';
 import { ReactComponent as RightNavX } from '../assets/images/x.svg';
 import { ReactComponent as LeftNavX } from '../assets/images/x.svg';
 import { ReactComponent as Logo } from '../assets/images/logo.svg';
@@ -10,7 +12,7 @@ import { ReactComponent as Logo } from '../assets/images/logo.svg';
 
 
 const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
-
+  const auth = useAuth();
   if (type === 'navbar') {
     return (
       <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-8">
@@ -43,31 +45,45 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
     return (
       <div className="">
         <div className='flex justify-between mb-8'>
-          <Avatar type='2' />
+          {auth?.user?.profilePic ? (
+            <div className='rounded-full border-2 border-blue-200'><img
+              src={auth.user.profilePic}
+              alt={auth.user.firstName}
+              className="w-10 h-10 rounded-full object-cover"
+            /></div>
+          ) : (
+            <div className='rounded-full'>
+              <div className='rounded-full'>
+                <UserCircle
+                  className="w-10 h-10 rounded-full object-cover text-gray-600"
+                />
+              </div>
+            </div>
+          )}
           <button onClick={rightNavHandler}>
             <RightNavX fill="" />
           </button>
         </div>
         <div className="flex flex-col gap-y-4 md:gap-x-8 text-base font-normal">
-        <div className="">
-          <Link className="" to="/profile">Profile</Link>
-        </div>
-        <div className="">
-          <Link className="" to="/profile/projects">My projects</Link>
-        </div>
-        <div className="">
-          <Link className="" to="/profile/teams">My teams</Link>
-        </div>
-        <div className="">
-          <Link className="" to="/profile/tasks">My tasks</Link>
-        </div>
-        <div className="">
-          <Link className="" to="/account">Account</Link>
-        </div>
+          <div className="">
+            <Link className="" to="/profile">Profile</Link>
+          </div>
+          <div className="">
+            <Link className="" to="/profile/projects">My projects</Link>
+          </div>
+          <div className="">
+            <Link className="" to="/profile/teams">My teams</Link>
+          </div>
+          <div className="">
+            <Link className="" to="/profile/tasks">My tasks</Link>
+          </div>
+          <div className="">
+            <Link className="" to="/account">Account</Link>
+          </div>
 
-        <div className="">
-          <Link className="" to="/"><AuthButton /></Link>
-        </div>
+          <div className="">
+            <Link className="" to="/"><AuthButton /></Link>
+          </div>
         </div>
       </div>
     )

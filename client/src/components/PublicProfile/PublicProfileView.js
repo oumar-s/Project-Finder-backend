@@ -8,6 +8,13 @@ import {
     ExternalLink
 } from 'lucide-react';
 const PublicProfileView = ({ members, profile }) => {
+    const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
+        <div className={`text-center p-6 ${className}`}>
+          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+          <p className="text-sm text-gray-500">{description}</p>
+        </div>
+      );
     const skills = profile.skills ? profile.skills.split(",") : [];
     console.log('skills', skills);
     let projects = [];
@@ -84,7 +91,11 @@ const PublicProfileView = ({ members, profile }) => {
                         {projects.length > 0 ? (
                             <ProjectsListContainer projects={projects} isPublicProfile={true}/>
                         ) : (
-                            <p className="text-gray-500">No Projects found</p>
+                            <EmptyState
+                                icon={Star}
+                                title="No Projects Yet"
+                                description="This user has not added any projects yet."
+                            />
                         )}
                     </div>
                 </section>

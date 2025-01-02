@@ -6,7 +6,6 @@ const { Project, ProjectMember, Team, User } = db;
 
 //Get all projects the user belongs to. Include team.
 router.get('/:userId', async (req, res) => {
-    console.log("Get all project user log");
     try {
         const userId = req.params.userId;
         const project = await ProjectMember.findAll({

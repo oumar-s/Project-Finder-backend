@@ -15,9 +15,6 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", passport.authenticate("local"), async (req, res) => {
-  // If this function gets called, authentication was successful.
-  // `req.user` contains the authenticated user.
-  //console.log("Authenticated user is: ", req.user);
   try {
     const firebaseToken = await admin.auth().createCustomToken(req.user.id.toString());
     res.json({user: req.user, token: firebaseToken}); //res.json(req.user);
@@ -45,8 +42,6 @@ router.post("/logout", (req, res, next) => {
 // Route to get the current logged-in user
 router.get('/user', async (req, res) => {
   try {
-    //console.log("user request log", req);
-    //console.log("user Id:", req.user.id);
     const user = await User.findByPk(req.user.id, {
       attributes: { exclude: ['passwordHash'] }
     });

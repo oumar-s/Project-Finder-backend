@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         projectRepository: {
             type: DataTypes.STRING,
         },
-        projectStatus: { //New, Ongoing, Completed. 
+        projectStatus: {  
             type: DataTypes.STRING,
             default: "New",
         },

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Avatar from "../../assets/images/profile_image.png";
 import { useAuth } from '../../context/authContext';
-import { Users } from 'lucide-react';
+import { Users, UserCircle } from 'lucide-react';
 
 const ConfirmationModal = ({ isOpen, member, onConfirm, onCancel }) => {
   if (!isOpen) return null;
@@ -73,18 +72,18 @@ const TeamMembersListView = ({
             >
               <div className="flex items-center space-x-3">
                 {member.user.profilePic ? (
-                  <div className='border border-blue-200 rounded-full'><img
+                  <div className='rounded-full'><img
                     src={member.user.profilePic}
                     alt={member.user.firstName}
                     className="w-10 h-10 rounded-full object-cover"
                   /></div>
                 ) : (
-                  <div className='border border-blue-200 rounded-full'>
-                    <img
-                    src={Avatar}
-                    alt={member.user.firstName}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  <div className='rounded-full'>
+                    <div className='rounded-full'>
+                    <UserCircle
+                    className="w-10 h-10 rounded-full object-cover text-gray-400"
+                    />
+                  </div>
                   </div>
                 )}
                 <div>
@@ -135,12 +134,12 @@ const TeamMembersListView = ({
                     className="w-10 h-10 rounded-full object-cover"
                   /></div>
                 ) : (
-                  <div className='border border-blue-200 rounded-full'>
-                    <img
-                    src={Avatar}
-                    alt={member.user.firstName}
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
+                  <div className='rounded-full'>
+                    <div className='rounded-full'>
+                    <UserCircle
+                    className="w-10 h-10 rounded-full object-cover text-gray-400"
+                    />
+                    </div>
                   </div>
                 )}
                 <div>

@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         taskDescription: {
             type: DataTypes.STRING,
         },
-        taskStatus: { //New, In-process, Completed. 
+        taskStatus: { //'Todo', 'In Progress','Done'
             type: DataTypes.STRING,
-            default: "New",
+            default: "Todo",
         },
     });
 

@@ -1,4 +1,3 @@
-// This file should not be modified
 "use strict";
 
 const fs = require("fs");
@@ -23,7 +22,6 @@ if (config.url) {
     config.password,
     config
   );
-
 }
 
 fs.readdirSync(__dirname)

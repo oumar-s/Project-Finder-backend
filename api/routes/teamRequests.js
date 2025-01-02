@@ -6,7 +6,6 @@ const { TeamRequest, User, Team } = db;
 
 //Get all requests of a specific team
 router.get('/:teamId', async (req, res) => {
-	console.log("get all requests");
 	try {
 		const teamId = req.params.teamId;
 		const requests = await TeamRequest.findAll({
@@ -51,7 +50,6 @@ router.post('/:teamId', async (req, res) => {
 
 //update a request
 router.put('/:requestId', async (req, res) => {
-	console.log('body', req.body);
 	try {
 		const requestId = req.params.requestId;
 		const status = req.body.status;
