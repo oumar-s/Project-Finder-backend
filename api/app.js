@@ -10,12 +10,6 @@ const passport = require("./middlewares/authentication");
 const PORT = process.env.PORT || 8080;
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
-// const dotenv = require('dotenv').config();
-
-// //set up dotenv
-// if (dotenv.error) {
-//   throw dotenv.error;
-// }
 
 console.log('starting app');
 let serviceAccount;

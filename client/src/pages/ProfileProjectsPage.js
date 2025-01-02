@@ -6,8 +6,13 @@ import { useGetAllProjectsForUserQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 
 export default function ProfileProjectsPage() {
-    //tabs:overview, teams, projects, tasks
-    const tabs = [{id: 1, name: 'Overview', link: "/profile"}, {id: 2, name: "Teams", link: "/profile/teams"}, {id: 3, name: "Projects", link: "/profile/projects"}, {id: 4, name: "Tasks", link: "/profile/tasks"}];
+    const tabs = [
+        {id: 1, name: 'Overview', link: "/profile"}, 
+        {id: 2, name: "Teams", link: "/profile/teams"}, 
+        {id: 3, name: "Projects", link: "/profile/projects"}, 
+        {id: 4, name: "Tasks", link: "/profile/tasks"},
+        {id: 5, name: "Edit Profile", link: "/account"}
+    ];
     const auth = useAuth();
     const { data: projects, isSuccess, error, isLoading } = useGetAllProjectsForUserQuery(auth.user?.id);
 

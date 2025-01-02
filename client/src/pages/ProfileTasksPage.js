@@ -9,8 +9,13 @@ import { CheckSquare } from 'lucide-react';
 
 export default function ProfileTasksPage() {
     const auth = useAuth();
-    //tabs:overview, teams, projects, tasks
-    const tabs = [{id: 1, name: 'Overview', link: "/profile"}, {id: 2, name: "Teams", link: "/profile/teams"}, {id: 3, name: "Projects", link: "/profile/projects"}, {id: 4, name: "Tasks", link: "/profile/tasks"}];
+    const tabs = [
+        {id: 1, name: 'Overview', link: "/profile"}, 
+        {id: 2, name: "Teams", link: "/profile/teams"}, 
+        {id: 3, name: "Projects", link: "/profile/projects"}, 
+        {id: 4, name: "Tasks", link: "/profile/tasks"},
+        {id: 5, name: "Edit Profile", link: "/account"}
+    ];
 
     const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetTasksForUserQuery(auth.user?.id);
 
