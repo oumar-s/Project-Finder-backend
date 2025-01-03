@@ -21,15 +21,15 @@ export default function ProjectInfoPage() {
 
     const [removeUserFromProject] = useRemoveUserFromProjectMutation();
 
-    const isOwner = project?.ownerID === auth.user?.id;
-    const isMember = members?.some(member => member.user.id === auth.user?.id);
-
     if (membersLoading || tasksLoading || projectLoading) {
         return <div>Loading...</div>
     }
     if (membersError || tasksError || projectError) {
         return <div>There was an error.</div>
     }
+
+    const isOwner = project?.ownerID === auth.user?.id;
+    const isMember = members?.some(member => member.user.id === auth.user?.id);
 
     let tabs = [];
 
@@ -56,8 +56,6 @@ export default function ProjectInfoPage() {
     else {
         tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
     }
-
-
 
     const handleDelete = (memberId) => {
         // Handle member deletion

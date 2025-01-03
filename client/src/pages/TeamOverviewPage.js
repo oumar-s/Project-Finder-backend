@@ -1,6 +1,7 @@
 import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
+import ErrorMessage from '../components/ErrorMessage';
 import { TeamPageContainer } from '../features/team/teamPage/TeamPageContainer';
 import TeamInfoViewContainer from '../components/TeamInfoView/TeamInfoViewContainer';
 import { useGetTeamQuery, useGetProjectsForTeamQuery, useGetTeamMembersQuery, useGetUserProjectsInTeamQuery } from '../features/api/apiSlice';
@@ -19,11 +20,20 @@ export default function TeamOverviewPage() {
 
     const {data: teamMembers, error: teamMembersError, isLoading: teamMembersLoading} = useGetTeamMembersQuery(params.teamId);
 
-    if (teamLoading || teamProjectsLoading || myProjectsLoading || teamMembersLoading) {
-        return <div>Loading...</div>
-    }
-    if (teamError || teamProjectsError || myProjectsError || teamMembersError) {
-        return <div>There was an error. Please try again.</div>
+    const isLoading = teamLoading || teamProjectsLoading || myProjectsLoading || teamMembersLoading;
+    const hasError = teamError || teamProjectsError || myProjectsError || teamMembersError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Team" />
+                <ErrorMessage
+                    loading={isLoading}
+                    error={hasError}
+                />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = team?.ownerID === auth.user?.id;

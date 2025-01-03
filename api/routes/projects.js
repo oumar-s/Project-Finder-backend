@@ -33,13 +33,17 @@ router.get('/:projectId', async (req, res) => {
           model: User,
           as: "owner",
           attributes: ["id", "firstName", "lastName"],
+        },
+        {
+          model: Team,
+          as: "team",
         }
       ]
     });
 
-    if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
-    }
+    // if (!project) {
+    //   return res.status(404).json({ error: 'Project not found' });
+    // }
 
     return res.json(project);
   } catch (err) {

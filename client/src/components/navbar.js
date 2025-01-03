@@ -156,7 +156,7 @@ const Navbar = ({ page }) => {
                   <div className='rounded-full'>
                     <div className='rounded-full'>
                     <UserCircle
-                    className="w-10 h-10 rounded-full object-cover text-gray-600"
+                    className="w-10 h-10 rounded-full object-cover bg-gray-50 text-gray-600"
                     />
                   </div>
                   </div>

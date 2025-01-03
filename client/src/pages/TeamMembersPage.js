@@ -23,13 +23,33 @@ export default function TeamMembersPage() {
         return <div>Error: {membersError.message}</div>
     }
 
-    const tabs = [
-        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
-        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
-        { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
-        { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
-        { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
-    ]
+    const isOwner = team?.ownerID === auth.user?.id;
+    const isMember = members?.some(member => member.user.id === auth.user?.id);
+    console.log('team members', members);
+    console.log('isOwner', isOwner);
+    console.log('isMember', isMember);
+
+    let tabs = [];
+
+    if (isOwner) {
+        tabs = [
+            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+            { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
+            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+        ]
+    } else if(isMember) {
+        tabs = [
+            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+        ]
+    } else {
+
+        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+    }
 
     const handleDelete = (memberId) => {
         // Handle member deletion

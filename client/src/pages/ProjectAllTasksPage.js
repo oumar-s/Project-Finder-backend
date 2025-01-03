@@ -32,14 +32,30 @@ export default function ProjectAllTasksPage() {
     }
 
     const isOwner = project?.ownerID === auth.user?.id;
-    const tabs = [
-        { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
-        { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-        { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-        { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
-        { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
-        { id: 6, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-    ];
+    const isMember = members?.some(member => member.user.id === auth.user?.id);
+
+    let tabs = [];
+
+    if (isOwner) {
+        tabs = [
+            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+            { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
+            { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+            { id: 6, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+        ];
+    } else if (isMember) {
+        tabs = [
+            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+            { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
+            { id: 5, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+        ];
+    } else {
+        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+    }
 
     return (
         <div >

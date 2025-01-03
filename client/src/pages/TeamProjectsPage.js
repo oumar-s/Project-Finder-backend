@@ -3,25 +3,50 @@ import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 //import { ProjectsListContainer } from '../components/ProjectsList/projectsListContainer'; 
 import { ProjectsContainer } from '../features/project/allProjects/allProjectsContainer'
-import { useGetProjectsForTeamQuery } from '../features/api/apiSlice';
+import { useGetProjectsForTeamQuery, useGetTeamQuery, useGetTeamMembersQuery } from '../features/api/apiSlice';
+import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
 export default function TeamProjectsPage() {
     const params = useParams();
+    const auth = useAuth();
     const { data: projects, error: projectsError, isLoading: projectsLoading } = useGetProjectsForTeamQuery(params.teamId);
+    const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
+    const { data: teamMembers, error: teamMembersError, isLoading: teamMembersLoading } = useGetTeamMembersQuery(params.teamId);
 
-    const tabs = [
-        { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
-        { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
-        { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
-        { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
-        { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
-    ]
 
-    if (projectsLoading) {
+    const isOwner = team?.ownerID === auth.user?.id;
+    const isMember = teamMembers?.some(member => member.user.id === auth.user?.id);
+    console.log('team members', teamMembers);
+    console.log('isOwner', isOwner);
+    console.log('isMember', isMember);
+
+    let tabs = [];
+
+    if (isOwner) {
+        tabs = [
+            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+            { id: 5, name: "Requests", link: "/teams/" + params.teamId + "/requests" },
+            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+        ]
+    } else if(isMember) {
+        tabs = [
+            { id: 1, name: 'Overview', link: "/teams/" + params.teamId + "/overview" },
+            { id: 2, name: "Projects", link: "/teams/" + params.teamId + "/projects" },
+            { id: 3, name: "Members", link: "/teams/" + params.teamId + "/members" },
+            { id: 4, name: "New project", link: "/teams/" + params.teamId + "/new-project" },
+        ]
+    } else {
+
+        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+    }
+
+    if (projectsLoading || teamLoading || teamMembersLoading) {
         return <div>Loading...</div>
     }
-    if (projectsError) {
+    if (projectsError || teamError || teamMembersError) {
         return <div>There was an error. Please try again.</div>
     }
 

@@ -2,7 +2,7 @@ import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
 import { RequestsListContainer } from '../components/RequestsList/requestsListContainer'; 
-import { useGetProjectRequestsQuery, useChangeProjectRequestStatusMutation, useAddUserToProjectMutation } from '../features/api/apiSlice';
+import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectRequestsQuery, useChangeProjectRequestStatusMutation, useAddUserToProjectMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 
@@ -11,26 +11,45 @@ export default function ProjectRequestsPage() {
     const auth = useAuth();
 
     const { data: requests, error: requestsError, isLoading: requestsLoading } = useGetProjectRequestsQuery(params.projectId);
+    const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
+    const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
 
     const [changeProjectRequestStatus] = useChangeProjectRequestStatusMutation();
 
     const [addUserToProject] = useAddUserToProjectMutation();
 
-    if (requestsLoading) {
+    if (requestsLoading || projectLoading || membersLoading) {
         return <div>Loading...</div>
     }
-    if (requestsError) {
+    if (requestsError || projectError || membersError) {
         return <div>There was an error. Please try again.</div>
     }
 
-    const tabs = [
-        { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
-        { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
-        { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
-        { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
-        { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
-        { id: 6, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
-    ];
+    const isOwner = project?.ownerID === auth.user?.id;
+    const isMember = members?.some(member => member.user.id === auth.user?.id);
+
+    let tabs = [];
+
+    if (isOwner) {
+        tabs = [
+            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+            { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
+            { id: 5, name: "Requests", link: "/projects/" + params.projectId + "/requests" },
+            { id: 6, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+        ];
+    } else if (isMember) {
+        tabs = [
+            { id: 1, name: "Overview", link: "/projects/" + params.projectId + "/info" },
+            { id: 2, name: 'All Tasks', link: "/projects/" + params.projectId + "/all" },
+            { id: 3, name: "My Tasks", link: "/projects/" + params.projectId + "/my" },
+            { id: 4, name: "Members", link: "/projects/" + params.projectId + "/members" },
+            { id: 5, name: "New Task", link: "/projects/" + params.projectId + "/new-task" },
+        ];
+    } else {
+        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+    }
 
     const acceptRequest = async (request) => {
         await addUserToProject({ projectId: request.projectID, userId: request.userID });

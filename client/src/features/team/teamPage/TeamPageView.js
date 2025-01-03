@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectsListContainer } from '../../../components/ProjectsList/projectsListContainer';
 import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer'; 
-import { Users, Briefcase, Users2 } from 'lucide-react';
+import { Users, Briefcase, Users2, UserCheck } from 'lucide-react';
 const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
     const members = [
         { name: "Alex Rodriguez", role: "JavaScript, SQL" },
@@ -39,12 +39,21 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     />
                 </div>
                 <div className="flex-grow">
-                    <h2 className="text-2xl font-semibold text-blue-800 mb-4">
-                        {team.teamName}
-                    </h2>
-                    <p className="text-gray-700">
+                    <div className="mb-2">
+                        <h2 className="text-2xl font-semibold text-blue-800">
+                            {team.teamName}
+                        </h2>
+                        
+                    </div>
+                    
+                    <p className="text-gray-700 mb-8">
                         {team.teamDescription}
                     </p>
+                    <div className="flex items-center text-gray-700">
+                            <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
+                            <span className="font-medium">{team.owner.firstName} {team.owner.lastName}
+                            </span>
+                        </div>
                 </div>
             </div>
 
