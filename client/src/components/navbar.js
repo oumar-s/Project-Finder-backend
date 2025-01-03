@@ -83,7 +83,7 @@ const Navbar = ({ page }) => {
 
   return (
     <div className=''>
-      <div className={`flex items-center justify-between bg-gray-50 h-16 px-4 md:px-2 `}>
+      <div className={`flex items-center justify-between bg-gray-50 h-16 px-4 md:px-2 relative z-50`}>
 
         {/* left nav */}
         <div className="flex flex-row items-center gap-4  ">
@@ -122,7 +122,7 @@ const Navbar = ({ page }) => {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+              <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                 <Link
                   to="/new-project"
                   className="flex w-full items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

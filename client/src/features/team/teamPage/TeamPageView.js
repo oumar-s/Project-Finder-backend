@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ProjectsListContainer } from '../../../components/ProjectsList/projectsListContainer';
 import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer'; 
 import { Users, Briefcase, Users2, UserCheck } from 'lucide-react';
+import DefaultBanner from '../../../assets/images/DefaultBanner.png';
+import DefaultIcon from '../../../assets/images/DefaultIcon.png'; 
 const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
     const members = [
         { name: "Alex Rodriguez", role: "JavaScript, SQL" },
@@ -21,9 +23,10 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
     return (
         <div className="bg-gray-50 min-h-screen pt-4">
             {/* Section 1: Team Banner */}
-            <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
+            <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 shadow-lg relative overflow-hidden z-0">
+                
                 <img
-                    src={team.teamBanner}
+                    src={team.teamBanner ? team.teamBanner : DefaultBanner}
                     alt="Team Banner"
                     className="absolute inset-0 w-full h-full rounded-2xl object-cover"
                 />
@@ -31,15 +34,18 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
 
             {/* Section 2: Team Details */}
             <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-                <div className="w-64 h-64 flex-shrink-0 mr-8">
+                <div className="w-64 h-64 flex-shrink-0 mr-8 bg-gray-200">
+                    { team.teamIcon ? 
                     <img
                         src={team.teamIcon}
                         alt="Team Profile"
                         className="w-full h-full object-cover rounded-lg shadow-lg"
-                    />
+                    /> :
+                    <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
+                    }
                 </div>
                 <div className="flex-grow">
-                    <div className="mb-2">
+                    <div className="mb-2 mt-4">
                         <h2 className="text-2xl font-semibold text-blue-800">
                             {team.teamName}
                         </h2>
