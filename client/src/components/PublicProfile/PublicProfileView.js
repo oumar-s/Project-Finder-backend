@@ -5,7 +5,7 @@ import {
     Code2,
     Briefcase,
     Star,
-    ExternalLink
+    UserCircle
 } from 'lucide-react';
 const PublicProfileView = ({ members, profile }) => {
     const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -31,11 +31,21 @@ const PublicProfileView = ({ members, profile }) => {
                 <div className="flex flex-col items-center space-y-4">
                     {/* Profile Picture */}
                     <div className="relative">
-                        <img
-                            src={profile.profilePic ? profile.profilePic : "https://www.pngfind.com/pngs/m/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.png"}
-                            alt="Profile"
-                            className="w-24 md:w-32 h-24 md:h-32 rounded-full border-4 border-blue-100"
-                        />
+                    {profile.profilePic ?
+                            <img
+                                src={profile.profilePic}
+                                alt="Profile"
+                                className="w-24 md:w-32 h-24 md:h-32 rounded-full border-4 border-blue-100"
+                            />
+                        :
+                            <div className='rounded-full'>
+                                <div className='rounded-full'>
+                                    <UserCircle
+                                        className="w-24 md:w-32 h-24 md:h-32 rounded-full object-cover text-gray-400 border-4 border-blue-100"
+                                    />
+                                </div>
+                            </div>
+                        }
                     </div>
 
                     {/* User Info */}

@@ -1,8 +1,6 @@
 import { React } from 'react';
 import { Link } from 'react-router-dom';
 import AuthButton from './AuthButton';
-import { useAuth } from '../context/authContext';
-import Avatar from './Avatar';
 import { UserCircle } from 'lucide-react';
 import { ReactComponent as RightNavX } from '../assets/images/x.svg';
 import { ReactComponent as LeftNavX } from '../assets/images/x.svg';
@@ -11,8 +9,7 @@ import { ReactComponent as Logo } from '../assets/images/logo.svg';
 
 
 
-const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
-  const auth = useAuth();
+const Navlinks = ({ type, rightNavHandler, leftNavHandler, user }) => {
   if (type === 'navbar') {
     return (
       <div className="flex flex-col gap-y-4 md:flex-row md:gap-x-8">
@@ -44,22 +41,31 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler }) => {
   if (type === 'rightnav') {
     return (
       <div className="">
-        <div className='flex justify-between mb-8'>
-          {auth?.user?.profilePic ? (
-            <div className='rounded-full border-2 border-blue-200'><img
-              src={auth.user.profilePic}
-              alt={auth.user.firstName}
-              className="w-10 h-10 rounded-full object-cover"
-            /></div>
-          ) : (
-            <div className='rounded-full'>
-              <div className='rounded-full'>
-                <UserCircle
-                  className="w-10 h-10 rounded-full object-cover text-gray-600"
-                />
+        <div className='flex justify-between items-center mb-8'>
+          <div className="flex items-center gap-3">
+            {user?.profilePic ? (
+              <div className='rounded-full border-2 border-blue-200'>
+                <img
+                src={user.profilePic}
+                alt={user.firstName}
+                className="w-10 h-10 rounded-full object-cover"
+              />
               </div>
+            ) : (
+              <div className='rounded-full'>
+                <div className='rounded-full'>
+                  <UserCircle
+                    className="w-10 h-10 rounded-full object-cover text-gray-600"
+                  />
+                </div>
+              </div>
+            )}
+            <div className="flex flex-col">
+              <span className="font-medium text-gray-900">
+                {user?.firstName} {user?.lastName}
+              </span>
             </div>
-          )}
+          </div>
           <button onClick={rightNavHandler}>
             <RightNavX fill="" />
           </button>

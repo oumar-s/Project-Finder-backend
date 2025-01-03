@@ -1,6 +1,8 @@
 import { React, useState, useEffect, useRef } from 'react';
 import { UserCircle } from 'lucide-react';
+import ErrorMessage from './ErrorMessage';
 import { useAuth } from '../context/authContext';
+import { useGetUserQuery } from '../features/api/apiSlice';
 import { Link } from 'react-router-dom';
 import Navlinks from './Navlinks';
 import Avatar from './Avatar';
@@ -31,6 +33,12 @@ const Navbar = ({ page }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+  const { data: user, error: userError, isLoading: userLoading } = useGetUserQuery(auth?.user?.id);
+  if (auth.isAuthenticated) {
+    if (userLoading || userError) {
+      return <ErrorMessage loading={userLoading} error={userError} />;
+    }
+  }
   const handleNav = () => {
     setShowNav(!showNav);
   }
@@ -62,7 +70,7 @@ const Navbar = ({ page }) => {
                 <Link className="text-xl font-semibold" to="/">Synergy</Link>
               </div>
               <div className="hidden md:flex md:order-2 ">
-                <Navlinks type='navbar' />
+                <Navlinks type='navbar' user={user} />
               </div>
             </div>
             <div className="md:order-3">
@@ -72,7 +80,7 @@ const Navbar = ({ page }) => {
         </div>
         {showNav &&
           <div className="flex flex-col absolute pt-4 pl-4 top-16 right-0 z-10 w-full h-64 bg-white1 border-b rounded-lg md:hidden">
-            <Navlinks type='navbar' />
+            <Navlinks type='navbar' user={user} />
           </div>
         }
 
@@ -148,8 +156,8 @@ const Navbar = ({ page }) => {
             <button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onClick={handleRightNav}>
             {auth?.user?.profilePic ? (
                   <div className='rounded-full border-2 border-blue-200'><img
-                    src={auth.user.profilePic}
-                    alt={auth.user.firstName}
+                    src={user.profilePic}
+                    alt={user.firstName}
                     className="w-10 h-10 rounded-full object-cover"
                   /></div>
                 ) : (
@@ -168,7 +176,7 @@ const Navbar = ({ page }) => {
 
       {showNav &&
         <div className="flex flex-col items-end absolute top-16 right-0 z-10 w-full min-h-32 bg-black1 text-white p-8 md:hidden">
-          <Navlinks type='rightnav' />
+          <Navlinks type='rightnav' user={user} />
         </div>
       }
 
@@ -182,11 +190,11 @@ const Navbar = ({ page }) => {
         <>
           {/* Shadow overlay */}
           <div
-            className="fixed inset-0 bg-black/30 z-10"
+            className="fixed inset-0 bg-black/30 z-[60]"
             onClick={handleRightNav}
           />
-          <div className="flex flex-col absolute top-0 right-0 z-20 w-80 h-full rounded-l-2xl bg-white p-8 shadow-2xl">
-            <Navlinks type='rightnav' rightNavHandler={handleRightNav} />
+          <div className="flex flex-col absolute top-0 right-0 z-[70] w-80 h-full rounded-l-2xl bg-white p-8 shadow-2xl">
+            <Navlinks type='rightnav' rightNavHandler={handleRightNav} user={user} />
           </div>
         </>
       }

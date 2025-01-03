@@ -20,7 +20,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser', 'getUserById']
+      invalidatesTags: ['getUser', 'getUserById', 'getTeamMembers', 'getProjectMembers']
     }),
     updateEmail: builder.mutation({
       query: (data) => ({
@@ -28,7 +28,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser', 'getUserById']
+      invalidatesTags: ['getUser', 'getUserById', 'getTeamMembers', 'getProjectMembers']
     }),
     updatePassword: builder.mutation({
       query: (data) => ({
@@ -36,7 +36,7 @@ export const apiSlice = createApi({
         method: 'PUT',
         body: data
       }),
-      invalidatesTags: ['getUser', 'getUserById']
+      invalidatesTags: ['getUser', 'getUserById', 'getTeamMembers', 'getProjectMembers']
     }),
 
     //Project
