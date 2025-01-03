@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddProjectFormView from "./addProjectFormView";
 import { useAddProjectMutation, useGetUserTeamsQuery, useAddUserToProjectMutation } from "../../features/api/apiSlice";
 import { useAuth } from "../../context/authContext";
+import ErrorMessage from "../ErrorMessage";
 
 export function AddProjectFormContainer() {
   const { user } = useAuth();
@@ -16,13 +17,9 @@ export function AddProjectFormContainer() {
     const [addUserToProject] = useAddUserToProjectMutation();
     const [showToast, setShowToast] = useState(false);
 
-    if (teamsLoading) {
-        return <div>Loading...</div>;
-      }
-    
-    if (teamsError) {
-        return <div>Error: {teamsError?.message}</div>;
-      }
+    if (teamsLoading || teamsError) {
+        return <ErrorMessage loading={teamsLoading} error={teamsError} />;
+    }
     
     const handleSubmit = async event => {
         event.preventDefault();

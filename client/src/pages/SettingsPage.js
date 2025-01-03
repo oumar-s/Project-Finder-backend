@@ -6,6 +6,7 @@ import { useGetUserQuery, useRemoveMemberFromTeamMutation, useRemoveUserFromProj
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { useAuth } from '../context/authContext';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function SettingsPage() {
     const auth = useAuth();
@@ -47,30 +48,19 @@ export default function SettingsPage() {
         }
     };
 
-    if (projectsIsLoading || teamsIsLoading || userIsLoading) {
-        return <div>Loading...</div>
-    }   
-    if (projectsError || teamsError || userError) {
-        return <div>There was an error.</div>
+    const isLoading = projectsIsLoading || teamsIsLoading || userIsLoading;
+    const hasError = projectsError || teamsError || userError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Settings" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
-    // return (
-    //     <div >
-    //         <Navbar />
-
-    //         <div className="">
-    //         Teams:
-    //         <AllTeamsListContainer settingsPage={true} leaveTeam={leaveTeam} />
-    //         </div>
-
-    //         <div className="" >
-    //         Projects:
-    //         <AllProjectsListContainer settingsPage={true} leaveProject={leaveProject} />
-    //         </div>
-            
-    //         <Footer />
-    //     </div>
-    // );
     return (
         <div >
             <Navbar page="Settings" />

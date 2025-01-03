@@ -6,6 +6,8 @@ import { ProjectsContainer } from '../features/project/allProjects/allProjectsCo
 import { useGetProjectsForTeamQuery, useGetTeamQuery, useGetTeamMembersQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import React from "react";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function TeamProjectsPage() {
     const params = useParams();
@@ -13,7 +15,6 @@ export default function TeamProjectsPage() {
     const { data: projects, error: projectsError, isLoading: projectsLoading } = useGetProjectsForTeamQuery(params.teamId);
     const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
     const { data: teamMembers, error: teamMembersError, isLoading: teamMembersLoading } = useGetTeamMembersQuery(params.teamId);
-
 
     const isOwner = team?.ownerID === auth.user?.id;
     const isMember = teamMembers?.some(member => member.user.id === auth.user?.id);
@@ -43,11 +44,17 @@ export default function TeamProjectsPage() {
         tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
     }
 
-    if (projectsLoading || teamLoading || teamMembersLoading) {
-        return <div>Loading...</div>
-    }
-    if (projectsError || teamError || teamMembersError) {
-        return <div>There was an error. Please try again.</div>
+    const isLoading = projectsLoading || teamLoading || teamMembersLoading;
+    const hasError = projectsError || teamError || teamMembersError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Team" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     return (

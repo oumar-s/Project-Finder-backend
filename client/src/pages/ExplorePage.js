@@ -3,6 +3,7 @@ import { useGetAllProjectsQuery } from "../features/api/apiSlice";
 import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function ExplorePage() {
     const tabs = [
@@ -12,19 +13,17 @@ export default function ExplorePage() {
 
     const { data, isSuccess, error, isLoading } = useGetAllProjectsQuery();
 
-    if (isLoading) {
-        return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading projects...</div>;
+    if (isLoading || error) {
+        return (
+            <div>
+                <Navbar page="Explore" />
+                <ErrorMessage loading={isLoading} error={error} />
+                <Footer />
+            </div>
+        );
     }
-
-    if (error) {
-        return <div>Error! Try again: {error.message}</div>;
-    }
-
-
 
     if (isSuccess) {
-
-
         return (
             <div >
                 <Navbar page='Explore' />

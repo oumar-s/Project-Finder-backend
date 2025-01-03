@@ -1,19 +1,16 @@
 import { useGetUserTeamsQuery } from "../../features/api/apiSlice";
 import AllTeamsListView from "./allTeamsListView";
 import { useAuth } from "../../context/authContext";
+import ErrorMessage from '../../components/ErrorMessage';
 
 export function AllTeamsListContainer({settingsPage, leaveTeam}) {
   const auth = useAuth();
   const { data, isSuccess, error, isLoading } = useGetUserTeamsQuery(auth.user?.id);
 
-  
-  if (isLoading) {
-    return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading projects...</div>;
+  if (isLoading || error) {
+    return <ErrorMessage loading={isLoading} error={error} />;
   }
 
-  if (error) {
-    return <div>Error! Try again: {error.message}</div>;
-  }
   if (isSuccess) {
     console.log("all teams: ", data);
     return (

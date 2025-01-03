@@ -5,6 +5,7 @@ import TabNav from '../components/TabNav';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { CheckSquare } from 'lucide-react';
+import ErrorMessage from '../components/ErrorMessage';
 
 
 export default function ProfileTasksPage() {
@@ -19,12 +20,16 @@ export default function ProfileTasksPage() {
 
     const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetTasksForUserQuery(auth.user?.id);
 
-    if(tasksLoading) {
-        return <div>Loading...</div>
+    if (tasksLoading || tasksError) {
+        return (
+            <div>
+                <Navbar page="Profile" />
+                <ErrorMessage loading={tasksLoading} error={tasksError} />
+                <Footer />
+            </div>
+        );
     }
-    if(tasksError) {
-        return <div>There was an error.</div>
-    }
+
     return (
         <div >
             <Navbar page="Profile" />

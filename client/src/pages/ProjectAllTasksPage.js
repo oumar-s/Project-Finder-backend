@@ -7,6 +7,7 @@ import { React, useState } from 'react';
 import { useAuth } from '../context/authContext';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 
 
@@ -24,11 +25,17 @@ export default function ProjectAllTasksPage() {
     const [changeTaskStatus] = useChangeTaskStatusMutation();
     const [deleteTask] = useDeleteTaskMutation();
 
-    if (tasksLoading || membersLoading || projectLoading) {
-        return <div>Loading...</div>
-    }
-    if (tasksError || membersError || projectError) {
-        return <div>There was an error</div>
+    const isLoading = tasksLoading || membersLoading || projectLoading;
+    const hasError = tasksError || membersError || projectError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

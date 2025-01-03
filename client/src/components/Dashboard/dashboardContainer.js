@@ -1,6 +1,7 @@
 import DashboardView from "./dashboardView";
 import { useGetUserTeamsQuery, useGetAllProjectsForUserQuery } from "../../features/api/apiSlice";
 import React, { useState } from 'react';
+import ErrorMessage from '../../components/ErrorMessage';
 
 import { useAuth } from "../../context/authContext";
 export function DashboardContainer({tasks}) {
@@ -12,19 +13,12 @@ export function DashboardContainer({tasks}) {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isTeamDropdownOpen, setIsTeamDropdownOpen] = useState(false);
 
-  if (teamsLoading || projectsLoading) {
-    return <div>Loading...</div>;
+  const isLoading = teamsLoading || projectsLoading;
+  const hasError = teamsError || projectsError;
+
+  if (isLoading || hasError) {
+    return <ErrorMessage loading={isLoading} error={hasError} />;
   }
-
-  if (teamsError || projectsError) {
-    return <div>Error: {teamsError?.message || projectsError?.message}</div>;
-  }
-
-  
-
-  
-
-  
 
   const getStatusColor = (status) => {
     switch (status.toLowerCase()) {

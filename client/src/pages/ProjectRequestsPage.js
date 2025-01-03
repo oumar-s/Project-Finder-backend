@@ -5,6 +5,7 @@ import { RequestsListContainer } from '../components/RequestsList/requestsListCo
 import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectRequestsQuery, useChangeProjectRequestStatusMutation, useAddUserToProjectMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function ProjectRequestsPage() {
     const params = useParams();
@@ -18,11 +19,17 @@ export default function ProjectRequestsPage() {
 
     const [addUserToProject] = useAddUserToProjectMutation();
 
-    if (requestsLoading || projectLoading || membersLoading) {
-        return <div>Loading...</div>
-    }
-    if (requestsError || projectError || membersError) {
-        return <div>There was an error. Please try again.</div>
+    const isLoading = requestsLoading || projectLoading || membersLoading;
+    const hasError = requestsError || projectError || membersError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

@@ -1,21 +1,16 @@
 import { useGetAllProjectsForUserQuery } from "../../features/api/apiSlice";
 import AllProjectsListView from "./allProjectsListView";
 import { useAuth } from "../../context/authContext";
+import ErrorMessage from "../ErrorMessage";
 
 export function AllProjectsListContainer({settingsPage, leaveProject}) {
   const auth = useAuth();
   const { data, isSuccess, error, isLoading } = useGetAllProjectsForUserQuery(auth.user?.id);
 
-  
-  if (isLoading) {
-    return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading projects...</div>;
+  if (isLoading || error) {
+    <ErrorMessage loading={isLoading} error={error} />
   }
 
-  if (error) {
-    return <div>Error! Try again: {error.message}</div>;
-  }
-
-  
   if (isSuccess) {
     console.log("all teams: ", data);
     return (

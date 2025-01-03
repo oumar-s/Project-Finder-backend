@@ -5,6 +5,7 @@ import { useGetProjectTasksAssignedToUserQuery, useGetProjectMembersQuery, useAs
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
 import { useAuth } from '../context/authContext';
+import ErrorMessage from '../components/ErrorMessage';
 
 
 export default function FilteredProjectsPage() { 
@@ -18,11 +19,17 @@ export default function FilteredProjectsPage() {
     const [assignTask] = useAssignTaskMutation();
     const [changeTaskStatus] = useChangeTaskStatusMutation();
 
-    if (tasksLoading || membersLoading || projectLoading) {
-        return <div>Loading...</div>
-    }
-    if (tasksError || membersError || projectError) {
-        return <div>There was an error. Please try again.</div>
+    const isLoading = tasksLoading || membersLoading || projectLoading;
+    const hasError = tasksError || membersError || projectError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

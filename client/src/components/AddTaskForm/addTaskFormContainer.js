@@ -2,6 +2,7 @@ import { useState } from "react";
 import AddTaskFormView from "./addTaskFormView";
 import { useAddTaskMutation, useGetProjectMembersQuery } from "../../features/api/apiSlice";
 import { useParams } from "react-router-dom";
+import ErrorMessage from "../ErrorMessage";
 
 export function AddTaskFormContainer() {
     const params = useParams();
@@ -15,12 +16,10 @@ export function AddTaskFormContainer() {
     const [addPost] = useAddTaskMutation();
     const [showToast, setShowToast] = useState(false);
     
-    if (membersLoading) {
-        return <div>Loading...</div>;
-      }
-    if (membersError) {
-        return <div>There was an error</div>;
+    if (membersLoading || membersError) {
+        return <ErrorMessage loading={membersLoading} error={membersError} />;
     }
+    
     //These event handlers keeps track of changes as the user fills out the form.
     //these event handlers will be passed to the AddProjectFormView as a prop.
     const handleTaskNameChange = (event) => {

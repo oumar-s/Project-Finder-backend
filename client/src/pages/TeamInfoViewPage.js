@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import { useParams } from "react-router-dom";
 import { useGetTeamQuery, useGetProjectsForTeamQuery, useGetTeamMembersQuery } from '../features/api/apiSlice';
 import TabNav from '../components/TabNav';
+import ErrorMessage from '../components/ErrorMessage';
 
 function TeamInfoViewPage() {
   const params = useParams();
@@ -12,11 +13,17 @@ function TeamInfoViewPage() {
   const { data: teamMembers, error: teamMembersError, isLoading: teamMembersLoading } = useGetTeamMembersQuery(params.teamId);
   const { data: teamProjects, error: teamProjectsError, isLoading: teamProjectsLoading } = useGetProjectsForTeamQuery(params.teamId);  
 
-  if (teamLoading || teamMembersLoading || teamProjectsLoading) {
-    return <div>Loading...</div>;
-  }
-  if (teamError || teamMembersError || teamProjectsError) {
-    return <div>There was an error. Please try again.</div>;
+  const isLoading = teamLoading || teamMembersLoading || teamProjectsLoading;
+  const hasError = teamError || teamMembersError || teamProjectsError;
+
+  if (isLoading || hasError) {
+    return (
+      <div>
+        <Navbar page="Team" />
+        <ErrorMessage loading={isLoading} error={hasError} />
+        <Footer />
+      </div>
+    );
   }
 
   const tabs = [

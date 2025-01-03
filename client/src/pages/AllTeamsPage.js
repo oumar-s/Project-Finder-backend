@@ -3,6 +3,7 @@ import Footer from '../components/footer';
 import TabNav from '../components/TabNav';
 import { AllTeamsContainer } from '../features/team/allTeams/AllTeamsContainer';
 import { useGetAllTeamsQuery } from "../features/api/apiSlice";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function AllTeamsPage() {
     const { data,  error, isLoading } = useGetAllTeamsQuery();
@@ -12,12 +13,14 @@ export default function AllTeamsPage() {
         { id: 2, name: 'Projects', link: "/projects" }, 
     ];
 
-    if (isLoading) {
-        return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading teams...</div>;
-    }
-
-    if (error) {
-        return <div>There was an error.</div>;
+    if (isLoading || error) {
+        return (
+            <div>
+                <Navbar page="Explore" />
+                <ErrorMessage loading={isLoading} error={error} />
+                <Footer />
+            </div>
+        );
     }
 
     return (

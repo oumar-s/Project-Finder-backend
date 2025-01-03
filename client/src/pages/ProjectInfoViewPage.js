@@ -5,6 +5,7 @@ import Footer from "../components/footer";
 import { useParams } from "react-router-dom";
 import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectTasksQuery} from '../features/api/apiSlice';
 import TabNav from '../components/TabNav';
+import ErrorMessage from '../components/ErrorMessage';
 
 function ProjectInfoViewPage() {
   const params = useParams();
@@ -12,11 +13,17 @@ function ProjectInfoViewPage() {
   const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
   const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
   
-  if (membersLoading || tasksLoading || projectLoading) {
-    return <div>Loading...</div>;
-  }
-  if (membersError || tasksError || projectError) {
-    return <div>There was an error. Please try again.</div>;
+  const isLoading = membersLoading || tasksLoading || projectLoading;
+  const hasError = membersError || tasksError || projectError;
+
+  if (isLoading || hasError) {
+    return (
+      <div>
+        <Navbar page="Project" />
+        <ErrorMessage loading={isLoading} error={hasError} />
+        <Footer />
+      </div>
+    );
   }
 
   return (

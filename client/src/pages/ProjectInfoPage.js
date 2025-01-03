@@ -7,6 +7,7 @@ import TabNav from '../components/TabNav';
 import {useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 
 export default function ProjectInfoPage() { 
@@ -21,11 +22,17 @@ export default function ProjectInfoPage() {
 
     const [removeUserFromProject] = useRemoveUserFromProjectMutation();
 
-    if (membersLoading || tasksLoading || projectLoading) {
-        return <div>Loading...</div>
-    }
-    if (membersError || tasksError || projectError) {
-        return <div>There was an error.</div>
+    const isLoading = membersLoading || tasksLoading || projectLoading;
+    const hasError = membersError || tasksError || projectError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

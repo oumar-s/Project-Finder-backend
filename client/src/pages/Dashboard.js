@@ -4,6 +4,7 @@ import { useAuth } from '../context/authContext';
 import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function Dashboard() {
     const auth = useAuth();
@@ -11,12 +12,16 @@ export default function Dashboard() {
 
     const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetIncompleteTasksForUserQuery(auth.user?.id);
 
-    if (tasksLoading) {
-        return <div>Loading...</div>
+    if (tasksLoading || tasksError) {
+        return (
+            <div>
+                <Navbar page="Dashboard" />
+                <ErrorMessage loading={tasksLoading} error={tasksError} />
+                <Footer />
+            </div>
+        );
     }
-    if (tasksError) {
-        return <div>There was an error.</div>
-    }
+
     return (
         <div className=''>
             <Navbar page={'Dashboard'} />

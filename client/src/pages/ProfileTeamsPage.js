@@ -4,6 +4,7 @@ import TabNav from '../components/TabNav';
 import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { useAuth } from '../context/authContext';
+import ErrorMessage from '../components/ErrorMessage';
 
 
 export default function ProfileTeamsPage() {
@@ -17,11 +18,14 @@ export default function ProfileTeamsPage() {
         {id: 5, name: "Edit Profile", link: "/account"}
     ];
 
-    if (isLoading) {
-        return <div className="" style={{ minHeight: "calc(100vh - 268px)" }}>Loading teams...</div>;
-    }
-    if (error) {
-        return <div>There was an error.</div>;
+    if (isLoading || error) {
+        return (
+            <div>
+                <Navbar page="Profile" />
+                <ErrorMessage loading={isLoading} error={error} />
+                <Footer />
+            </div>
+        );
     }
     return (
         <div >

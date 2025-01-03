@@ -5,6 +5,7 @@ import { TeamMembersListContainer } from '../components/TeamMembersList/teamMemb
 import { useGetTeamQuery, useGetTeamMembersQuery, useRemoveMemberFromTeamMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function TeamMembersPage() {
 
@@ -16,11 +17,17 @@ export default function TeamMembersPage() {
 
     const [removeMemberFromTeam] = useRemoveMemberFromTeamMutation();
 
-    if (membersLoading || teamLoading) {
-        return <div>Loading...</div>
-    }
-    if (membersError || teamError) {
-        return <div>Error: {membersError.message}</div>
+    const isLoading = membersLoading || teamLoading;
+    const hasError = membersError || teamError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Team" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = team?.ownerID === auth.user?.id;

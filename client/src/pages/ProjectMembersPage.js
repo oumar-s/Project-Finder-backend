@@ -5,6 +5,7 @@ import { TeamMembersListContainer } from '../components/TeamMembersList/teamMemb
 import { useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function ProjectMembersPage() {
 
@@ -16,11 +17,17 @@ export default function ProjectMembersPage() {
 
     const [removeMemberFromProject] = useRemoveUserFromProjectMutation();
 
-    if (membersLoading || projectLoading) {
-        return <div>Loading...</div>
-    }
-    if (membersError || projectError) {
-        return <div>There was an error.</div>
+    const isLoading = membersLoading || projectLoading;
+    const hasError = membersError || projectError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

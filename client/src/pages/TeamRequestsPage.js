@@ -5,6 +5,7 @@ import { RequestsListContainer } from '../components/RequestsList/requestsListCo
 import { useGetTeamQuery, useGetTeamMembersQuery, useGetTeamRequestsQuery, useChangeTeamRequestStatusMutation, useAddMemberToTeamMutation } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function TeamRequestsPage() {
     const params = useParams();
@@ -18,11 +19,17 @@ export default function TeamRequestsPage() {
 
     const [addMemberToTeam] = useAddMemberToTeamMutation();
 
-    if (requestsLoading || teamLoading) {
-        return <div>Loading...</div>
-    }
-    if (requestsError || teamError) {
-        return <div>There was an error. Please try again.</div>
+    const isLoading = requestsLoading || teamLoading || teamMembersLoading;
+    const hasError = requestsError || teamError || teamMembersError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Team" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = team?.ownerID === auth.user?.id;

@@ -4,6 +4,7 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { useGetAllProjectsForUserQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function ProfileProjectsPage() {
     const tabs = [
@@ -16,12 +17,14 @@ export default function ProfileProjectsPage() {
     const auth = useAuth();
     const { data: projects, isSuccess, error, isLoading } = useGetAllProjectsForUserQuery(auth.user?.id);
 
-    if (isLoading) {
-        return <div>Loading projects...</div>;
-    }
-
-    if (error) {
-        return <div>Error! Try again: {error.message}</div>;
+    if (isLoading || error) {
+        return (
+            <div>
+                <Navbar page="Profile" />
+                <ErrorMessage loading={isLoading} error={error} />
+                <Footer />
+            </div>
+        );
     }
 
     return (

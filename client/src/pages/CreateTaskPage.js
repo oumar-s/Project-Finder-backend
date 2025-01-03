@@ -5,6 +5,7 @@ import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
 import { useGetProjectQuery, useGetProjectMembersQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function CreateTaskPage() { 
     const params = useParams();
@@ -13,11 +14,17 @@ export default function CreateTaskPage() {
     const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
     const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
 
-    if (projectLoading || membersLoading) {
-        return <div>Loading...</div>
-    }
-    if (projectError || membersError) {
-        return <div>There was an error</div>
+    const isLoading = projectLoading || membersLoading;
+    const hasError = projectError || membersError;
+
+    if (isLoading || hasError) {
+        return (
+            <div>
+                <Navbar page="Project" />
+                <ErrorMessage loading={isLoading} error={hasError} />
+                <Footer />
+            </div>
+        );
     }
 
     const isOwner = project?.ownerID === auth.user?.id;

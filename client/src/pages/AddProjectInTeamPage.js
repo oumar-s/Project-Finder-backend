@@ -5,6 +5,8 @@ import { useGetTeamQuery, useGetTeamMembersQuery } from '../features/api/apiSlic
 import { useAuth } from '../context/authContext';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";
+import ErrorMessage from '../components/ErrorMessage';
+
 function AddProjectInTeamPage() {
 
   let params = useParams();
@@ -13,11 +15,17 @@ function AddProjectInTeamPage() {
   const { data: members, error: membersError, isLoading: membersLoading } = useGetTeamMembersQuery(params.teamId);
   const { data: team, error: teamError, isLoading: teamLoading } = useGetTeamQuery(params.teamId);
 
-  if (membersLoading || teamLoading) {
-    return <div>Loading...</div>
-  }
-  if (membersError || teamError) {
-    return <div>Error: {membersError.message}</div>
+  const isLoading = membersLoading || teamLoading;
+  const hasError = membersError || teamError;
+
+  if (isLoading || hasError) {
+    return (
+      <div>
+        <Navbar page="Team" />
+        <ErrorMessage loading={isLoading} error={hasError} />
+        <Footer />
+      </div>
+    );
   }
 
   const isOwner = team?.ownerID === auth.user?.id;
