@@ -30,7 +30,7 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
     </div>
   );
   return (
-    <div className="bg-gray-50 min-h-screen pt-4">
+    <div className="min-h-screen pt-4">
       {showAlert.visible && showAlert.teamId === team.id && (
         <Toast onClose={() => setShowAlert({ visible: false, teamId: null })}>
           A request has been made to join {team.teamName}!
@@ -47,7 +47,7 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
 
       {/* Section 2: Team Details */}
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-        <div className="w-64 h-64 flex-shrink-0 mr-8 bg-gray-200">
+        <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
           {team.teamIcon ?
             <img
               src={team.teamIcon}
@@ -113,7 +113,9 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
               <h3 className="text-xl font-semibold text-blue-800">Team Projects</h3>
             </div>
 
-            <ProjectsContainer projects={teamProjects} />
+            <div className='max-h-96 overflow-y-auto p-1'>
+                <ProjectsContainer projects={teamProjects} />
+            </div>
           </div>
         </div>
 

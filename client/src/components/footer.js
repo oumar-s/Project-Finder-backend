@@ -1,7 +1,7 @@
 
 function Footer() {
   return (
-    <footer className="flex flex-col gap-4 mt-8 p-8 justify-center items-center bg-[#f5f5f7]">
+    <footer className="flex flex-col gap-4 mt-8 p-8 justify-center items-center border-t-2 bg-[#f5f5f7]">
       {/* <div className="">
         <a href='https://oumar-s.github.io/' target='blank' className=''> About Us </a>
       </div> */}
