@@ -72,7 +72,7 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             <Briefcase className="mr-2 text-blue-600" />
                             <h3 className="text-xl font-semibold text-blue-800">Your Projects</h3>
                         </div>
-                        <div className='max-h-96 overflow-y-auto'>
+                        <div className='max-h-96 overflow-y-auto p-1'>
                             <ProjectsListContainer projects={myProjects} />
                         </div>
 
@@ -82,7 +82,7 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                             <Users2 className="mr-2 text-blue-600" />
                             <h3 className="text-xl font-semibold text-blue-800">Team Projects</h3>
                         </div>
-                        <div className='max-h-96 overflow-y-auto'>
+                        <div className='max-h-96 overflow-y-auto p-1'>
                             <ProjectsContainer projects={teamProjects} />
                         </div>
                     </div>
