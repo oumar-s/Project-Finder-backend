@@ -2,6 +2,7 @@ import ProfileView from "./settingsView";
 import { useState } from "react";
 import { storage } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
 export function SettingsContainer({ user, updateUserProfile, updateEmail, updatePassword, projectMembers, teamMembers, removeMemberFromTeam, removeUserFromProject }) {
   const [userForm, setUserForm] = useState({
     profilePic: user.profilePic,
@@ -30,6 +31,16 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
   console.log("user: ", user);
   console.log("projectMembers: ", projectMembers);
   console.log("teamMembers: ", teamMembers);
+
+  // Add new loading and error states
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileError, setProfileError] = useState(null);
+  const [accountLoading, setAccountLoading] = useState(false);
+  const [accountError, setAccountError] = useState(null);
+  const [projectsLoading, setProjectsLoading] = useState(false);
+  const [projectsError, setProjectsError] = useState(null);
+  const [teamsLoading, setTeamsLoading] = useState(false);
+  const [teamsError, setTeamsError] = useState(null);
 
   const handleProfilePicUpload = (setter) => (event) => {
     const file = event.target.files[0];
@@ -72,6 +83,8 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
 
   const updateProfileInfo = async event => {
     event.preventDefault();
+    setProfileLoading(true);
+    setProfileError(null);
     try {
         console.log('submitting form');
         console.log('user form', userForm);
@@ -98,7 +111,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
             setShowProfileToast(false);
         }, 3000);
     } catch (error) {
+        setProfileError('Failed to update profile. Please try again.');
         console.error('Error updating profile:', error);
+    } finally {
+      setProfileLoading(false);
     }
 }
 
@@ -121,42 +137,62 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
   };
 
   const handleUpdateEmail = async () => {
+    setAccountLoading(true);
+    setAccountError(null);
     if (emailForm.newEmail === emailForm.confirmEmail) {
       // update email
-      await updateEmail({ userId: user.id, newEmail: emailForm.newEmail });
-      console.log('Updating email to:', emailForm.newEmail);
-      // Reset form and error
-      setEmailForm({ newEmail: '', confirmEmail: '' });
-      setEmailError('');
-      setShowEmailConfirm(false);
-      setShowEmailToast(true);
-      setTimeout(() => {
-          setShowEmailToast(false);
-      }, 3000);
+      try {
+        await updateEmail({ userId: user.id, newEmail: emailForm.newEmail });
+        console.log('Updating email to:', emailForm.newEmail);
+        // Reset form and error
+        setEmailForm({ newEmail: '', confirmEmail: '' });
+        setEmailError('');
+        setShowEmailConfirm(false);
+        setShowEmailToast(true);
+        setTimeout(() => {
+            setShowEmailToast(false);
+        }, 3000);
+      } catch (error) {
+        setAccountError('Failed to update email. Please try again.');
+        console.error('Error updating email:', error);
+      } finally {
+        setAccountLoading(false);
+      }
     } else {
       setEmailError('Emails do not match');
     }
   };
 
   const handleUpdatePassword = async () => {
+    setAccountLoading(true);
+    setAccountError(null);
     if (passwordForm.newPassword === passwordForm.confirmPassword) {
       // update password
-      await updatePassword({ userId: user.id, newPassword: passwordForm.newPassword });
-      console.log('Updating password');
-      // Reset form and error
-      setPasswordForm({ newPassword: '', confirmPassword: '' });
-      setPasswordError('');
-      setShowPasswordConfirm(false);
-      setShowPasswordToast(true);
-      setTimeout(() => {
-          setShowPasswordToast(false);
-      }, 3000);
+      try {
+        await updatePassword({ userId: user.id, newPassword: passwordForm.newPassword });
+        console.log('Updating password');
+        // Reset form and error
+        setPasswordForm({ newPassword: '', confirmPassword: '' });
+        setPasswordError('');
+        setShowPasswordConfirm(false);
+        setShowPasswordToast(true);
+        setTimeout(() => {
+            setShowPasswordToast(false);
+        }, 3000);
+      } catch (error) {
+        setAccountError('Failed to update password. Please try again.');
+        console.error('Error updating password:', error);
+      } finally {
+        setAccountLoading(false);
+      }
     } else {
       setPasswordError('Passwords do not match');
     }
   };
 
   const leaveProject = async (projectId) => {
+    setProjectsLoading(true);
+    setProjectsError(null);
     try {
       await removeUserFromProject(projectId);
       console.log("leave project success");
@@ -167,11 +203,16 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       }, 3000);
     }
     catch (error) {
-      console.log(error);
+      setProjectsError('Failed to leave project. Please try again.');
+      console.error('Error leaving project:', error);
+    } finally {
+      setProjectsLoading(false);
     }
   }
 
   const leaveTeam = async (teamId) => {
+    setTeamsLoading(true);
+    setTeamsError(null);
     try {
       await removeMemberFromTeam(teamId);
       console.log("leave team success");
@@ -182,7 +223,10 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
       }, 3000);
     }
     catch (error) {
-      console.log(error);
+      setTeamsError('Failed to leave team. Please try again.');
+      console.error('Error leaving team:', error);
+    } finally {
+      setTeamsLoading(false);
     }
   }
 
@@ -199,7 +243,7 @@ export function SettingsContainer({ user, updateUserProfile, updateEmail, update
   };
 
   return (
-    <ProfileView user={user} projectMembers={projectMembers} teamMembers={teamMembers} leaveProject={leaveProject} leaveTeam={leaveTeam} uploadProfilePic={handleProfilePicUpload} profilePic={profilePic} setProfilePic={setProfilePic} activeTab={activeTab} setActiveTab={setActiveTab} handleChange={handleChange} userForm={userForm} updateProfileInfo={updateProfileInfo} handleEmailChange={handleEmailChange} emailForm={emailForm} handleUpdateEmail={showEmailConfirmation} emailError={emailError} handlePasswordChange={handlePasswordChange} passwordForm={passwordForm} handleUpdatePassword={showPasswordConfirmation} passwordError={passwordError} showEmailConfirm={showEmailConfirm} setShowEmailConfirm={setShowEmailConfirm} showPasswordConfirm={showPasswordConfirm} setShowPasswordConfirm={setShowPasswordConfirm} confirmEmailUpdate={handleUpdateEmail} confirmPasswordUpdate={handleUpdatePassword} showLeaveProjectConfirm={showLeaveProjectConfirm} setShowLeaveProjectConfirm={setShowLeaveProjectConfirm} confirmLeaveProject={confirmLeaveProject} showLeaveTeamConfirm={showLeaveTeamConfirm} setShowLeaveTeamConfirm={setShowLeaveTeamConfirm} confirmLeaveTeam={confirmLeaveTeam} showProfileToast={showProfileToast} showEmailToast={showEmailToast} showPasswordToast={showPasswordToast} showProjectToast={showProjectToast} showTeamToast={showTeamToast} setShowProfileToast={setShowProfileToast} setShowEmailToast={setShowEmailToast} setShowPasswordToast={setShowPasswordToast} setShowProjectToast={setShowProjectToast} setShowTeamToast={setShowTeamToast} />
+    <ProfileView user={user} projectMembers={projectMembers} teamMembers={teamMembers} leaveProject={leaveProject} leaveTeam={leaveTeam} uploadProfilePic={handleProfilePicUpload} profilePic={profilePic} setProfilePic={setProfilePic} activeTab={activeTab} setActiveTab={setActiveTab} handleChange={handleChange} userForm={userForm} updateProfileInfo={updateProfileInfo} handleEmailChange={handleEmailChange} emailForm={emailForm} handleUpdateEmail={showEmailConfirmation} emailError={emailError} handlePasswordChange={handlePasswordChange} passwordForm={passwordForm} handleUpdatePassword={showPasswordConfirmation} passwordError={passwordError} showEmailConfirm={showEmailConfirm} setShowEmailConfirm={setShowEmailConfirm} showPasswordConfirm={showPasswordConfirm} setShowPasswordConfirm={setShowPasswordConfirm} confirmEmailUpdate={handleUpdateEmail} confirmPasswordUpdate={handleUpdatePassword} showLeaveProjectConfirm={showLeaveProjectConfirm} setShowLeaveProjectConfirm={setShowLeaveProjectConfirm} confirmLeaveProject={confirmLeaveProject} showLeaveTeamConfirm={showLeaveTeamConfirm} setShowLeaveTeamConfirm={setShowLeaveTeamConfirm} confirmLeaveTeam={confirmLeaveTeam} showProfileToast={showProfileToast} showEmailToast={showEmailToast} showPasswordToast={showPasswordToast} showProjectToast={showProjectToast} showTeamToast={showTeamToast} setShowProfileToast={setShowProfileToast} setShowEmailToast={setShowEmailToast} setShowPasswordToast={setShowPasswordToast} setShowProjectToast={setShowProjectToast} setShowTeamToast={setShowTeamToast} profileLoading={profileLoading} profileError={profileError} accountLoading={accountLoading} accountError={accountError} projectsLoading={projectsLoading} projectsError={projectsError} teamsLoading={teamsLoading} teamsError={teamsError} />
   )
 
 }
