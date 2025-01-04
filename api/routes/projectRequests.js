@@ -38,14 +38,47 @@ router.post('/:projectId', async (req, res) => {
 	try {
 		const projectId = req.params.projectId;
 		const userId = req.user.id;
+
+		// Check if user is already a project member
+		const existingMember = await ProjectMember.findOne({
+			where: {
+				projectID: projectId,
+				userID: userId
+			}
+		});
+		if (existingMember) {
+			return res.status(400).json({ 
+				code: "ALREADY_MEMBER",
+				error: "You are already a member of this project" 
+			});
+		}
+
+		// Check for existing pending request
+		const existingRequest = await ProjectRequest.findOne({
+			where: {
+				projectID: projectId,
+				userID: userId,
+				status: "Pending"
+			}
+		});
+		if (existingRequest) {
+			return res.status(400).json({ 
+				code: "DUPLICATE_REQUEST",
+				error: "You already have a pending request for this project" 
+			});
+		}
+
 		const project = await ProjectRequest.create({
 			status: "Pending",
 			projectID: projectId,
 			userID: userId,
-		})
+		});
 		res.status(201).json(project);
 	} catch (err) {
-		res.status(400).json(err);
+		res.status(400).json({ 
+			code: "REQUEST_FAILED",
+			error: "Failed to create project request. Try again later." 
+		});
 	}
 });
 

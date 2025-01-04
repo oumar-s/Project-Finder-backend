@@ -14,21 +14,28 @@ export function ProjectsContainer({projects, type, title}) {
 
   const handleJoinProject = async (projectId) => {
     setLoadingProjects(prev => new Set([...prev, projectId]));
-    await addRequestToProject(projectId);
-    console.log("join project clicked"); 
-    setLoadingProjects(prev => {
-      const next = new Set(prev);
-      next.delete(projectId);
-      return next;
-    });
-    
-    setJoinedProjects(prev => new Set([...prev, projectId]));
-    setShowAlert({ visible: true, projectId });
-    
-    // Hide alert after 3 seconds
-    setTimeout(() => {
-      setShowAlert({ visible: false, projectId: null });
-    }, 3000);
+    try {
+      const response = await addRequestToProject(projectId).unwrap();
+      setJoinedProjects(prev => new Set([...prev, projectId]));
+      setShowAlert({ visible: true, projectId, type: 'success', message: `A request has been made to join the project!` });
+    } catch (error) {
+      setShowAlert({ 
+        visible: true, 
+        projectId, 
+        type: 'error', 
+        message: error.data?.error || 'Failed to send request'
+      });
+    } finally {
+      setLoadingProjects(prev => {
+        const next = new Set(prev);
+        next.delete(projectId);
+        return next;
+      });
+      
+      setTimeout(() => {
+        setShowAlert({ visible: false, projectId: null });
+      }, 4000);
+    }
   }
 
     return (

@@ -37,14 +37,47 @@ router.post('/:teamId', async (req, res) => {
 	try {
 		const teamId = req.params.teamId;
 		const userId = req.user.id;
+
+		// Check if user is already a team member
+		const existingMember = await TeamMember.findOne({
+			where: {
+				teamID: teamId,
+				userID: userId
+			}
+		});
+		if (existingMember) {
+			return res.status(400).json({ 
+				code: "ALREADY_MEMBER",
+				error: "You are already a member of this team" 
+			});
+		}
+
+		// Check for existing pending request
+		const existingRequest = await TeamRequest.findOne({
+			where: {
+				teamID: teamId,
+				userID: userId,
+				status: "Pending"
+			}
+		});
+		if (existingRequest) {
+			return res.status(400).json({ 
+				code: "DUPLICATE_REQUEST",
+				error: "You already have a pending request for this team" 
+			});
+		}
+
 		const team = await TeamRequest.create({
 			status: "Pending",
 			teamID: teamId,
 			userID: userId,
-		})
+		});
 		res.status(201).json(team);
 	} catch (err) {
-		res.status(400).json(err);
+		res.status(400).json({ 
+			code: "REQUEST_FAILED",
+			error: "Failed to create team request. Try again later." 
+		});
 	}
 });
 

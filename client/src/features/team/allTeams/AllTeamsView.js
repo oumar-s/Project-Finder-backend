@@ -19,22 +19,27 @@ const AllTeamsView = ({teams, isAuthenticated, type, handleJoinTeam, loadingTeam
         );
     }
 // Custom Toast Component
-const Toast = ({ children, onClose }) => (
-    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
-      <div className="flex items-center gap-2 w-max px-4 py-3 bg-white border border-emerald-200 rounded-lg shadow-lg">
-        <div className="flex items-center justify-center w-6 h-6 bg-emerald-100 rounded-full">
+const Toast = ({ children, onClose, type = 'success' }) => (
+  <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
+    <div className={`flex items-center gap-2 w-max px-4 py-3 bg-white border rounded-lg shadow-lg
+      ${type === 'success' ? 'border-emerald-200' : 'border-red-200'}`}>
+      <div className={`flex items-center justify-center w-6 h-6 rounded-full
+        ${type === 'success' ? 'bg-emerald-100' : 'bg-red-100'}`}>
+        {type === 'success' ? (
           <Check className="h-4 w-4 text-emerald-600" />
-        </div>
-        <span className="text-sm font-medium text-gray-700">{children}</span>
-        <button 
-          onClick={onClose} 
-          className="ml-2 text-gray-400 hover:text-gray-600"
-        >
-          <X className="h-4 w-4" />
-        </button>
+        ) : (
+          <X className="h-4 w-4 text-red-600" />
+        )}
       </div>
+      <span className={`text-sm font-medium ${type === 'success' ? 'text-gray-700' : 'text-red-700'}`}>
+        {children}
+      </span>
+      <button onClick={onClose} className="ml-2 text-gray-400 hover:text-gray-600">
+        <X className="h-4 w-4" />
+      </button>
     </div>
-  );
+  </div>
+);
     const getStatusStyles = (status) => {
         switch (status) {
           case 'open':
@@ -77,8 +82,8 @@ const Toast = ({ children, onClose }) => (
                 className="bg-white rounded-lg border border-gray-200 p-6 transition-shadow hover:shadow-md"
               >
                 {showAlert.visible && showAlert.teamId === team.id && (
-                <Toast onClose={() => setShowAlert({ visible: false, teamId: null })}>
-                  A request has been made to join {team.teamName}!
+                <Toast onClose={() => setShowAlert({ visible: false, teamId: null })} type={showAlert.type}>
+                  {showAlert.message}
                 </Toast>
               )}
                 <div className="flex justify-between items-start mb-4">

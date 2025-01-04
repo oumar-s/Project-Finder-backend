@@ -13,21 +13,28 @@ export function AllTeamsContainer({teams, type}) {
 
   const handleJoinTeam = async (teamId) => {
     setLoadingTeams(prev => new Set([...prev, teamId]));
-    await addRequestToTeam(teamId);
-    console.log("join team clicked"); 
-    setLoadingTeams(prev => {
-      const next = new Set(prev);
-      next.delete(teamId);
-      return next;
-    });
-    
-    setJoinedTeams(prev => new Set([...prev, teamId]));
-    setShowAlert({ visible: true, teamId });
-    
-    // Hide alert after 3 seconds
-    setTimeout(() => {
-      setShowAlert({ visible: false, projectId: null });
-    }, 3000);
+    try {
+      const response = await addRequestToTeam(teamId).unwrap();
+      setJoinedTeams(prev => new Set([...prev, teamId]));
+      setShowAlert({ visible: true, teamId, type: 'success', message: `A request has been made to join the team!` });
+    } catch (error) {
+      setShowAlert({ 
+        visible: true, 
+        teamId, 
+        type: 'error', 
+        message: error.data?.error || 'Failed to send request'
+      });
+    } finally {
+      setLoadingTeams(prev => {
+        const next = new Set(prev);
+        next.delete(teamId);
+        return next;
+      });
+      
+      setTimeout(() => {
+        setShowAlert({ visible: false, teamId: null });
+      }, 4000);
+    }
   }
   
     console.log("all teams: ", teams);
