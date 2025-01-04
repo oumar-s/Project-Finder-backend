@@ -49,7 +49,7 @@ const ProjectInfoViewView = ({
             </Toast>
           )}
           {/* Section 1: Project Overview */}
-          <section className="bg-white shadow-sm rounded-lg p-6 mb-8">
+          <section className="bg-white shadow-md rounded-lg p-6 mb-8 border border-purple-200">
             <div className="flex flex-col md:flex-row items-start justify-between">
               <div className="flex-grow">
                 <h1 className="text-2xl font-bold text-purple-600 mb-3">{project.projectTitle}</h1>
@@ -62,7 +62,7 @@ const ProjectInfoViewView = ({
                       <span className="font-medium">{project.owner.firstName} {project.owner.lastName}</span>
                     </div>
                       <Link 
-                        to={`/teams/${project.team.id}/overview`}
+                        to={`/team-info-view/${project.team.id}`}
                         className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
                       >
                         <Users2Icon className="mr-2 h-5 w-5" />
@@ -117,7 +117,7 @@ const ProjectInfoViewView = ({
           {/* Section 2: Tasks and Members */}
           <section className="grid md:grid-cols-2 gap-6">
             {/* Section 2a: Tasks */}
-            <div className="bg-white shadow-sm rounded-lg p-6">
+            <div className="bg-white shadow-md rounded-lg p-6 border border-purple-200">
               <div className="flex items-center mb-4">
                 <ClipboardIcon className="mr-2 h-5 w-5 text-blue-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Tasks</h2>
@@ -148,7 +148,7 @@ const ProjectInfoViewView = ({
             </div>
     
             {/* Section 2b: Members */}
-            <div className="bg-white shadow-sm rounded-lg p-6 ">
+            <div className="bg-white shadow-md rounded-lg p-6 border border-purple-200">
               <div className="flex items-center mb-4">
                 <UsersIcon className="mr-2 h-5 w-5 text-purple-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Members</h2>

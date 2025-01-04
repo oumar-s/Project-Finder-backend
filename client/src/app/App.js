@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from '../context/authContext';
 import PrivateRouteRequiresAuth from '../components/PrivateRouteRequiresAuth';
+import PublicRoute from '../components/PublicRoute';
 import ExplorePage from '../pages/ExplorePage';
 import AboutPage from '../pages/AboutPage';
 import LandingPage from '../pages/LandingPage';
@@ -38,16 +39,16 @@ function App() {
 		<AuthProvider>
 			<Router>
 				<Routes>
-					<Route path="/" element={<LandingPage />} />
-					<Route path="/login" element={<LoginPage />} />
-					<Route path="/sign-up" element={<SignUpPage />} />
-					<Route path="/projects" element={<ExplorePage />} />
-					<Route path="/teams" element={<AllTeamsPage />} />
-					<Route path="/about" element={<AboutPage />} />
-					<Route path="/project-info-view/:projectId" element={<ProjectInfoViewPage />} />
-					<Route path="/team-info-view/:teamId" element={<TeamInfoViewPage />} />
-					<Route path="/test" element={<Test />} />
-					<Route path="/profile/:userId" element={<PublicProfilePage />} />
+					<Route path="/" element={<PublicRoute><LandingPage /></PublicRoute>} />
+					<Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+					<Route path="/sign-up" element={<PublicRoute><SignUpPage /></PublicRoute>} />
+					<Route path="/projects" element={<PublicRoute><ExplorePage /></PublicRoute>} />
+					<Route path="/teams" element={<PublicRoute><AllTeamsPage /></PublicRoute>} />
+					<Route path="/about" element={<PublicRoute><AboutPage /></PublicRoute>} />
+					<Route path="/project-info-view/:projectId" element={<PublicRoute><ProjectInfoViewPage /></PublicRoute>} />
+					<Route path="/team-info-view/:teamId" element={<PublicRoute><TeamInfoViewPage /></PublicRoute>} />
+					<Route path="/test" element={<PublicRoute><Test /></PublicRoute>} />
+					<Route path="/profile/:userId" element={<PublicRoute><PublicProfilePage /></PublicRoute>} />
 
 					<Route
 						path="/dashboard"

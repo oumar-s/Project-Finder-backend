@@ -21,7 +21,7 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
         </div>
       );
     return (
-        <div className="bg-gray-50 min-h-screen pt-4">
+        <div className="min-h-screen pt-4">
             {/* Section 1: Team Banner */}
             <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 shadow-lg relative overflow-hidden z-0">
                 
@@ -34,7 +34,7 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
 
             {/* Section 2: Team Details */}
             <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-                <div className="w-64 h-64 flex-shrink-0 mr-8 bg-gray-200">
+                <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
                     { team.teamIcon ? 
                     <img
                         src={team.teamIcon}

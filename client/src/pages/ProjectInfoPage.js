@@ -76,7 +76,7 @@ export default function ProjectInfoPage() {
 
             <TabNav tabs={tabs}/>
 
-            <div className='min-h-screen bg-gray-50'>
+            <div className='min-h-screen'>
             { (isMember || isOwner) ?
                 <ProjectPageContainer tasks={tasks} members={members}/>
                 :
