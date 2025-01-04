@@ -24,9 +24,15 @@ router.post("/login", passport.authenticate("local"), async (req, res) => {
   }
 });
 
-router.get("/login", (req, res) => {
+router.get("/login", async (req, res) => {
   if (req.user) {
-    res.json(req.user);
+    try {
+      const firebaseToken = await admin.auth().createCustomToken(req.user.id.toString());
+      res.json({ user: req.user, token: firebaseToken });
+    } catch (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
   } else {
     res.sendStatus(401);
   }

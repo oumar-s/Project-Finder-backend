@@ -27,8 +27,14 @@ const AuthProvider = ({ children }) => {
           throw new Error("Unauthenticated");
         }
 
-        let fetchedUser = await response.json();
-        setUser(fetchedUser);
+        let data = await response.json();
+        setUser(data.user);
+
+        // Re-authenticate with Firebase using the token
+        if (data.token) {
+          const auth = getAuth();
+          await signInWithCustomToken(auth, data.token);
+        }
       } catch (error) {
         console.log("Error: User not logged in.")
         setUser(false);
