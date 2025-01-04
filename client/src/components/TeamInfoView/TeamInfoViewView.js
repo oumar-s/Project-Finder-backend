@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectsContainer } from '../../features/project/allProjects/allProjectsContainer';
 import { Users, Users2, Check, X, Loader2 } from 'lucide-react';
+import DefaultBanner from '../../assets/images/DefaultBanner.png';
+
+
 const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, handleJoinTeamRequest, showAlert, setShowAlert, loadingTeam, joinedTeam }) => {
   const Toast = ({ children, onClose }) => (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
@@ -36,7 +39,7 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
       {/* Section 1: Team Banner */}
       <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
           <img
-              src={team.teamBanner}
+              src={team.teamBanner ? team.teamBanner : DefaultBanner}
               alt="Team Banner"
               className="absolute inset-0 w-full h-full rounded-2xl object-cover"
           />
@@ -44,12 +47,15 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
 
       {/* Section 2: Team Details */}
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-        <div className="w-64 h-64 flex-shrink-0 mr-8">
-          <img
-            src={team.teamIcon}
-            alt="Team Profile"
-            className="w-full h-full object-cover rounded-lg shadow-lg"
-          />
+        <div className="w-64 h-64 flex-shrink-0 mr-8 bg-gray-200">
+          {team.teamIcon ?
+            <img
+              src={team.teamIcon}
+              alt="Team Profile"
+              className="w-full h-full object-cover rounded-lg shadow-lg"
+            /> :
+            <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
+          }
         </div>
         <div className="flex-grow">
           <h2 className="text-2xl font-semibold text-blue-800 mb-4">
