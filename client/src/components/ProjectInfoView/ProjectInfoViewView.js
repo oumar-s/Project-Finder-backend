@@ -6,7 +6,9 @@ import {
     ExternalLinkIcon,
     Check,
     X,
-    Loader2
+    Loader2,
+    UserCheck, 
+    Users2Icon
   } from 'lucide-react';
   
 const ProjectInfoViewView = ({
@@ -54,20 +56,30 @@ const ProjectInfoViewView = ({
                 <p className="text-gray-600 mb-4">{project.projectDescription}</p>
                 
                 <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <span className="text-gray-500">Owner:</span>
-                    <span className="font-medium text-gray-700">{project.owner.firstName} {project.owner.lastName}</span>
+                  <div className="flex items-center space-x-4">
+                    <div className="flex items-center text-gray-700">
+                      <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
+                      <span className="font-medium">{project.owner.firstName} {project.owner.lastName}</span>
+                    </div>
+                      <Link 
+                        to={`/teams/${project.team.id}/overview`}
+                        className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                      >
+                        <Users2Icon className="mr-2 h-5 w-5" />
+                        {project.team.teamName}
+                      </Link>
+                    {project.projectRepository && 
+                    <a 
+                      href={project.projectRepository} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      <ExternalLinkIcon className="mr-2 h-5 w-5" />
+                      Repository
+                    </a>
+                    }
                   </div>
-                  
-                  <a 
-                    href={project.projectRepository} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    <ExternalLinkIcon className="mr-2 h-5 w-5" />
-                    Repository
-                  </a>
                 </div>
               </div>
             </div>

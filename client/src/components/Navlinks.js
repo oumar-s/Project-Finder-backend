@@ -84,7 +84,7 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler, user }) => {
             <Link className="" to="/profile/tasks">My tasks</Link>
           </div>
           <div className="">
-            <Link className="" to="/account">Account</Link>
+            <Link className="" to="/account">Settings</Link>
           </div>
 
           <div className="">

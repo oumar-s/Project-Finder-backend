@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
-const { ProjectRequest, User, Project } = db;
+const { ProjectRequest, User, Project, ProjectMember } = db;
 
 //Get all requests of a specific project
 router.get('/:projectId', async (req, res) => {

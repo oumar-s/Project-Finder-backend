@@ -10,7 +10,7 @@ function LoginPage() {
   const location = useLocation();
   const [data, setData] = useState({ email: "", password: "" });
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const fieldChanged = (name) => {
     return (event) => {

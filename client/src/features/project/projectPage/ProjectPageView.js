@@ -39,6 +39,7 @@ const ProjectPageView = ({project, tasks, members}) => {
                         <Users2Icon className="mr-2 h-5 w-5" />
                         {project.team.teamName}
                       </Link>
+                    {project.projectRepository && 
                     <a 
                       href={project.projectRepository} 
                       target="_blank" 
@@ -48,6 +49,7 @@ const ProjectPageView = ({project, tasks, members}) => {
                       <ExternalLinkIcon className="mr-2 h-5 w-5" />
                       Repository
                     </a>
+                    }
                   </div>
                 </div>
               </div>

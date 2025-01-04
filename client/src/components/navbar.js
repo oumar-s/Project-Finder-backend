@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from 'react';
 import { UserCircle } from 'lucide-react';
 import ErrorMessage from './ErrorMessage';
 import { useAuth } from '../context/authContext';
-import { useGetUserQuery } from '../features/api/apiSlice';
+import { useGetUserByIdQuery } from '../features/api/apiSlice';
 import { Link } from 'react-router-dom';
 import Navlinks from './Navlinks';
 import Avatar from './Avatar';
@@ -21,6 +21,12 @@ const Navbar = ({ page }) => {
   const dropdownRef = useRef(null);
 
   const auth = useAuth();
+  const { data: user, error: userError, isLoading: userLoading } = useGetUserByIdQuery(
+    auth?.user?.id,
+    {
+      skip: !auth.isAuthenticated
+    }
+  );
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -33,12 +39,11 @@ const Navbar = ({ page }) => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
-  const { data: user, error: userError, isLoading: userLoading } = useGetUserQuery(auth?.user?.id);
-  if (auth.isAuthenticated) {
-    if (userLoading || userError) {
-      return <ErrorMessage loading={userLoading} error={userError} />;
-    }
+
+  if (auth.isAuthenticated && (userLoading || userError)) {
+    return <ErrorMessage loading={userLoading} error={userError} />;
   }
+
   const handleNav = () => {
     setShowNav(!showNav);
   }

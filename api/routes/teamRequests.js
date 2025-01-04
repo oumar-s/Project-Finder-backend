@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require("../middlewares/authentication");
 const router = express.Router();
 const db = require('../models');
-const { TeamRequest, User, Team } = db;
+const { TeamRequest, User, Team, TeamMember } = db;
 
 //Get all requests of a specific team
 router.get('/:teamId', async (req, res) => {

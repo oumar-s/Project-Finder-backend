@@ -70,7 +70,7 @@ const LandingPage = () => (
               className="inline-flex items-center px-6 py-3 rounded-md border-2 border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               to="/teams"
             >
-              Browse Projects
+              Explore Teams
             </Link>
           </div>
         </div>
