@@ -13,12 +13,16 @@ export function AddProjectFormContainer() {
         teamId: ''
     });
     const { data: userTeams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(user?.id);
-    const [addPost] = useAddProjectMutation();
-    const [addUserToProject] = useAddUserToProjectMutation();
+    const [addPost, { isLoading: isCreating, error: createError }] = useAddProjectMutation();
+    const [addUserToProject, { isLoading: isAddingUser, error: addUserError }] = useAddUserToProjectMutation();
     const [showToast, setShowToast] = useState(false);
 
-    if (teamsLoading || teamsError) {
-        return <ErrorMessage loading={teamsLoading} error={teamsError} />;
+    if (teamsLoading || isCreating || isAddingUser) {
+        return <ErrorMessage loading={true} error={null} />;
+    }
+
+    if (teamsError || createError || addUserError) {
+        return <ErrorMessage loading={false} error={teamsError || createError || addUserError} />;
     }
     
     const handleSubmit = async event => {

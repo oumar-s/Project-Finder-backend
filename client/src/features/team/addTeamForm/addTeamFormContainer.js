@@ -4,7 +4,7 @@ import { useAddTeamMutation, useAddMemberToTeamMutation } from "../../api/apiSli
 import { useAuth } from "../../../context/authContext";
 import { storage } from "../../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-
+import ErrorMessage from "../../../components/ErrorMessage";
 
 export function AddTeamFormContainer() {
     const auth = useAuth();
@@ -17,8 +17,8 @@ export function AddTeamFormContainer() {
     });
     const [teamImage, setTeamImage] = useState(null);
     const [teamBanner, setTeamBanner] = useState(null);
-    const [addTeam] = useAddTeamMutation();
-    const [addMemberToTeam] = useAddMemberToTeamMutation();
+    const [addTeam, { isLoading: isCreating, error: createError }] = useAddTeamMutation();
+    const [addMemberToTeam, { isLoading: isAddingMember, error: addMemberError }] = useAddMemberToTeamMutation();
     
     //These event handlers keeps track of changes as the user fills out the form.
     //these event handlers will be passed to the AddProjectFormView as a prop.
@@ -106,6 +106,14 @@ export function AddTeamFormContainer() {
         setTimeout(() => {
             setShowToast(false);
         }, 3000);
+    }
+
+    if (isCreating || isAddingMember) {
+        return <ErrorMessage loading={true} error={null} />;
+    }
+
+    if (createError || addMemberError) {
+        return <ErrorMessage loading={false} error={createError || addMemberError} />;
     }
     
     return (

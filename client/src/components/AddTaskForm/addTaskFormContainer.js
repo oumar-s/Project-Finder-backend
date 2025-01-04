@@ -13,11 +13,15 @@ export function AddTaskFormContainer() {
         taskDescription: '',
         assignedTo: ''
     });
-    const [addPost] = useAddTaskMutation();
+    const [addPost, { isLoading: isCreating, error: createError }] = useAddTaskMutation();
     const [showToast, setShowToast] = useState(false);
     
-    if (membersLoading || membersError) {
-        return <ErrorMessage loading={membersLoading} error={membersError} />;
+    if (membersLoading || isCreating) {
+        return <ErrorMessage loading={true} error={null} />;
+    }
+
+    if (membersError || createError) {
+        return <ErrorMessage loading={false} error={membersError || createError} />;
     }
     
     //These event handlers keeps track of changes as the user fills out the form.

@@ -3,6 +3,7 @@ import AddProjectFormView from "./addProjectFormView";
 import { useAddProjectMutation, useAddUserToProjectMutation } from "../../api/apiSlice";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../context/authContext";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 export function AddProjectFormContainer() {
     const { user } = useAuth();
@@ -15,9 +16,17 @@ export function AddProjectFormContainer() {
         teamId: ''
     });
     
-    const [addPost] = useAddProjectMutation();
-    const [addUserToProject] = useAddUserToProjectMutation();
+    const [addPost, { isLoading: isCreating, error: createError }] = useAddProjectMutation();
+    const [addUserToProject, { isLoading: isAddingUser, error: addUserError }] = useAddUserToProjectMutation();
     
+    if (isCreating || isAddingUser) {
+        return <ErrorMessage loading={true} error={null} />;
+    }
+
+    if (createError || addUserError) {
+        return <ErrorMessage loading={false} error={createError || addUserError} />;
+    }
+
     //These event handlers keeps track of changes as the user fills out the form.
     //these event handlers will be passed to the AddProjectFormView as a prop.
     const handleTitleChange = (event) => {
