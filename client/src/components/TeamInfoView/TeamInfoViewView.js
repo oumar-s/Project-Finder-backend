@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectsContainer } from '../../features/project/allProjects/allProjectsContainer';
-import { Users, Users2, Check, X, Loader2 } from 'lucide-react';
+import { Users, Users2, Check, X, Loader2, UserCheck } from 'lucide-react';
 import DefaultBanner from '../../assets/images/DefaultBanner.png';
 
 
@@ -47,25 +47,34 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
 
       {/* Section 2: Team Details */}
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-        <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
-          {team.teamIcon ?
-            <img
-              src={team.teamIcon}
-              alt="Team Profile"
-              className="w-full h-full object-cover rounded-lg shadow-lg"
-            /> :
-            <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
-          }
-        </div>
-        <div className="flex-grow">
-          <h2 className="text-2xl font-semibold text-blue-800 mb-4">
-            {team.teamName}
-          </h2>
-          <p className="text-gray-700">
-            {team.teamDescription}
-          </p>
-        </div>
-      </div>
+                <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
+                    {team.teamIcon ?
+                        <img
+                            src={team.teamIcon}
+                            alt="Team Profile"
+                            className="w-full h-full object-cover rounded-lg shadow-lg"
+                        /> :
+                        <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
+                    }
+                </div>
+                <div className="flex-grow">
+                    <div className="mb-2 mt-4">
+                        <h2 className="text-2xl font-semibold text-blue-800">
+                            {team.teamName}
+                        </h2>
+
+                    </div>
+
+                    <p className="text-gray-700 mb-8">
+                        {team.teamDescription}
+                    </p>
+                    <div className="flex items-center text-gray-700">
+                        <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
+                        <span className="font-medium">{team.owner.firstName} {team.owner.lastName}
+                        </span>
+                    </div>
+                </div>
+            </div>
       { isAuthenticated ?
         
       <div className="container mx-auto px-4 my-4 flex justify-center md:justify-end">
