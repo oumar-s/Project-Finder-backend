@@ -1,19 +1,7 @@
 import { Link } from "react-router-dom"
-import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
+import { Users, Info, UserCheck} from 'lucide-react';
 
 const TeamsListView = ({ teams, isTeamMemberList }) => {
-  const getStatusStyles = (status) => {
-    switch (status) {
-      case 'open':
-        return 'bg-emerald-100 text-emerald-700';
-      case 'closed':
-        return 'bg-gray-100 text-gray-700';
-      case 'waitlist':
-        return 'bg-amber-100 text-amber-700';
-      default:
-        return 'bg-gray-100 text-gray-700';
-    }
-  };
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
     <div className={`text-center p-6 ${className}`}>
       <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />

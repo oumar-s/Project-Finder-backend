@@ -13,7 +13,6 @@ import { ReactComponent as Logo } from '../assets/images/logo.svg';
 
 const Navbar = ({ page }) => {
   const [showNav, setShowNav] = useState(false);
-  const [showLeftNav, setshowLeftNav] = useState(false);
   const [showRightNav, setshowRightNav] = useState(false);
   const [ShowAddMenu, setShowAddMenu] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -142,7 +141,7 @@ const Navbar = ({ page }) => {
           {/* Profile Image */}
           <div className="relative">
             <button className="flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" onClick={handleRightNav}>
-            {auth?.user?.profilePic ? (
+            {user?.profilePic ? (
                   <div className='rounded-full border-2 border-blue-200'><img
                     src={user.profilePic}
                     alt={user.firstName}

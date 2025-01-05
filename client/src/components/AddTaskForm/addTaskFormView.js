@@ -1,4 +1,4 @@
-import { Type, MessageCircle, ExternalLink, Users, Check, X } from 'lucide-react';
+import { Type, MessageCircle, Users, Check, X } from 'lucide-react';
 
 const Toast = ({ children, onClose }) => (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">

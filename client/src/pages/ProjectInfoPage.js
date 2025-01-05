@@ -3,7 +3,7 @@ import Footer from '../components/footer';
 import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
 import { ProjectInfoViewContainer } from '../components/ProjectInfoView/ProjectInfoViewContainer';
 import TabNav from '../components/TabNav';
-import { useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksQuery } from '../features/api/apiSlice';
+import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectTasksQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 import ErrorMessage from '../components/ErrorMessage';
@@ -18,8 +18,6 @@ export default function ProjectInfoPage() {
     const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
 
     const { data: tasks, error: tasksError, isLoading: tasksLoading } = useGetProjectTasksQuery(params.projectId);
-
-    const [removeUserFromProject] = useRemoveUserFromProjectMutation();
 
     const isLoading = membersLoading || tasksLoading || projectLoading;
     const hasError = membersError || tasksError || projectError;
