@@ -1,47 +1,13 @@
 import MyTasksListView from './myTasksListView';
 import MyTaskModal from './myTaskModal';
 import { React, useState } from 'react';
-import { useAuth } from '../../context/authContext';
 
 
 export const MyTasksListContainer = ({tasks, members, assignTask, changeTaskStatus}) => {
-  const auth = useAuth();
 
   const [selectedTask, setSelectedTask] = useState(null);
   const [openDropdownId, setOpenDropdownId] = useState(null);
   
-
-  const task = [
-    {
-      id: 1,
-      title: "Implement User Authentication",
-      description: "Add login and registration functionality using JWT tokens",
-      assignee: "Sarah Chen",
-      status: "In Progress"
-    },
-    {
-      id: 2,
-      title: "Design Database Schema",
-      description: "Create ERD and implement database models for the application",
-      assignee: "Mike Johnson",
-      status: "Completed"
-    },
-    {
-      id: 3,
-      title: "API Documentation",
-      description: "Document all API endpoints using Swagger",
-      assignee: "Alex Thompson",
-      status: "Pending"
-    },
-    {
-      id: 4,
-      title: "Unit Test Coverage",
-      description: "Increase test coverage to 80% for core modules",
-      assignee: "Emily Davis",
-      status: "In Review"
-    }
-  ];
-
   const getStatusColor = (status) => {
     const statusColors = {
       'Done': 'bg-green-100 text-green-800',

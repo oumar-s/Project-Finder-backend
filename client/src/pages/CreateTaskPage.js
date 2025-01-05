@@ -10,7 +10,6 @@ import ErrorMessage from '../components/ErrorMessage';
 export default function CreateTaskPage() { 
     const params = useParams();
     const auth = useAuth();
-
     const { data: project, error: projectError, isLoading: projectLoading } = useGetProjectQuery(params.projectId);
     const { data: members, error: membersError, isLoading: membersLoading } = useGetProjectMembersQuery(params.projectId);
 
@@ -61,7 +60,6 @@ export default function CreateTaskPage() {
             <div className='min-h-screen p-8'>
             <AddTaskFormContainer />
             </div>
-
             <Footer />
         </div>
     );

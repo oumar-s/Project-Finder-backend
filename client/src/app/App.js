@@ -213,7 +213,6 @@ function App() {
 							</PrivateRouteRequiresAuth>
 						}
 					/>
-					
 				</Routes>
 			</Router>
 		</AuthProvider>

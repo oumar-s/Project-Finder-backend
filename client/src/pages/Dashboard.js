@@ -26,7 +26,6 @@ export default function Dashboard() {
         <div className=''>
             <Navbar page={'Dashboard'} />
 
-
             <TabNav tabs={tabs} />
             <div className='min-h-screen'>
             <DashboardContainer tasks={tasks} />

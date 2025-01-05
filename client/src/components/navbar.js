@@ -5,7 +5,6 @@ import { useAuth } from '../context/authContext';
 import { useGetUserByIdQuery } from '../features/api/apiSlice';
 import { Link } from 'react-router-dom';
 import Navlinks from './Navlinks';
-import Avatar from './Avatar';
 import AuthButton from './AuthButton';
 import { Plus, ChevronDown } from 'lucide-react';
 import { ReactComponent as ThreeBars } from '../assets/images/three-bars.svg';
@@ -46,10 +45,6 @@ const Navbar = ({ page }) => {
 
   const handleNav = () => {
     setShowNav(!showNav);
-  }
-
-  const handleLeftNav = () => {
-    setshowLeftNav(!showLeftNav);
   }
 
   const handleRightNav = () => {
@@ -100,9 +95,6 @@ const Navbar = ({ page }) => {
 
         {/* left nav */}
         <div className="flex flex-row items-center gap-4  ">
-          {/* <button onClick={handleLeftNav} className="border p-2 rounded-md">
-            <ThreeBars />
-          </button> */}
           <Link className="" to="/dashboard">
             <Logo />
           </Link>
@@ -111,15 +103,6 @@ const Navbar = ({ page }) => {
           </div>
         </div>
 
-        {/* right nav */}
-        {/* <div className="flex flex-row items-center gap-2">
-          <button className="border px-4" onClick={handleAddMenu}>
-            +
-          </button>
-          <button onClick={handleRightNav} className="">
-            <Avatar type='1' />
-          </button>
-        </div> */}
         {/* Right section: Add button and Profile */}
         <div className="flex items-center gap-4">
           {/* Custom Dropdown */}
@@ -185,12 +168,6 @@ const Navbar = ({ page }) => {
         </div>
       }
 
-      {/* {showRightNav &&
-        <div className="flex flex-col absolute top-0 right-0 z-10 w-80 h-full rounded-l-2xl bg-black1 text-white p-8">
-
-          <Navlinks type='rightnav' rightNavHandler={handleRightNav} />
-        </div>
-      } */}
       {showRightNav &&
         <>
           {/* Shadow overlay */}
@@ -203,24 +180,6 @@ const Navbar = ({ page }) => {
           </div>
         </>
       }
-
-      {/* {showLeftNav &&
-        <div className="flex flex-col absolute top-0 z-10 w-80 h-full rounded-r-2xl bg-black1 text-white p-8">
-          <Navlinks type='leftnav' leftNavHandler={handleLeftNav} />
-        </div>
-      } */}
-
-      {/*showLeftNav &&
-        <>
-          <div
-            className="fixed inset-0 bg-black/30 z-10"
-            onClick={handleLeftNav}
-          />
-          <div className="flex flex-col absolute top-0 left-0 z-20 w-80 h-full rounded-r-2xl bg-white p-8 shadow-">
-            <Navlinks type='leftnav' leftNavHandler={handleLeftNav} />
-          </div>
-        </>
-      */}
 
       {ShowAddMenu &&
         <div className="flex flex-col absolute top-16 right-10 z-10 w-48 h-60 rounded-2xl shadow-xl bg-white text-sm  p-2 border">

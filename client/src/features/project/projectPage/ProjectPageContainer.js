@@ -2,8 +2,6 @@ import ProjectPageView from "./ProjectPageView";
 import ErrorMessage from "../../../components/ErrorMessage";
 import { useGetProjectQuery } from "../../api/apiSlice";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
-
 
 export function ProjectPageContainer({tasks, members}) {
   const params = useParams();

@@ -55,11 +55,6 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
                     {team.teamDescription}
                   </p>
                 </div>
-                {/* <span 
-                    className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(project.projectStatus)}`}
-                  >
-                    {project.projectStatus}
-                  </span> */}
               </div>
 
               <div className="flex items-center justify-between">
@@ -105,11 +100,6 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
                     {teamMember.team.teamDescription}
                   </p>
                 </div>
-                {/* <span 
-                    className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(project.projectStatus)}`}
-                  >
-                    {project.projectStatus}
-                  </span> */}
               </div>
 
               <div className="flex items-center justify-between">
@@ -132,7 +122,6 @@ const TeamsListView = ({ teams, isTeamMemberList }) => {
           ))}
           </div>
         }
-
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import Footer from '../components/footer';
 import { TasksListContainer } from '../components/TasksList/tasksListContainer';
 import { useGetProjectQuery } from '../features/api/apiSlice';
 import { useGetProjectTasksQuery, useGetProjectMembersQuery, useAssignTaskMutation, useChangeTaskStatusMutation, useDeleteTaskMutation } from '../features/api/apiSlice';
-import { React, useState } from 'react';
+import React from 'react';
 import { useAuth } from '../context/authContext';
 import TabNav from '../components/TabNav';
 import { useParams } from "react-router-dom";

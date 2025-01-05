@@ -12,10 +12,8 @@ function AddTeamPage() {
       <div className='min-h-screen p-8'>
         <AddTeamFormContainer />
       </div>
-
       <Footer />
     </div>
   );
 }
-
 export default AddTeamPage;

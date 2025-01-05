@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
   
 const ProjectPageView = ({project, tasks, members}) => {
-    console.log('ProjectPageView', project)
+    // console.log('ProjectPageView', project)
     const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
       <div className={`text-center p-6 ${className}`}>
         <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
@@ -64,25 +64,6 @@ const ProjectPageView = ({project, tasks, members}) => {
                 <ClipboardIcon className="mr-2 h-5 w-5 text-blue-600" />
                 <h2 className="text-lg font-semibold text-gray-800">Project Tasks</h2>
               </div>
-              {/* <ul className="space-y-3">
-                {tasks.map((task) => (
-                  <li 
-                    key={task.id} 
-                    className="flex justify-between items-center p-3 bg-gray-50 rounded-md"
-                  >
-                    <span className="text-gray-700">{task.title}</span>
-                    <span 
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        task.status === 'Completed' ? 'bg-emerald-100 text-emerald-800' :
-                        task.status === 'In Progress' ? 'bg-amber-100 text-amber-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {task.status}
-                    </span>
-                  </li>
-                ))}
-              </ul> */}
               <div className='max-h-96 overflow-y-auto'>
                 <MyTasksListContainer tasks={tasks} />
               </div>
@@ -102,11 +83,6 @@ const ProjectPageView = ({project, tasks, members}) => {
                     to={`/profile/${teamMember.user.id}`}
                     className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   >
-                    {/* <img 
-                      src={member.avatar} 
-                      alt={member.name} 
-                      className="w-10 h-10 rounded-full"
-                    /> */}
                     <div>
                       <p className="font-medium text-teal-700">{teamMember.user.firstName} {teamMember.user.lastName}</p>
                       <p className="text-gray-600 text-sm">{teamMember.user.email}</p>

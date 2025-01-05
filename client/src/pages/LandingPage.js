@@ -7,10 +7,6 @@ import imageOpen from "../assets/images/opensource.png";
 import imageClosed from "../assets/images/closedsource.png";
 
 import {
-	Users,
-	Code2,
-	Library,
-	Box,
 	GitFork,
 	Brain,
 	Users2,

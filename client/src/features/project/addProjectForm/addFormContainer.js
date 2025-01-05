@@ -27,22 +27,6 @@ export function AddProjectFormContainer() {
         return <ErrorMessage loading={false} error={createError || addUserError} />;
     }
 
-    //These event handlers keeps track of changes as the user fills out the form.
-    //these event handlers will be passed to the AddProjectFormView as a prop.
-    const handleTitleChange = (event) => {
-        setProjectForm({...projectForm, projectTitle: event.target.value});
-    }
-    const handleDescriptionChange = (event) => {
-        setProjectForm({...projectForm, projectDescription: event.target.value});
-    }
-
-    const handleTeamChange = (event) => {
-        setProjectForm({...projectForm, teamId: event.target.value});
-    }
-
-    const handleRepositoryChange = (event) => {
-        setProjectForm({...projectForm, projectRepository: event.target.value});
-    }
     const handleSubmit = async event => {
         event.preventDefault();
         console.log('projectForm', projectForm);

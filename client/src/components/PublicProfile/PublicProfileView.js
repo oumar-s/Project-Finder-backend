@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ProjectsListContainer } from "../../components/ProjectsList/projectsListContainer";
 import {
     Mail,
@@ -109,20 +108,6 @@ const PublicProfileView = ({ members, profile }) => {
                         )}
                     </div>
                 </section>
-
-                {/* <div className="info">
-                    <p>bio: {profile.bio}</p>
-                    <div>
-                        <p>Projects:</p>
-                        {members.map((member) => (
-                            <div key={member.id}>
-                                <Link to={`/projects/${member.project.id}/all`}>
-                                    <p>{member.project.projectTitle}</p>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </div> */}
             </main>
         </div>
     );

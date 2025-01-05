@@ -6,7 +6,7 @@ import ErrorMessage from '../../components/ErrorMessage';
 import { useAuth } from "../../context/authContext";
 export function DashboardContainer({tasks}) {
   const auth = useAuth();
-  //const teams = ['Team A', 'Team B', 'Team C'];
+  
   const { data: teams, error: teamsError, isLoading: teamsLoading, isSuccess: teamsSuccess } = useGetUserTeamsQuery(auth.user?.id);
   const { data: projects, error: projectsError, isLoading: projectsLoading, isSuccess: projectsSuccess } = useGetAllProjectsForUserQuery(auth.user?.id);
   
@@ -49,7 +49,6 @@ export function DashboardContainer({tasks}) {
 
     console.log('projectsByTeam', projectsByTeam);
     console.log('teams', teams);
-    const teamz = [];
     
     return (
       <div className="">

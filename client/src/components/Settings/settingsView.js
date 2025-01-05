@@ -1,16 +1,12 @@
-import { updateProfile } from 'firebase/auth';
 import {
     User,
     Building2,
     Users,
     LogOut,
-    Mail,
     UserCircle,
     Lock,
-    Github,
     KeyRound,
     AtSign,
-    Code2,
     FolderGit2,
     Check,
     X
@@ -169,20 +165,6 @@ const SettingsView = ({ user, projectMembers, teamMembers, leaveProject, leaveTe
 
                                                     />
                                                 </div>
-
-                                                {/* <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    Email
-                                                </label>
-                                                <input
-                                                    type="email"
-                                                    name='email'
-                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                                                    value={userForm.email || ''}
-                                                    onChange={handleChange}
-                                                    placeholder="john@example.com"
-                                                />
-                                            </div> */}
 
                                                 <div>
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">

@@ -8,7 +8,6 @@ const TabNav = (props) => {
     const handleTabChange = (tab) => {
         console.log(tab);
     }
-
     return (
         <div className="bg-gray-50 flex gap-6 pl-6 flex-wrap text-base text-gray-600 min-h-10 border-b">
             {props.tabs.map((tab) => (

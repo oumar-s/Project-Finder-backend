@@ -1,30 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProjectsListContainer } from '../../../components/ProjectsList/projectsListContainer';
-import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer'; 
+import { ProjectsContainer } from '../../project/allProjects/allProjectsContainer';
 import { Users, Briefcase, Users2, UserCheck } from 'lucide-react';
 import DefaultBanner from '../../../assets/images/DefaultBanner.png';
-import DefaultIcon from '../../../assets/images/DefaultIcon.png'; 
 const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
-    const members = [
-        { name: "Alex Rodriguez", role: "JavaScript, SQL" },
-        { name: "Sam Chen", role: "JavaScript, SQL" },
-        { name: "Jordan Kim", role: "billyfil@example.com" },
-        { name: "Taylor Wong", role: "billyfil@example.com" }
-    ];
-
     const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
         <div className={`text-center p-6 ${className}`}>
-          <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-          <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
-          <p className="text-sm text-gray-500">{description}</p>
+            <Icon className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <h3 className="text-sm font-medium text-gray-900 mb-1">{title}</h3>
+            <p className="text-sm text-gray-500">{description}</p>
         </div>
-      );
+    );
     return (
         <div className="min-h-screen pt-4">
             {/* Section 1: Team Banner */}
             <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 shadow-lg relative overflow-hidden z-0">
-                
+
                 <img
                     src={team.teamBanner ? team.teamBanner : DefaultBanner}
                     alt="Team Banner"
@@ -35,13 +27,13 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
             {/* Section 2: Team Details */}
             <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
                 <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
-                    { team.teamIcon ? 
-                    <img
-                        src={team.teamIcon}
-                        alt="Team Profile"
-                        className="w-full h-full object-cover rounded-lg shadow-lg"
-                    /> :
-                    <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
+                    {team.teamIcon ?
+                        <img
+                            src={team.teamIcon}
+                            alt="Team Profile"
+                            className="w-full h-full object-cover rounded-lg shadow-lg"
+                        /> :
+                        <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
                     }
                 </div>
                 <div className="flex-grow">
@@ -49,17 +41,17 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                         <h2 className="text-2xl font-semibold text-blue-800">
                             {team.teamName}
                         </h2>
-                        
+
                     </div>
-                    
+
                     <p className="text-gray-700 mb-8">
                         {team.teamDescription}
                     </p>
                     <div className="flex items-center text-gray-700">
-                            <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
-                            <span className="font-medium">{team.owner.firstName} {team.owner.lastName}
-                            </span>
-                        </div>
+                        <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
+                        <span className="font-medium">{team.owner.firstName} {team.owner.lastName}
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -88,11 +80,6 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     </div>
                 </div>
 
-
-
-
-
-
                 {/* Part (b): Team Members - Visible on MD and larger screens */}
                 <div className="hidden md:block w-1/3">
                     <div className="flex items-center mb-6">
@@ -113,10 +100,10 @@ const TeamPageView = ({ team, teamMembers, teamProjects, myProjects }) => {
                     </div>
                     {teamMembers.length === 0 && (
                         <EmptyState
-                        icon={Users}
-                        title="No team members found"
-                        description="Add team members to get started."
-                    />
+                            icon={Users}
+                            title="No team members found"
+                            description="Add team members to get started."
+                        />
                     )}
                 </div>
 

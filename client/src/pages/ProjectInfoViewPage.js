@@ -4,7 +4,6 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { useParams } from "react-router-dom";
 import { useGetProjectQuery, useGetProjectMembersQuery, useGetProjectTasksQuery} from '../features/api/apiSlice';
-import TabNav from '../components/TabNav';
 import ErrorMessage from '../components/ErrorMessage';
 
 function ProjectInfoViewPage() {

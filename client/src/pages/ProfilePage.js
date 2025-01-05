@@ -5,7 +5,6 @@ import Footer from '../components/footer';
 
 
 export default function ProfilePage() {
-    //tabs:overview, teams, projects, tasks
     const tabs = [
         {id: 1, name: 'Overview', link: "/profile"}, 
         {id: 2, name: "Teams", link: "/profile/teams"}, 

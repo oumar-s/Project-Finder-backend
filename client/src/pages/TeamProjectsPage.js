@@ -1,7 +1,6 @@
 import Navbar from '../components/navbar';
 import TabNav from '../components/TabNav';
 import Footer from '../components/footer';
-//import { ProjectsListContainer } from '../components/ProjectsList/projectsListContainer'; 
 import { ProjectsContainer } from '../features/project/allProjects/allProjectsContainer'
 import { useGetProjectsForTeamQuery, useGetTeamQuery, useGetTeamMembersQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';

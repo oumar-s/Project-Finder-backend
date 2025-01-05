@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ProjectsListContainer } from "../../components/ProjectsList/projectsListContainer";
 import {
     Mail,
@@ -51,7 +50,6 @@ const ProfileView = ({ members, profile }) => {
                     {/* User Info */}
                     <div className="text-center space-y-2">
                         <h1 className="text-xl font-semibold text-gray-900">{profile.firstName} {profile.lastName}</h1>
-                        {/* <p className="text-blue-600 font-medium">{user.username}</p> */}
                         <div className="flex items-center justify-center space-x-2 text-gray-600">
                             <Mail size={16} />
                             <span className="text-sm">{profile.email}</span>
@@ -109,20 +107,6 @@ const ProfileView = ({ members, profile }) => {
                         )}
                     </div>
                 </section>
-
-                {/* <div className="info">
-                    <p>bio: {profile.bio}</p>
-                    <div>
-                        <p>Projects:</p>
-                        {members.map((member) => (
-                            <div key={member.id}>
-                                <Link to={`/projects/${member.project.id}/all`}>
-                                    <p>{member.project.projectTitle}</p>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                </div> */}
             </main>
         </div>
     );

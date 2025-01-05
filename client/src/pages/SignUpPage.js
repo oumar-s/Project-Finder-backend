@@ -6,7 +6,6 @@ import ErrorAlert from "../components/ErrorAlert";
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 
-// sign up a user with first name, last name, email, and password and put the data into sql database with post request
 function SignUpPage() {
 	const auth = useAuth();
 	const navigate = useNavigate();

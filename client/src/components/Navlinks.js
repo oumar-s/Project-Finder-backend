@@ -19,21 +19,6 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler, user }) => {
         <div className="">
           <Link className="nav-link text-xl font-semibold md:text-base md:font-normal" to="/about">About</Link>
         </div>
-        {/* <div className="">
-          <Link className="nav-link" to="/home">Home</Link>
-        </div>
-        <div className="nav-item">
-          <Link className="nav-link" to="/post">Post</Link>
-        </div>
-        <div className="nav-item">
-          <Link className="nav-link" to="/requests">Requests</Link>
-        </div>
-        <div className="nav-item">
-          <Link className="nav-link" to="/account">Account</Link>
-        </div>
-        <div className="nav-item">
-          <Link className="nav-link" to="/profile">Profile</Link>
-        </div> */}
       </div>
     )
   }
@@ -123,10 +108,6 @@ const Navlinks = ({ type, rightNavHandler, leftNavHandler, user }) => {
       </div>
     )
   }
-
-
-
-
 }
 
 export default Navlinks;

@@ -41,13 +41,6 @@ const MyTasksListView = ({ tasks, getStatusColor, handleTaskClick }) => {
                   >
                     <Eye className="h-4 w-4" /> View
                   </button>
-                  {/* <Link
-                  to={`/tasks/${task.id}`}
-                  onClick={() => handleTaskClick(task)}
-                  className="ml-auto text-sm text-teal-600 hover:text-blue-800 hover:underline"
-                >
-                  View Details
-                </Link> */}
                 </div>
               </div>
             ))}

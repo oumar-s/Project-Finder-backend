@@ -1,4 +1,4 @@
-import { Plus, GitBranch, Users, ExternalLink, FileText, Image, Type, MessageCircle, Check, X } from 'lucide-react';
+import { Users, ExternalLink, Type, MessageCircle, Check, X } from 'lucide-react';
 
 const Toast = ({ children, onClose }) => (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
@@ -19,13 +19,6 @@ const Toast = ({ children, onClose }) => (
 
 const AddProjectFormView = (props) => {
     const {handleChange, userTeams, handleSubmit, formData, showToast, setShowToast } = props;
-    const teams = [
-        { id: 1, name: 'Open Source Collective'},
-        { id: 2, name: 'Innovation Accelerator'},
-        { id: 3, name: 'Community Builders'},
-        { id: 4, name: 'Tech for Good'},
-        { id: 5, name: 'Emerging Technologies'},
-      ];
     return (
         <div className="max-w-xl mx-auto p-6 bg-white shadow-md rounded-lg">
             {showToast && (
@@ -121,7 +114,6 @@ const AddProjectFormView = (props) => {
                 type="submit"
                 className="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition-colors duration-300 flex items-center justify-center"
               >
-                
                 Create project
               </button>
             </div>

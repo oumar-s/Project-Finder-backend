@@ -20,9 +20,6 @@ const ProjectsListView = ({ projects, isPublicProfile }) => {
   }
   return (
     <div className="flex flex-col md:grid md:grid-cols-2 gap-4">
-      {/* <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl font-semibold text-gray-900">Team Projects</h2>
-      </div> */}
     {console.log("projectsList view: ", projects)}
       {/* <div className=""> */}
         {projects.map((project) => (
@@ -42,11 +39,6 @@ const ProjectsListView = ({ projects, isPublicProfile }) => {
                   {project.projectDescription || project.project.projectDescription}
                 </p>
               </div>
-              {/* <span 
-                className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${getStatusStyles(project.projectStatus)}`}
-              >
-                {project.projectStatus}
-              </span> */}
             </div>
 
             <div className="flex items-center justify-between">

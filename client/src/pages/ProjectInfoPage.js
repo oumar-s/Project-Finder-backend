@@ -2,15 +2,14 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 import { ProjectPageContainer } from '../features/project/projectPage/ProjectPageContainer';
 import { ProjectInfoViewContainer } from '../components/ProjectInfoView/ProjectInfoViewContainer';
-//import { TeamMembersListContainer } from '../components/TeamMembersList/teamMembersListContainer';
 import TabNav from '../components/TabNav';
-import {useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksQuery } from '../features/api/apiSlice';
+import { useGetProjectQuery, useGetProjectMembersQuery, useRemoveUserFromProjectMutation, useGetProjectTasksQuery } from '../features/api/apiSlice';
 import { useAuth } from '../context/authContext';
 import { useParams } from "react-router-dom";
 import ErrorMessage from '../components/ErrorMessage';
 
 
-export default function ProjectInfoPage() { 
+export default function ProjectInfoPage() {
 
     const params = useParams();
     const auth = useAuth();
@@ -59,30 +58,23 @@ export default function ProjectInfoPage() {
         ];
 
     }
-    
+
     else {
-        tabs = [{id: 1, name: 'My teams', link: "/profile/teams"}, {id: 2, name: "Explore", link: "/teams"}];
+        tabs = [{ id: 1, name: 'My teams', link: "/profile/teams" }, { id: 2, name: "Explore", link: "/teams" }];
     }
 
-    const handleDelete = (memberId) => {
-        // Handle member deletion
-        removeUserFromProject(memberId);
-        console.log(`Deleting member ${memberId}`);
-    };
-     
     return (
         <div >
             <Navbar page="Project" />
 
-            <TabNav tabs={tabs}/>
+            <TabNav tabs={tabs} />
 
             <div className='min-h-screen'>
-            { (isMember || isOwner) ?
-                <ProjectPageContainer tasks={tasks} members={members}/>
-                :
-                <ProjectInfoViewContainer project={project} tasks={tasks} members={members} />
-            }
-            {/* <TeamMembersListContainer members={members} onDeleteMember={handleDelete} type="project" isOwner={project?.ownerID === auth.user?.id ? true : false} /> */}
+                {(isMember || isOwner) ?
+                    <ProjectPageContainer tasks={tasks} members={members} />
+                    :
+                    <ProjectInfoViewContainer project={project} tasks={tasks} members={members} />
+                }
             </div>
 
             <Footer />

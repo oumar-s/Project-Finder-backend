@@ -62,7 +62,6 @@ function LoginPage() {
               type="email"
               className="border p-3 rounded-md h-8"
               name="email"
-              //placeholder="Email"
               value={data.email}
               onChange={fieldChanged("email")}
               autoFocus = "true"
@@ -73,15 +72,11 @@ function LoginPage() {
               <label htmlFor="password" className="">
                 Password
               </label>
-              {/* <a href="/forgot-password" style={{ textDecoration: "none" }} className="">
-                Forgot your password?
-              </a> */}
             </div>
             <input
               type="password"
               className="border p-3 rounded-md h-8"
               name="password"
-              //placeholder="Password"
               value={data.password}
               onChange={fieldChanged("password")}
             />

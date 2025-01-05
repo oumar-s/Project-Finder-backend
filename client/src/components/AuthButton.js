@@ -25,7 +25,6 @@ const AuthButton = () => {
 
   return (
     <div>
-      {/* Welcome! {auth.user.firstName}  */}
       <button className="" onClick={logout}>
         Logout
       </button>

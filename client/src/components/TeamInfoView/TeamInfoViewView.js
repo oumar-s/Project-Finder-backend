@@ -99,14 +99,6 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
       <div className="container mx-auto px-4 py-8 grid md:flex md:justify-between gap-8">
         <div className='flex flex-col gap-12 w-full'>
           {/* Part (a): Projects */}
-          {/* <div className='flex flex-col w-full'>
-                        <div className="flex items-center mb-6">
-                            <Briefcase className="mr-2 text-blue-600" />
-                            <h3 className="text-xl font-semibold text-blue-800">Your Projects</h3>
-                        </div>
-                        <ProjectsListContainer projects={myProjects} />
-
-                    </div> */}
           <div className='flex flex-col w-full'>
             <div className="flex items-center mb-6">
               <Users2 className="mr-2 text-blue-600" />

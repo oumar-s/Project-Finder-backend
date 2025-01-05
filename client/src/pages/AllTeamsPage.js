@@ -12,7 +12,6 @@ export default function AllTeamsPage() {
         { id: 1, name: "Teams", link: "/teams" },
         { id: 2, name: 'Projects', link: "/projects" }, 
     ];
-
     if (isLoading || error) {
         return (
             <div>
@@ -22,7 +21,6 @@ export default function AllTeamsPage() {
             </div>
         );
     }
-
     return (
         <div >
             <Navbar page='Explore' />
@@ -30,7 +28,6 @@ export default function AllTeamsPage() {
             <div className='min-h-screen'>
                 <AllTeamsContainer teams={data} type="Join" />
             </div>
-
             <Footer />
         </div>
     );

@@ -14,7 +14,6 @@ function AddProjectPage() {
         <div className='min-h-screen p-8'>
             <AddProjectFormContainer />
         </div>
-  
         <Footer />
       </div>
     );

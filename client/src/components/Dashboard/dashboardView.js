@@ -1,6 +1,6 @@
 import { MyTasksListContainer } from "../TasksListDisplay/myTasksListContainer";
 import { Link } from "react-router-dom";
-import { ChevronDown, CheckSquare, Users, FolderGit2, ExternalLink, AlertCircle, LinkIcon } from 'lucide-react';
+import { ChevronDown, CheckSquare, Users, FolderGit2, ExternalLink, AlertCircle } from 'lucide-react';
 const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamSelect, isTeamDropdownOpen, setIsTeamDropdownOpen, tasks, getStatusColor }) => {
   console.log('selected team', selectedTeam);
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -56,17 +56,6 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                         ))}
                       </div>
                     )}
-
-                    {/* <div className="self-end">
-                      {selectedTeam && (
-                        <button
-
-                          className="flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-md text-sm hover:bg-blue-100"
-                        >
-                          <Eye className="h-4 w-4" /> View Team
-                        </button>
-                      )}
-                    </div> */}
                   </div>
                   
                 ) : (

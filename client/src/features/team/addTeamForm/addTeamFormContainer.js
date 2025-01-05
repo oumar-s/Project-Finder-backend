@@ -19,22 +19,6 @@ export function AddTeamFormContainer() {
     const [teamBanner, setTeamBanner] = useState(null);
     const [addTeam, { isLoading: isCreating, error: createError }] = useAddTeamMutation();
     const [addMemberToTeam, { isLoading: isAddingMember, error: addMemberError }] = useAddMemberToTeamMutation();
-    
-    //These event handlers keeps track of changes as the user fills out the form.
-    //these event handlers will be passed to the AddProjectFormView as a prop.
-    const handleTeamNameChange = (event) => {
-        setTeamForm({...teamForm, teamName: event.target.value});
-    }
-    const handleTeamDescriptionChange = (event) => {
-        setTeamForm({...teamForm, teamDescription: event.target.value});
-    }
-    const handleTeamIconChange = (event) => {
-        console.log('file', event.target.files[0]);
-        setTeamForm({...teamForm, teamIcon: event.target.files[0]});
-    }
-    const handleTeamBannerChange = (event) => {
-        setTeamForm({...teamForm, teamBanner: event.target.files[0]});
-    }
 
     const handleTeamIconUpload = (setter) => (event) => {
         const file = event.target.files[0];
