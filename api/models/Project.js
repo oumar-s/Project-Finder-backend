@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         projectDescription: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
         },
         projectRepository: {
             type: DataTypes.STRING,

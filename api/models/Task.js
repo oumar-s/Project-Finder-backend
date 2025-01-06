@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         taskDescription: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
         },
         taskStatus: { //'Todo', 'In Progress','Done'
             type: DataTypes.STRING,
