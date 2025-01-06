@@ -33,7 +33,7 @@ const ProjectPageView = ({ project, tasks, members }) => {
                   <span className="font-medium">{project.owner.firstName} {project.owner.lastName}</span>
                 </div>
                 <Link
-                  to={`/team-info-view/${project.team.id}`}
+                  to={`/teams/${project.team.id}/overview`}
                   className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
                 >
                   <Users2Icon className="mr-2 h-5 w-5" />

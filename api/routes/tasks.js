@@ -171,7 +171,7 @@ router.post('/:projectId', async (req, res) => {
         const task = await Task.create({
             taskName: req.body.taskName,
             taskDescription: req.body.taskDescription,
-            taskStatus: "In Progress",
+            taskStatus: "Todo",
             ownerID: req.user.id,
             assignedTo: req.body.assignedTo,
             projectID: projectId,

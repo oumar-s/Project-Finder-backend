@@ -24,7 +24,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                     <div className="flex">
                     <button
                       onClick={() => setIsTeamDropdownOpen(!isTeamDropdownOpen)}
-                      className="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-700 bg-gray-50 rounded-md hover:bg-gray-100"
+                      className="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-700 bg-blue-50 hover:text-blue-700 rounded-md hover:bg-blue-100"
                     >
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-blue-500" />
@@ -115,7 +115,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
         </div>
 
         {/* Main Content - Includes all content for mobile */}
-        <div className="w-full">
+        <div className="w-full min-h-screen">
           <div className="p-8 md:p-8">
             {/* Mobile-only team and projects section */}
             <div className="md:hidden space-y-6 mb-8">
@@ -130,7 +130,7 @@ const DashboardView = ({ teams, projects, selectedTeam, setSelectedTeam, onTeamS
                     <div className="flex">
                     <button
                       onClick={() => setIsTeamDropdownOpen(!isTeamDropdownOpen)}
-                      className="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100"
+                      className="w-full flex items-center justify-between p-2 text-sm text-gray-700 bg-blue-50 border border-gray-200 rounded-md hover:text-blue-700 hover:bg-blue-100"
                     >
                       <div className="flex items-center  gap-2">
                         {selectedTeam?.teamName}
