@@ -56,8 +56,8 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="flex items-center space-x-6 mb-4 sm:mb-0">
                 <div className="flex items-center text-gray-600">
                   <Info size={18} className="mr-2" />
                   <span className="text-sm">
@@ -76,7 +76,7 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
                 joinedTeams.has(team.id) ? (
                   <button
                     disabled
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-emerald-500 bg-emerald-100 rounded-md"
                   >
                     <Check className="mr-2 h-4 w-4" />
                     Request made
@@ -85,7 +85,7 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
                   <button
                     onClick={() => handleJoinTeam(team.id)}
                     disabled={loadingTeams.has(team.id)}
-                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-emerald-500 rounded-md hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-emerald-500 rounded-md hover:bg-emerald-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingTeams.has(team.id) ? (
                       <>
@@ -99,12 +99,12 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
                 )
               )}
               {team.teamStatus === 'Waitlist' && (
-                <button className="px-4 py-2 text-sm font-medium text-white bg-amber-500 rounded-md hover:bg-amber-600 transition-colors">
+                <button className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-amber-500 rounded-md hover:bg-amber-600 transition-colors">
                   Join Waitlist
                 </button>
               )}
               {team.teamStatus === 'Closed' && (
-                <button disabled className="px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 rounded-md cursor-not-allowed">
+                <button disabled className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 rounded-md cursor-not-allowed">
                   Closed
                 </button>
               )}
