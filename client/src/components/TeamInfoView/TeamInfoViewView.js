@@ -109,12 +109,12 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
             <Users className="mr-2 text-blue-600" />
             <h3 className="text-xl font-semibold text-blue-800">Team Members</h3>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             {teamMembers.map((member, index) => (
               <Link
                 key={index}
                 to={`/profile/${member.user.id}`}
-                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className="bg-white w-full p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
                 <p className="text-gray-600 text-sm">{member.user.email}</p>
@@ -136,12 +136,12 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
             <Users className="mr-2 text-blue-600" />
             <h3 className="text-xl font-semibold text-blue-800">Team Members</h3>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex flex-col gap-3">
             {teamMembers.map((member, index) => (
               <Link
                 key={index}
                 to={`/profile/${member.user.id}`}
-                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className="bg-white w-full p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 <h4 className="font-medium text-teal-700">{member.user.firstName + " " + member.user.lastName}</h4>
                 <p className="text-gray-600 text-sm">{member.user.email}</p>
