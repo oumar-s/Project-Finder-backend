@@ -22,7 +22,7 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
         </Toast>
       )}
       {/* Section 1: Team Banner */}
-      <div className="w-11/12 h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
+      <div className="w-11/12 h-48 md:h-64 mx-auto rounded-2xl bg-gray-200 relative overflow-hidden">
           <img
               src={team.teamBanner ? team.teamBanner : DefaultBanner}
               alt="Team Banner"
@@ -32,34 +32,32 @@ const TeamInfoViewView = ({ team, teamMembers, teamProjects, isAuthenticated, ha
 
       {/* Section 2: Team Details */}
       <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
-                <div className="w-64 h-64 flex-shrink-0 mr-8 rounded-lg bg-gray-200">
-                    {team.teamIcon ?
-                        <img
-                            src={team.teamIcon}
-                            alt="Team Profile"
-                            className="w-full h-full object-cover rounded-lg shadow-lg"
-                        /> :
-                        <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
-                    }
-                </div>
-                <div className="flex-grow">
-                    <div className="mb-2 mt-4">
-                        <h2 className="text-2xl font-semibold text-blue-800">
-                            {team.teamName}
-                        </h2>
+          <div className="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 md:mr-8 rounded-lg bg-gray-200 mb-4 md:mb-0">
+              {team.teamIcon ?
+                  <img
+                      src={team.teamIcon}
+                      alt="Team Profile"
+                      className="w-full h-full object-cover rounded-lg shadow-lg"
+                  /> :
+                  <Users2 className="w-full h-full text-blue-800 object-cover rounded-lg shadow-lg" />
+              }
+          </div>
+          <div className="flex-grow text-center md:text-left">
+              <div className="mb-2 mt-4">
+                  <h2 className="text-2xl font-semibold text-blue-800">
+                      {team.teamName}
+                  </h2>
+              </div>
 
-                    </div>
-
-                    <p className="text-gray-700 mb-8">
-                        {team.teamDescription}
-                    </p>
-                    <div className="flex items-center text-gray-700">
-                        <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
-                        <span className="font-medium">{team.owner.firstName} {team.owner.lastName}
-                        </span>
-                    </div>
-                </div>
-            </div>
+              <p className="text-gray-700 mb-8">
+                  {team.teamDescription}
+              </p>
+              <div className="flex items-center text-gray-700 justify-center md:justify-start">
+                  <UserCheck className="mr-2 h-5 w-5 text-gray-500" />
+                  <span className="font-medium">{team.owner.firstName} {team.owner.lastName}</span>
+              </div>
+          </div>
+      </div>
       { isAuthenticated ?
         
       <div className="container mx-auto px-4 my-4 flex justify-center md:justify-end">
