@@ -13,14 +13,23 @@ export function ProjectInfoViewContainer({ project, members, tasks }) {
 
   const handleJoinProject = async (projectId) => {
     setLoadingProject(true);
-    await addRequestToProject(projectId);
-    setLoadingProject(false);
-    setJoinedProject(true);
-    console.log("join project clicked");
-    setShowAlert({ visible: true, projectId });
-    setTimeout(() => {
-      setShowAlert({ visible: false, projectId: null });
-    }, 3000);
+    try {
+      const response = await addRequestToProject(projectId).unwrap();
+      setJoinedProject(true);
+      setShowAlert({ visible: true, projectId, type: 'success', message: `A request has been made to join the project!` });
+    } catch (error) {
+      setShowAlert({ 
+        visible: true, 
+        projectId, 
+        type: 'error', 
+        message: error.data?.error || 'Failed to send request'
+      });
+    } finally {
+      setLoadingProject(false);
+      setTimeout(() => {
+        setShowAlert({ visible: false, projectId: null });
+      }, 4000);
+    }
   }
 
   return (

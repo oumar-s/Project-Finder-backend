@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
-import { Users, Info, UserCheck, Check, Loader2, X } from 'lucide-react';
+import { Users, Info, UserCheck, Check, Loader2 } from 'lucide-react';
+import Toast from '../../../components/Toast';
 
 const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTeams, joinedTeams, showAlert, setShowAlert }) => {
   const EmptyState = ({ icon: Icon, title, description, className = "" }) => (
@@ -9,6 +10,7 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
       <p className="text-sm text-gray-500">{description}</p>
     </div>
   );
+
   if (!teams.length) {
     return (
       <EmptyState
@@ -18,28 +20,7 @@ const AllTeamsView = ({ teams, isAuthenticated, type, handleJoinTeam, loadingTea
       />
     );
   }
-  // Custom Toast Component
-  const Toast = ({ children, onClose, type = 'success' }) => (
-    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slideDown">
-      <div className={`flex items-center gap-2 w-max px-4 py-3 bg-white border rounded-lg shadow-lg
-      ${type === 'success' ? 'border-emerald-200' : 'border-red-200'}`}>
-        <div className={`flex items-center justify-center w-6 h-6 rounded-full
-        ${type === 'success' ? 'bg-emerald-100' : 'bg-red-100'}`}>
-          {type === 'success' ? (
-            <Check className="h-4 w-4 text-emerald-600" />
-          ) : (
-            <X className="h-4 w-4 text-red-600" />
-          )}
-        </div>
-        <span className={`text-sm font-medium ${type === 'success' ? 'text-gray-700' : 'text-red-700'}`}>
-          {children}
-        </span>
-        <button onClick={onClose} className="ml-2 text-gray-400 hover:text-gray-600">
-          <X className="h-4 w-4" />
-        </button>
-      </div>
-    </div>
-  );
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center justify-between mb-6">

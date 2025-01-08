@@ -15,13 +15,23 @@ export default function TeamInfoViewContainer({ team, teamMembers, teamProjects 
   console.log("team info view container add request", addRequestToTeam);
   const handleJoinTeamRequest = async (teamId) => {
     setLoadingTeam(true);
-    await addRequestToTeam(teamId);
-    setLoadingTeam(false);
-    setJoinedTeam(true);
-    setShowAlert({ visible: true, teamId });
-    setTimeout(() => {
-      setShowAlert({ visible: false, teamId: null });
-    }, 3000);
+    try {
+      const response = await addRequestToTeam(teamId).unwrap();
+      setJoinedTeam(true);
+      setShowAlert({ visible: true, teamId, type: 'success', message: `A request has been made to join the team!` });
+    } catch (error) {
+      setShowAlert({ 
+        visible: true, 
+        teamId, 
+        type: 'error', 
+        message: error.data?.error || 'Failed to send request'
+      });
+    } finally {
+      setLoadingTeam(false);
+      setTimeout(() => {
+        setShowAlert({ visible: false, teamId: null });
+      }, 4000);
+    }
   }
 
   return (
